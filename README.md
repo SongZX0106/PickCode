@@ -9,9 +9,9 @@ uni-app、vue3
 
 ### 软件截图
 
-<img src="https://szx-bucket1.oss-cn-hangzhou.aliyuncs.com/picgo/9f7947ba3b51941cbc5b939f180d83a4_compress.jpg" alt="img" style="zoom: 33%;" />
+![image-20250108165307584](https://szx-bucket1.oss-cn-hangzhou.aliyuncs.com/picgo/image-20250108165307584.png)
 
-<img src="https://szx-bucket1.oss-cn-hangzhou.aliyuncs.com/picgo/15b0347b39d31a53a68ea256af724bd2_compress.jpg" alt="img" style="zoom:33%;" />
+<img src="https://szx-bucket1.oss-cn-hangzhou.aliyuncs.com/picgo/image-20250108165332243.png" alt="image-20250108165332243" style="zoom: 67%;" />
 
 ### 后续开发计划
 
