@@ -767,7 +767,7 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-d31e1c47"], ["__file", "E:/A0MyCodes/pick-up-code-app/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const _sfc_main$2 = {
     name: "EditDialog",
     props: {
@@ -850,7 +850,7 @@ if (uni.restoreGlobal) {
       ])
     ])) : vue.createCommentVNode("v-if", true);
   }
-  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
+  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-90e7d67e"], ["__file", "E:/A0MyCodes/pick-up-code-app/components/EditDialog.vue"]]);
   var isIos;
   isIos = plus.os.name == "iOS";
   function judgeIosPermissionPush() {
@@ -1112,7 +1112,14 @@ if (uni.restoreGlobal) {
           }
           groups[formattedDate].push(item);
         });
-        return groups;
+        const sortedGroups = Object.entries(groups).sort((a, b) => {
+          return new Date(b[0].replace(/(\d+)年(\d+)月(\d+)日/, "$1-$2-$3")) - new Date(a[0].replace(/(\d+)年(\d+)月(\d+)日/, "$1-$2-$3"));
+        });
+        const sortedGroupsObj = {};
+        sortedGroups.forEach(([date, items]) => {
+          sortedGroupsObj[date] = items;
+        });
+        return sortedGroupsObj;
       }
     },
     created() {
@@ -1122,7 +1129,7 @@ if (uni.restoreGlobal) {
           this.packageCodes = JSON.parse(savedCodes);
         }
       } catch (e) {
-        formatAppLog("error", "at pages/index/index.vue:105", "读取缓存失败:", e);
+        formatAppLog("error", "at pages/index/index.vue:116", "读取缓存失败:", e);
       }
     },
     methods: {
@@ -1130,7 +1137,7 @@ if (uni.restoreGlobal) {
         try {
           uni.setStorageSync("packageCodes", JSON.stringify(this.packageCodes));
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:113", "保存缓存失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:124", "保存缓存失败:", e);
         }
       },
       addCode() {
@@ -1228,6 +1235,7 @@ if (uni.restoreGlobal) {
         return code;
       },
       async readSms() {
+        let that = this;
         var result = await permision.requestAndroidPermission("android.permission.READ_SMS");
         var msgList = [];
         if (result == 1) {
@@ -1244,7 +1252,7 @@ if (uni.restoreGlobal) {
             title: "匹配短信記錄中.."
           });
           let newdata = (/* @__PURE__ */ new Date()).getTime();
-          let fiveMinsAgo = newdata - 3 * 24 * 60 * 60 * 1e3;
+          let fiveMinsAgo = newdata - 1 * 24 * 60 * 60 * 1e3;
           var selection = "date > " + fiveMinsAgo;
           var cur = cr.query(uri, null, selection, null, null);
           while (cur.moveToNext()) {
@@ -1261,10 +1269,14 @@ if (uni.restoreGlobal) {
             var smsDate = cur.getString(cur.getColumnIndex("date"));
             smsDate = parseTime(smsDate);
             newObj.sendDate = smsDate;
-            formatAppLog("log", "at pages/index/index.vue:275", smsDate, "smsDate");
-            msgList.push(newObj);
+            let extractInfo = that.extractInfoStrict(body);
+            newObj.code = extractInfo.code;
+            if (body.includes("兔喜生活") || body.includes("递管家")) {
+              msgList.push(newObj);
+            }
           }
-          formatAppLog("log", "at pages/index/index.vue:279", "获取到的数据", JSON.stringify(msgList));
+          formatAppLog("log", "at pages/index/index.vue:296", "获取到的数据", JSON.stringify(msgList));
+          that.dyAddCode(msgList);
           cur.close();
           uni.hideLoading();
         } else {
@@ -1275,6 +1287,42 @@ if (uni.restoreGlobal) {
           setTimeout(() => {
             uni.hideToast();
           }, 3e3);
+        }
+      },
+      extractInfoStrict(text) {
+        const regexDiGuanjia = /(\d{8})/;
+        const regexTuXilife = /凭([^\s]+)来取/;
+        if (text.includes("递管家")) {
+          const matchDiGuanjia = text.match(regexDiGuanjia);
+          if (matchDiGuanjia) {
+            return {
+              code: matchDiGuanjia[1]
+            };
+          }
+        }
+        if (text.includes("兔喜生活")) {
+          const matchTuXilife = text.match(regexTuXilife);
+          if (matchTuXilife) {
+            return {
+              code: matchTuXilife[1]
+            };
+          }
+        }
+        return {
+          code: ""
+        };
+      },
+      dyAddCode(msgList) {
+        for (let item of msgList) {
+          if (this.packageCodes.some((i) => i.code === item.code)) {
+            continue;
+          }
+          this.packageCodes.unshift({
+            code: item.code,
+            date: new Date(item.sendDate).toLocaleString(),
+            isPicked: false
+          });
+          this.saveToStorage();
         }
       }
     }
@@ -1406,7 +1454,7 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/A0MyCodes/pick-up-code-app/pages/index/index.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   const _sfc_main = {
     onLaunch: function() {
@@ -1420,7 +1468,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:11", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/mygitee/项目大全/pickUpCode/取件码/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "E:/A0MyCodes/pick-up-code-app/App.vue"]]);
   function createApp() {
     const app = vue.createVueApp(App);
     return {

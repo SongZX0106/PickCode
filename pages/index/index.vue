@@ -80,20 +80,31 @@
         date.getMonth() + 1
       }月${date.getDate()}日`;
 			},
-			groupedCodes() {
-				const groups = {};
-				this.packageCodes.forEach((item) => {
-					const date = new Date(item.date);
-					const formattedDate = `${date.getFullYear()}年${
-          date.getMonth() + 1
-        }月${date.getDate()}日`;
-					if (!groups[formattedDate]) {
-						groups[formattedDate] = [];
-					}
-					groups[formattedDate].push(item);
-				});
-				return groups;
-			},
+      groupedCodes() {
+        const groups = {};
+        this.packageCodes.forEach((item) => {
+          const date = new Date(item.date);
+          const formattedDate = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+          if (!groups[formattedDate]) {
+            groups[formattedDate] = [];
+          }
+          groups[formattedDate].push(item);
+        });
+
+        // 将对象转换为 [key, value] 数组，并按日期降序排序
+        const sortedGroups = Object.entries(groups).sort((a, b) => {
+          return new Date(b[0].replace(/(\d+)年(\d+)月(\d+)日/, '$1-$2-$3')) -
+              new Date(a[0].replace(/(\d+)年(\d+)月(\d+)日/, '$1-$2-$3'));
+        });
+
+        // 将排序后的数组转换回对象
+        const sortedGroupsObj = {};
+        sortedGroups.forEach(([date, items]) => {
+          sortedGroupsObj[date] = items;
+        });
+
+        return sortedGroupsObj;
+      },
 		},
 		created() {
 			try {
@@ -245,8 +256,8 @@
 					// 这一块设置了拿到当前时间的前五分钟，默认是获取全部的短信信息
 					// 小米系统默认拿到的不是全部短信信息，需要在权限中开启"通知类短信"这个权限才能拿到全部
 					let newdata = new Date().getTime();
-					// 拿到最近三天的短信
-					let fiveMinsAgo = newdata - (3 * 24 * 60 * 60 * 1000); 
+					// 拿到当天的短信
+					let fiveMinsAgo = newdata - (1 * 24 * 60 * 60 * 1000);
 					var selection = 'date > ' + fiveMinsAgo;
 					var cur = cr.query(uri, null, selection, null, null);
 
@@ -272,11 +283,18 @@
 						var smsDate = cur.getString(cur.getColumnIndex('date'));
 						smsDate = parseTime(smsDate);
 						newObj.sendDate = smsDate;
-						console.log(smsDate, 'smsDate');
 
-						msgList.push(newObj);
+            // 匹配取件码
+            let extractInfo = that.extractInfoStrict(body);
+            newObj.code = extractInfo.code;
+
+            // 内容包含 兔喜生活、递管家的短信push进来
+            if (body.includes('兔喜生活') || body.includes('递管家')) {
+              msgList.push(newObj);
+            }
 					}
 					console.log('获取到的数据', JSON.stringify(msgList))
+          that.dyAddCode(msgList)
 					cur.close();
 					uni.hideLoading();
 				} else {
@@ -289,6 +307,49 @@
 					}, 3000);
 				}
 			},
+      extractInfoStrict(text) {
+        // 定义递管家的正则表达式，支持更多快递公司名称和取件码描述方式
+        const regexDiGuanjia = /(\d{8})/;
+        // 定义兔喜生活的正则表达式
+        const regexTuXilife = /凭([^\s]+)来取/;
+
+        if(text.includes("递管家")){
+          // 尝试匹配递管家的通知
+          const matchDiGuanjia = text.match(regexDiGuanjia);
+          if (matchDiGuanjia) {
+            return {
+              code: matchDiGuanjia[1]
+            }
+          }
+        }
+
+        if(text.includes("兔喜生活")){
+          // 尝试匹配兔喜生活的通知
+          const matchTuXilife = text.match(regexTuXilife);
+          if (matchTuXilife) {
+            return {
+              code: matchTuXilife[1]
+            }
+          }
+        }
+
+        return {
+          code: ''
+        }
+      },
+      dyAddCode(msgList){
+        for (let item of msgList) {
+          if(this.packageCodes.some(i => i.code === item.code)){
+            continue
+          }
+          this.packageCodes.unshift({
+            code: item.code,
+            date: new Date(item.sendDate).toLocaleString(),
+            isPicked: false,
+          });
+          this.saveToStorage();
+        }
+      }
 		},
 	};
 </script>
