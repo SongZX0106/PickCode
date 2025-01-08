@@ -851,6 +851,239 @@ if (uni.restoreGlobal) {
     ])) : vue.createCommentVNode("v-if", true);
   }
   const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
+  var isIos;
+  isIos = plus.os.name == "iOS";
+  function judgeIosPermissionPush() {
+    var result = false;
+    var UIApplication = plus.ios.import("UIApplication");
+    var app = UIApplication.sharedApplication();
+    var enabledTypes = 0;
+    if (app.currentUserNotificationSettings) {
+      var settings = app.currentUserNotificationSettings();
+      enabledTypes = settings.plusGetAttribute("types");
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:19", "enabledTypes1:" + enabledTypes);
+      if (enabledTypes == 0) {
+        formatAppLog("log", "at js_sdk/wa-permission/permission.js:21", "推送权限没有开启");
+      } else {
+        result = true;
+        formatAppLog("log", "at js_sdk/wa-permission/permission.js:24", "已经开启推送功能!");
+      }
+      plus.ios.deleteObject(settings);
+    } else {
+      enabledTypes = app.enabledRemoteNotificationTypes();
+      if (enabledTypes == 0) {
+        formatAppLog("log", "at js_sdk/wa-permission/permission.js:30", "推送权限没有开启!");
+      } else {
+        result = true;
+        formatAppLog("log", "at js_sdk/wa-permission/permission.js:33", "已经开启推送功能!");
+      }
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:35", "enabledTypes2:" + enabledTypes);
+    }
+    plus.ios.deleteObject(app);
+    plus.ios.deleteObject(UIApplication);
+    return result;
+  }
+  function judgeIosPermissionLocation() {
+    var result = false;
+    var cllocationManger = plus.ios.import("CLLocationManager");
+    var status = cllocationManger.authorizationStatus();
+    result = status != 2;
+    formatAppLog("log", "at js_sdk/wa-permission/permission.js:48", "定位权限开启：" + result);
+    plus.ios.deleteObject(cllocationManger);
+    return result;
+  }
+  function judgeIosPermissionRecord() {
+    var result = false;
+    var avaudiosession = plus.ios.import("AVAudioSession");
+    var avaudio = avaudiosession.sharedInstance();
+    var permissionStatus = avaudio.recordPermission();
+    formatAppLog("log", "at js_sdk/wa-permission/permission.js:70", "permissionStatus:" + permissionStatus);
+    if (permissionStatus == 1684369017 || permissionStatus == 1970168948) {
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:72", "麦克风权限没有开启");
+    } else {
+      result = true;
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:75", "麦克风权限已经开启");
+    }
+    plus.ios.deleteObject(avaudiosession);
+    return result;
+  }
+  function judgeIosPermissionCamera() {
+    var result = false;
+    var AVCaptureDevice = plus.ios.import("AVCaptureDevice");
+    var authStatus = AVCaptureDevice.authorizationStatusForMediaType("vide");
+    formatAppLog("log", "at js_sdk/wa-permission/permission.js:86", "authStatus:" + authStatus);
+    if (authStatus == 3) {
+      result = true;
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:89", "相机权限已经开启");
+    } else {
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:91", "相机权限没有开启");
+    }
+    plus.ios.deleteObject(AVCaptureDevice);
+    return result;
+  }
+  function judgeIosPermissionPhotoLibrary() {
+    var result = false;
+    var PHPhotoLibrary = plus.ios.import("PHPhotoLibrary");
+    var authStatus = PHPhotoLibrary.authorizationStatus();
+    formatAppLog("log", "at js_sdk/wa-permission/permission.js:102", "authStatus:" + authStatus);
+    if (authStatus == 3) {
+      result = true;
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:105", "相册权限已经开启");
+    } else {
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:107", "相册权限没有开启");
+    }
+    plus.ios.deleteObject(PHPhotoLibrary);
+    return result;
+  }
+  function judgeIosPermissionContact() {
+    var result = false;
+    var CNContactStore = plus.ios.import("CNContactStore");
+    var cnAuthStatus = CNContactStore.authorizationStatusForEntityType(0);
+    if (cnAuthStatus == 3) {
+      result = true;
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:120", "通讯录权限已经开启");
+    } else {
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:122", "通讯录权限没有开启");
+    }
+    plus.ios.deleteObject(CNContactStore);
+    return result;
+  }
+  function judgeIosPermissionCalendar() {
+    var result = false;
+    var EKEventStore = plus.ios.import("EKEventStore");
+    var ekAuthStatus = EKEventStore.authorizationStatusForEntityType(0);
+    if (ekAuthStatus == 3) {
+      result = true;
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:135", "日历权限已经开启");
+    } else {
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:137", "日历权限没有开启");
+    }
+    plus.ios.deleteObject(EKEventStore);
+    return result;
+  }
+  function judgeIosPermissionMemo() {
+    var result = false;
+    var EKEventStore = plus.ios.import("EKEventStore");
+    var ekAuthStatus = EKEventStore.authorizationStatusForEntityType(1);
+    if (ekAuthStatus == 3) {
+      result = true;
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:150", "备忘录权限已经开启");
+    } else {
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:152", "备忘录权限没有开启");
+    }
+    plus.ios.deleteObject(EKEventStore);
+    return result;
+  }
+  function requestAndroidPermission(permissionID) {
+    return new Promise((resolve, reject) => {
+      plus.android.requestPermissions(
+        [permissionID],
+        // 理论上支持多个权限同时查询，但实际上本函数封装只处理了一个权限的情况。有需要的可自行扩展封装
+        function(resultObj) {
+          var result = 0;
+          for (var i = 0; i < resultObj.granted.length; i++) {
+            var grantedPermission = resultObj.granted[i];
+            formatAppLog("log", "at js_sdk/wa-permission/permission.js:167", "已获取的权限：" + grantedPermission);
+            result = 1;
+          }
+          for (var i = 0; i < resultObj.deniedPresent.length; i++) {
+            var deniedPresentPermission = resultObj.deniedPresent[i];
+            formatAppLog("log", "at js_sdk/wa-permission/permission.js:172", "拒绝本次申请的权限：" + deniedPresentPermission);
+            result = 0;
+          }
+          for (var i = 0; i < resultObj.deniedAlways.length; i++) {
+            var deniedAlwaysPermission = resultObj.deniedAlways[i];
+            formatAppLog("log", "at js_sdk/wa-permission/permission.js:177", "永久拒绝申请的权限：" + deniedAlwaysPermission);
+            result = -1;
+          }
+          resolve(result);
+        },
+        function(error) {
+          formatAppLog("log", "at js_sdk/wa-permission/permission.js:187", "申请权限错误：" + error.code + " = " + error.message);
+          resolve({
+            code: error.code,
+            message: error.message
+          });
+        }
+      );
+    });
+  }
+  function judgeIosPermission(permissionID) {
+    if (permissionID == "location") {
+      return judgeIosPermissionLocation();
+    } else if (permissionID == "camera") {
+      return judgeIosPermissionCamera();
+    } else if (permissionID == "photoLibrary") {
+      return judgeIosPermissionPhotoLibrary();
+    } else if (permissionID == "record") {
+      return judgeIosPermissionRecord();
+    } else if (permissionID == "push") {
+      return judgeIosPermissionPush();
+    } else if (permissionID == "contact") {
+      return judgeIosPermissionContact();
+    } else if (permissionID == "calendar") {
+      return judgeIosPermissionCalendar();
+    } else if (permissionID == "memo") {
+      return judgeIosPermissionMemo();
+    }
+    return false;
+  }
+  function gotoAppPermissionSetting() {
+    if (isIos) {
+      var UIApplication = plus.ios.import("UIApplication");
+      var application2 = UIApplication.sharedApplication();
+      var NSURL2 = plus.ios.import("NSURL");
+      var setting2 = NSURL2.URLWithString("app-settings:");
+      application2.openURL(setting2);
+      plus.ios.deleteObject(setting2);
+      plus.ios.deleteObject(NSURL2);
+      plus.ios.deleteObject(application2);
+    } else {
+      var Intent = plus.android.importClass("android.content.Intent");
+      var Settings = plus.android.importClass("android.provider.Settings");
+      var Uri = plus.android.importClass("android.net.Uri");
+      var mainActivity = plus.android.runtimeMainActivity();
+      var intent = new Intent();
+      intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+      var uri = Uri.fromParts("package", mainActivity.getPackageName(), null);
+      intent.setData(uri);
+      mainActivity.startActivity(intent);
+    }
+  }
+  function checkSystemEnableLocation() {
+    if (isIos) {
+      var result = false;
+      var cllocationManger = plus.ios.import("CLLocationManager");
+      var result = cllocationManger.locationServicesEnabled();
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:253", "系统定位开启:" + result);
+      plus.ios.deleteObject(cllocationManger);
+      return result;
+    } else {
+      var context = plus.android.importClass("android.content.Context");
+      var locationManager = plus.android.importClass("android.location.LocationManager");
+      var main = plus.android.runtimeMainActivity();
+      var mainSvr = main.getSystemService(context.LOCATION_SERVICE);
+      var result = mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
+      formatAppLog("log", "at js_sdk/wa-permission/permission.js:262", "系统定位开启:" + result);
+      return result;
+    }
+  }
+  const permision = {
+    judgeIosPermission,
+    requestAndroidPermission,
+    checkSystemEnableLocation,
+    gotoAppPermissionSetting
+  };
+  function parseTime(timestamp) {
+    var date = new Date(parseInt(timestamp));
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, "0");
+    var day = date.getDate().toString().padStart(2, "0");
+    var hours = date.getHours().toString().padStart(2, "0");
+    var minutes = date.getMinutes().toString().padStart(2, "0");
+    var seconds = date.getSeconds().toString().padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
   const _sfc_main$1 = {
     components: {
       EditDialog
@@ -889,7 +1122,7 @@ if (uni.restoreGlobal) {
           this.packageCodes = JSON.parse(savedCodes);
         }
       } catch (e) {
-        formatAppLog("error", "at pages/index/index.vue:117", "读取缓存失败:", e);
+        formatAppLog("error", "at pages/index/index.vue:105", "读取缓存失败:", e);
       }
     },
     methods: {
@@ -897,14 +1130,28 @@ if (uni.restoreGlobal) {
         try {
           uni.setStorageSync("packageCodes", JSON.stringify(this.packageCodes));
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:125", "保存缓存失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:113", "保存缓存失败:", e);
         }
       },
       addCode() {
         if (!this.newCode)
           return;
+        const newCode = this.newCode.replace(/\s/g, "");
+        const today = (/* @__PURE__ */ new Date()).toLocaleDateString();
+        const isDuplicate = this.packageCodes.some((item) => {
+          const itemDate = new Date(item.date).toLocaleDateString();
+          return itemDate === today && item.code === newCode;
+        });
+        if (isDuplicate) {
+          uni.showToast({
+            title: "今日已添加该取件码",
+            icon: "none",
+            duration: 2e3
+          });
+          return;
+        }
         this.packageCodes.unshift({
-          code: this.newCode.replace(/\s/g, ""),
+          code: newCode,
           date: (/* @__PURE__ */ new Date()).toLocaleString(),
           isPicked: false
         });
@@ -917,10 +1164,29 @@ if (uni.restoreGlobal) {
         this.showEditDialog = true;
       },
       handleEditConfirm(value) {
-        if (this.editingItem) {
-          this.editingItem.code = value.replace(/\s/g, "");
-          this.saveToStorage();
+        if (!this.editingItem)
+          return;
+        const newCode = value.replace(/\s/g, "");
+        const editingDate = new Date(this.editingItem.date).toLocaleDateString();
+        if (newCode === this.editingItem.code) {
+          this.editingItem = null;
+          this.editingCode = "";
+          return;
         }
+        const isDuplicate = this.packageCodes.some((item) => {
+          const itemDate = new Date(item.date).toLocaleDateString();
+          return itemDate === editingDate && item.code === newCode && item !== this.editingItem;
+        });
+        if (isDuplicate) {
+          uni.showToast({
+            title: "该日期已存在相同取件码",
+            icon: "none",
+            duration: 2e3
+          });
+          return;
+        }
+        this.editingItem.code = newCode;
+        this.saveToStorage();
         this.editingItem = null;
         this.editingCode = "";
       },
@@ -960,6 +1226,56 @@ if (uni.restoreGlobal) {
           return code.replace(/(\d{4})(?=\d)/g, "$1 ");
         }
         return code;
+      },
+      async readSms() {
+        var result = await permision.requestAndroidPermission("android.permission.READ_SMS");
+        var msgList = [];
+        if (result == 1) {
+          var main = plus.android.runtimeMainActivity();
+          var Uri = plus.android.importClass("android.net.Uri");
+          plus.android.importClass("android.provider.ContactsContract");
+          var uri = Uri.parse("content://sms/");
+          var cr = main.getContentResolver();
+          plus.android.importClass(cr);
+          var cur = cr.query(uri, null, null, null, null);
+          plus.android.importClass(cur);
+          cur.moveToFirst();
+          uni.showLoading({
+            title: "匹配短信記錄中.."
+          });
+          let newdata = (/* @__PURE__ */ new Date()).getTime();
+          let fiveMinsAgo = newdata - 3 * 24 * 60 * 60 * 1e3;
+          var selection = "date > " + fiveMinsAgo;
+          var cur = cr.query(uri, null, selection, null, null);
+          while (cur.moveToNext()) {
+            let newObj = {};
+            var index_Address = cur.getColumnIndex("address");
+            var address = cur.getString(index_Address);
+            newObj.telphone = address;
+            var index_Body = cur.getColumnIndex("body");
+            var body = cur.getString(index_Body);
+            newObj.content = body;
+            var index_Type = cur.getColumnIndex("type");
+            var type = cur.getString(index_Type);
+            newObj.type = type == 1 ? "接收" : "發送";
+            var smsDate = cur.getString(cur.getColumnIndex("date"));
+            smsDate = parseTime(smsDate);
+            newObj.sendDate = smsDate;
+            formatAppLog("log", "at pages/index/index.vue:275", smsDate, "smsDate");
+            msgList.push(newObj);
+          }
+          formatAppLog("log", "at pages/index/index.vue:279", "获取到的数据", JSON.stringify(msgList));
+          cur.close();
+          uni.hideLoading();
+        } else {
+          uni.showToast({
+            title: "请授权读取短信,仅用于匹配取件码",
+            icon: "none"
+          });
+          setTimeout(() => {
+            uni.hideToast();
+          }, 3e3);
+        }
       }
     }
   };
@@ -1073,12 +1389,15 @@ if (uni.restoreGlobal) {
               128
               /* KEYED_FRAGMENT */
             ))
-          ])
+          ]),
+          vue.createElementVNode("button", {
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.readSms && $options.readSms(...args))
+          }, "读取短信")
         ]),
         vue.createCommentVNode(" 添加 Dialog 组件 "),
         vue.createVNode(_component_edit_dialog, {
           show: $data.showEditDialog,
-          "onUpdate:show": _cache[2] || (_cache[2] = ($event) => $data.showEditDialog = $event),
+          "onUpdate:show": _cache[3] || (_cache[3] = ($event) => $data.showEditDialog = $event),
           value: $data.editingCode,
           onConfirm: $options.handleEditConfirm
         }, null, 8, ["show", "value", "onConfirm"])
