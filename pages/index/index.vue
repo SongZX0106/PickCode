@@ -106,7 +106,7 @@
                         {{ formatCode(item.code) }}
                       </view>
                       <view class="code-desc" :class="{ picked: item.isPicked }">
-                        <text>{{ item.sendDate ? item.sendDate.split(" ")[1] : "" }} 进站</text>
+                        <text>{{ item.sendDate ? item.sendDate.split(" ")[1] : "" }} {{ item.isManual ? '添加' : '进站' }}</text>
                       </view>
                     </view>
                   </view>
@@ -320,11 +320,12 @@ export default {
       const newItem = {
         code: this.newCode.replace(/\s/g, ""),
         date: now,
-        sendDate: now,
+        sendDate: parseTime(new Date().getTime()),
         company: '手动添加',
         address: '手动添加',
         isPicked: false,
         showActions: false, // 添加 showActions 属性
+        isManual: true,
       };
       
       this.packageCodes.unshift(newItem);

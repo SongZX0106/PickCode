@@ -1205,12 +1205,13 @@ if (uni.restoreGlobal) {
         const newItem = {
           code: this.newCode.replace(/\s/g, ""),
           date: now,
-          sendDate: now,
+          sendDate: parseTime((/* @__PURE__ */ new Date()).getTime()),
           company: "手动添加",
           address: "手动添加",
           isPicked: false,
-          showActions: false
+          showActions: false,
           // 添加 showActions 属性
+          isManual: true
         };
         this.packageCodes.unshift(newItem);
         this.saveToStorage();
@@ -1330,12 +1331,12 @@ if (uni.restoreGlobal) {
                 msgList.push(newObj);
               }
             }
-            formatAppLog("log", "at pages/index/index.vue:480", "获取到的数据", JSON.stringify(msgList));
+            formatAppLog("log", "at pages/index/index.vue:481", "获取到的数据", JSON.stringify(msgList));
             that.dyAddCode(msgList);
             cur.close();
             uni.hideLoading();
           } catch (e) {
-            formatAppLog("log", "at pages/index/index.vue:485", "获取短信失败", e);
+            formatAppLog("log", "at pages/index/index.vue:486", "获取短信失败", e);
             uni.hideLoading();
           }
         } else {
@@ -1364,7 +1365,7 @@ if (uni.restoreGlobal) {
         if (text.includes("兔喜生活")) {
           const matchTuXilife = text.match(regexTuXilife);
           if (matchTuXilife) {
-            formatAppLog("log", "at pages/index/index.vue:521", "兔喜生活匹配结果:", matchTuXilife);
+            formatAppLog("log", "at pages/index/index.vue:522", "兔喜生活匹配结果:", matchTuXilife);
             return {
               company: matchTuXilife[1],
               address: matchTuXilife[2],
@@ -1460,7 +1461,7 @@ if (uni.restoreGlobal) {
         try {
           this.version = plus.runtime.version;
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:639", "获取版本号失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:640", "获取版本号失败:", e);
         }
       }
     }
@@ -1667,7 +1668,7 @@ if (uni.restoreGlobal) {
                                         vue.createElementVNode(
                                           "text",
                                           null,
-                                          vue.toDisplayString(item.sendDate ? item.sendDate.split(" ")[1] : "") + " 进站",
+                                          vue.toDisplayString(item.sendDate ? item.sendDate.split(" ")[1] : "") + " " + vue.toDisplayString(item.isManual ? "添加" : "进站"),
                                           1
                                           /* TEXT */
                                         )
