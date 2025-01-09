@@ -1100,7 +1100,9 @@ if (uni.restoreGlobal) {
         // 默认读取当天的短信
         dateShowActions: {},
         // 添加日期操作菜单的显示状态
-        yizhanIcon
+        yizhanIcon,
+        version: "1.0.0"
+        // 默认版本号
       };
     },
     computed: {
@@ -1145,7 +1147,7 @@ if (uni.restoreGlobal) {
           this.packageCodes = codes;
         }
       } catch (e) {
-        formatAppLog("error", "at pages/index/index.vue:251", "读取缓存失败:", e);
+        formatAppLog("error", "at pages/index/index.vue:255", "读取缓存失败:", e);
       }
       document.addEventListener("click", () => {
         this.packageCodes.forEach((item) => {
@@ -1159,23 +1161,24 @@ if (uni.restoreGlobal) {
           }
         });
       });
+      this.getAppVersion();
     },
     methods: {
       saveToStorage() {
         try {
           uni.setStorageSync("packageCodes", JSON.stringify(this.packageCodes));
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:274", "保存缓存失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:281", "保存缓存失败:", e);
         }
       },
       vibrateShort() {
         if (uni.getSystemInfoSync().platform !== "web") {
           uni.vibrateShort({
             success: function() {
-              formatAppLog("log", "at pages/index/index.vue:282", "震动成功");
+              formatAppLog("log", "at pages/index/index.vue:289", "震动成功");
             },
             fail: function() {
-              formatAppLog("log", "at pages/index/index.vue:285", "震动失败");
+              formatAppLog("log", "at pages/index/index.vue:292", "震动失败");
             }
           });
         }
@@ -1327,12 +1330,12 @@ if (uni.restoreGlobal) {
                 msgList.push(newObj);
               }
             }
-            formatAppLog("log", "at pages/index/index.vue:473", "获取到的数据", JSON.stringify(msgList));
+            formatAppLog("log", "at pages/index/index.vue:480", "获取到的数据", JSON.stringify(msgList));
             that.dyAddCode(msgList);
             cur.close();
             uni.hideLoading();
           } catch (e) {
-            formatAppLog("log", "at pages/index/index.vue:478", "获取短信失败", e);
+            formatAppLog("log", "at pages/index/index.vue:485", "获取短信失败", e);
             uni.hideLoading();
           }
         } else {
@@ -1361,7 +1364,7 @@ if (uni.restoreGlobal) {
         if (text.includes("兔喜生活")) {
           const matchTuXilife = text.match(regexTuXilife);
           if (matchTuXilife) {
-            formatAppLog("log", "at pages/index/index.vue:514", "兔喜生活匹配结果:", matchTuXilife);
+            formatAppLog("log", "at pages/index/index.vue:521", "兔喜生活匹配结果:", matchTuXilife);
             return {
               company: matchTuXilife[1],
               address: matchTuXilife[2],
@@ -1452,6 +1455,13 @@ if (uni.restoreGlobal) {
       clearInput() {
         this.vibrateShort();
         this.newCode = "";
+      },
+      getAppVersion() {
+        try {
+          this.version = plus.runtime.version;
+        } catch (e) {
+          formatAppLog("error", "at pages/index/index.vue:639", "获取版本号失败:", e);
+        }
       }
     }
   };
@@ -1461,7 +1471,16 @@ if (uni.restoreGlobal) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "page-wrapper" }, [
       vue.createElementVNode("view", { class: "page-bg" }),
       vue.createElementVNode("view", { class: "container" }, [
-        vue.createElementVNode("view", { class: "title" }, "取件码工具"),
+        vue.createElementVNode("view", { class: "title-wrapper" }, [
+          vue.createElementVNode("text", { class: "title" }, "取件码工具"),
+          vue.createElementVNode(
+            "text",
+            { class: "version-text" },
+            "V" + vue.toDisplayString($data.version),
+            1
+            /* TEXT */
+          )
+        ]),
         vue.createCommentVNode(" 输入区域 "),
         vue.createElementVNode("view", { class: "card input-card" }, [
           vue.createElementVNode("view", { class: "input-area" }, [

@@ -3,8 +3,11 @@
     <view class="page-bg"></view>
 
     <view class="container">
-      <view class="title">取件码工具</view>
-
+      <view class="title-wrapper">
+        <text class="title">取件码工具</text>
+        <text class="version-text">V{{ version }}</text>
+      </view>
+      
       <!-- 输入区域 -->
       <view class="card input-card">
         <view class="input-area">
@@ -188,6 +191,7 @@ export default {
       readDayCount: 4, // 默认读取当天的短信
       dateShowActions: {}, // 添加日期操作菜单的显示状态
       yizhanIcon,
+      version: '1.0.0', // 默认版本号
     };
   },
   computed: {
@@ -265,6 +269,9 @@ export default {
         }
       });
     });
+
+    // 获取应用版本号
+    this.getAppVersion();
   },
   methods: {
     saveToStorage() {
@@ -623,17 +630,45 @@ export default {
       this.vibrateShort();
       this.newCode = '';
     },
+    getAppVersion() {
+      // #ifdef APP-PLUS
+      // App 环境下获取真实版本号
+      try {
+        this.version = plus.runtime.version;
+      } catch (e) {
+        console.error('获取版本号失败:', e);
+      }
+      // #endif
+      
+      // #ifdef H5
+      // H5 环境下可以设置一个固定版本号
+      this.version = '1.0.0';
+      // #endif
+    },
   },
 };
 </script>
 
 <style lang="scss">
+.title-wrapper {
+  position: relative;
+  margin-bottom: 20rpx;
+  margin-top: 40rpx;
+}
+
 .title {
   font-size: 50rpx;
   color: #ffffff;
   font-weight: 700;
-  margin-bottom: 20rpx;
-  margin-top: 40rpx;
+}
+
+.version-text {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-8rpx); // 稍微向上偏移
 }
 
 .page-wrapper {
