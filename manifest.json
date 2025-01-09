@@ -18,7 +18,9 @@
         "modules" : {},
         "distribute" : {
             "android" : {
-                "permissions" : [],
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>"
+                ],
                 "minSdkVersion" : 21,
                 "targetSdkVersion" : 30,
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],

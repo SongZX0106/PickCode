@@ -767,7 +767,7 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-d31e1c47"], ["__file", "E:/A0MyCodes/pick-up-code-app/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const _sfc_main$2 = {
     name: "EditDialog",
     props: {
@@ -826,7 +826,7 @@ if (uni.restoreGlobal) {
             "input",
             {
               class: "dialog-input",
-              type: "text",
+              type: "number",
               "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.inputValue = $event),
               placeholder: "请输入新的取件码"
             },
@@ -850,7 +850,7 @@ if (uni.restoreGlobal) {
       ])
     ])) : vue.createCommentVNode("v-if", true);
   }
-  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-90e7d67e"], ["__file", "E:/A0MyCodes/pick-up-code-app/components/EditDialog.vue"]]);
+  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
   var isIos;
   isIos = plus.os.name == "iOS";
   function judgeIosPermissionPush() {
@@ -1084,6 +1084,7 @@ if (uni.restoreGlobal) {
     var seconds = date.getSeconds().toString().padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
+  const yizhanIcon = "/static/yizhan.png";
   const _sfc_main$1 = {
     components: {
       EditDialog
@@ -1094,7 +1095,12 @@ if (uni.restoreGlobal) {
         packageCodes: [],
         showEditDialog: false,
         editingItem: null,
-        editingCode: ""
+        editingCode: "",
+        readDayCount: 4,
+        // 默认读取当天的短信
+        dateShowActions: {},
+        // 添加日期操作菜单的显示状态
+        yizhanIcon
       };
     },
     computed: {
@@ -1108,16 +1114,20 @@ if (uni.restoreGlobal) {
           const date = new Date(item.date);
           const formattedDate = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
           if (!groups[formattedDate]) {
-            groups[formattedDate] = [];
+            groups[formattedDate] = {};
           }
-          groups[formattedDate].push(item);
+          const address = item.address || "未知地址";
+          if (!groups[formattedDate][address]) {
+            groups[formattedDate][address] = [];
+          }
+          groups[formattedDate][address].push(item);
         });
         const sortedGroups = Object.entries(groups).sort((a, b) => {
           return new Date(b[0].replace(/(\d+)年(\d+)月(\d+)日/, "$1-$2-$3")) - new Date(a[0].replace(/(\d+)年(\d+)月(\d+)日/, "$1-$2-$3"));
         });
         const sortedGroupsObj = {};
-        sortedGroups.forEach(([date, items]) => {
-          sortedGroupsObj[date] = items;
+        sortedGroups.forEach(([date, addressGroups]) => {
+          sortedGroupsObj[date] = addressGroups;
         });
         return sortedGroupsObj;
       }
@@ -1126,21 +1136,52 @@ if (uni.restoreGlobal) {
       try {
         const savedCodes = uni.getStorageSync("packageCodes");
         if (savedCodes) {
-          this.packageCodes = JSON.parse(savedCodes);
+          const codes = JSON.parse(savedCodes);
+          codes.forEach((item) => {
+            if (!item.hasOwnProperty("showActions")) {
+              this.$set(item, "showActions", false);
+            }
+          });
+          this.packageCodes = codes;
         }
       } catch (e) {
-        formatAppLog("error", "at pages/index/index.vue:116", "读取缓存失败:", e);
+        formatAppLog("error", "at pages/index/index.vue:251", "读取缓存失败:", e);
       }
+      document.addEventListener("click", () => {
+        this.packageCodes.forEach((item) => {
+          if (item.showActions) {
+            item.showActions = false;
+          }
+        });
+        Object.keys(this.dateShowActions).forEach((key) => {
+          if (this.dateShowActions[key]) {
+            this.$set(this.dateShowActions, key, false);
+          }
+        });
+      });
     },
     methods: {
       saveToStorage() {
         try {
           uni.setStorageSync("packageCodes", JSON.stringify(this.packageCodes));
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:124", "保存缓存失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:274", "保存缓存失败:", e);
+        }
+      },
+      vibrateShort() {
+        if (uni.getSystemInfoSync().platform !== "web") {
+          uni.vibrateShort({
+            success: function() {
+              formatAppLog("log", "at pages/index/index.vue:282", "震动成功");
+            },
+            fail: function() {
+              formatAppLog("log", "at pages/index/index.vue:285", "震动失败");
+            }
+          });
         }
       },
       addCode() {
+        this.vibrateShort();
         if (!this.newCode)
           return;
         const newCode = this.newCode.replace(/\s/g, "");
@@ -1157,18 +1198,27 @@ if (uni.restoreGlobal) {
           });
           return;
         }
-        this.packageCodes.unshift({
-          code: newCode,
-          date: (/* @__PURE__ */ new Date()).toLocaleString(),
-          isPicked: false
-        });
+        const now = (/* @__PURE__ */ new Date()).toLocaleString();
+        const newItem = {
+          code: this.newCode.replace(/\s/g, ""),
+          date: now,
+          sendDate: now,
+          company: "手动添加",
+          address: "手动添加",
+          isPicked: false,
+          showActions: false
+          // 添加 showActions 属性
+        };
+        this.packageCodes.unshift(newItem);
         this.saveToStorage();
         this.newCode = "";
       },
       editCode(item) {
+        this.vibrateShort();
         this.editingItem = item;
         this.editingCode = item.code;
         this.showEditDialog = true;
+        item.showActions = false;
       },
       handleEditConfirm(value) {
         if (!this.editingItem)
@@ -1198,24 +1248,18 @@ if (uni.restoreGlobal) {
         this.editingCode = "";
       },
       deleteCode(item) {
-        uni.showModal({
-          title: "确认删除",
-          content: "是否删除该取件码?",
-          success: (res) => {
-            if (res.confirm) {
-              const index = this.packageCodes.indexOf(item);
-              this.packageCodes.splice(index, 1);
-              this.saveToStorage();
-            }
-          }
-        });
+        this.vibrateShort();
+        const newPackageCodes = this.packageCodes.filter((code) => code !== item);
+        this.$set(this, "packageCodes", newPackageCodes);
+        this.saveToStorage();
       },
       togglePicked(item) {
+        this.vibrateShort();
         item.isPicked = !item.isPicked;
         this.saveToStorage();
       },
-      getPendingCount(group) {
-        return group.filter((item) => !item.isPicked).length;
+      getPendingCount(addressGroups) {
+        return Object.values(addressGroups).flat().filter((item) => !item.isPicked).length;
       },
       getTextBeforeNumber(str) {
         return str.split(/\d+/)[0];
@@ -1235,13 +1279,18 @@ if (uni.restoreGlobal) {
         return code;
       },
       async readSms() {
+        this.vibrateShort();
         let that = this;
-        var result = await permision.requestAndroidPermission("android.permission.READ_SMS");
+        var result = await permision.requestAndroidPermission(
+          "android.permission.READ_SMS"
+        );
         var msgList = [];
         if (result == 1) {
           var main = plus.android.runtimeMainActivity();
           var Uri = plus.android.importClass("android.net.Uri");
-          plus.android.importClass("android.provider.ContactsContract");
+          plus.android.importClass(
+            "android.provider.ContactsContract"
+          );
           var uri = Uri.parse("content://sms/");
           var cr = main.getContentResolver();
           plus.android.importClass(cr);
@@ -1251,34 +1300,41 @@ if (uni.restoreGlobal) {
           uni.showLoading({
             title: "匹配短信記錄中.."
           });
-          let newdata = (/* @__PURE__ */ new Date()).getTime();
-          let fiveMinsAgo = newdata - 1 * 24 * 60 * 60 * 1e3;
-          var selection = "date > " + fiveMinsAgo;
-          var cur = cr.query(uri, null, selection, null, null);
-          while (cur.moveToNext()) {
-            let newObj = {};
-            var index_Address = cur.getColumnIndex("address");
-            var address = cur.getString(index_Address);
-            newObj.telphone = address;
-            var index_Body = cur.getColumnIndex("body");
-            var body = cur.getString(index_Body);
-            newObj.content = body;
-            var index_Type = cur.getColumnIndex("type");
-            var type = cur.getString(index_Type);
-            newObj.type = type == 1 ? "接收" : "發送";
-            var smsDate = cur.getString(cur.getColumnIndex("date"));
-            smsDate = parseTime(smsDate);
-            newObj.sendDate = smsDate;
-            let extractInfo = that.extractInfoStrict(body);
-            newObj.code = extractInfo.code;
-            if (body.includes("兔喜生活") || body.includes("递管家")) {
-              msgList.push(newObj);
+          try {
+            let newdata = (/* @__PURE__ */ new Date()).getTime();
+            let fiveMinsAgo = newdata - that.readDayCount * 24 * 60 * 60 * 1e3;
+            var selection = "date > " + fiveMinsAgo;
+            var cur = cr.query(uri, null, selection, null, null);
+            while (cur.moveToNext()) {
+              let newObj = {};
+              var index_Address = cur.getColumnIndex("address");
+              var address = cur.getString(index_Address);
+              newObj.telphone = address;
+              var index_Body = cur.getColumnIndex("body");
+              var body = cur.getString(index_Body);
+              newObj.content = body;
+              if (body.includes("兔喜生活") || body.includes("递管家")) {
+                var index_Type = cur.getColumnIndex("type");
+                var type = cur.getString(index_Type);
+                newObj.type = type == 1 ? "接收" : "發送";
+                var smsDate = cur.getString(cur.getColumnIndex("date"));
+                smsDate = parseTime(smsDate);
+                newObj.sendDate = smsDate;
+                let extractInfo = await that.extractInfoStrict(body);
+                newObj.company = extractInfo.company;
+                newObj.address = extractInfo.address;
+                newObj.code = extractInfo.code;
+                msgList.push(newObj);
+              }
             }
+            formatAppLog("log", "at pages/index/index.vue:473", "获取到的数据", JSON.stringify(msgList));
+            that.dyAddCode(msgList);
+            cur.close();
+            uni.hideLoading();
+          } catch (e) {
+            formatAppLog("log", "at pages/index/index.vue:478", "获取短信失败", e);
+            uni.hideLoading();
           }
-          formatAppLog("log", "at pages/index/index.vue:296", "获取到的数据", JSON.stringify(msgList));
-          that.dyAddCode(msgList);
-          cur.close();
-          uni.hideLoading();
         } else {
           uni.showToast({
             title: "请授权读取短信,仅用于匹配取件码",
@@ -1290,21 +1346,26 @@ if (uni.restoreGlobal) {
         }
       },
       extractInfoStrict(text) {
-        const regexDiGuanjia = /(\d{8})/;
-        const regexTuXilife = /凭([^\s]+)来取/;
+        const regexDiGuanjia = /您的([^已]+)已到([^，]+)，(?:请凭取件码|凭取件码|凭码|取件码)(\d{8})(?:到|取|有问题联系)/;
+        const regexTuXilife = /您的([^，]+)包裹已到([^，]+)，凭([^，]+)来取/;
         if (text.includes("递管家")) {
           const matchDiGuanjia = text.match(regexDiGuanjia);
           if (matchDiGuanjia) {
             return {
-              code: matchDiGuanjia[1]
+              company: matchDiGuanjia[1],
+              address: matchDiGuanjia[2],
+              code: matchDiGuanjia[3]
             };
           }
         }
         if (text.includes("兔喜生活")) {
           const matchTuXilife = text.match(regexTuXilife);
           if (matchTuXilife) {
+            formatAppLog("log", "at pages/index/index.vue:514", "兔喜生活匹配结果:", matchTuXilife);
             return {
-              code: matchTuXilife[1]
+              company: matchTuXilife[1],
+              address: matchTuXilife[2],
+              code: matchTuXilife[3]
             };
           }
         }
@@ -1317,144 +1378,381 @@ if (uni.restoreGlobal) {
           if (this.packageCodes.some((i) => i.code === item.code)) {
             continue;
           }
-          this.packageCodes.unshift({
+          const newItem = {
             code: item.code,
             date: new Date(item.sendDate).toLocaleString(),
-            isPicked: false
-          });
+            sendDate: item.sendDate,
+            company: item.company || "",
+            address: item.address || "",
+            isPicked: false,
+            showActions: false
+            // 添加 showActions 属性
+          };
+          this.packageCodes.unshift(newItem);
           this.saveToStorage();
         }
+      },
+      toggleMoreActions(item) {
+        this.vibrateShort();
+        if (!item.hasOwnProperty("showActions")) {
+          this.$set(item, "showActions", false);
+        }
+        this.packageCodes.forEach((code) => {
+          if (code !== item && code.showActions) {
+            this.$set(code, "showActions", false);
+          }
+        });
+        this.$set(item, "showActions", !item.showActions);
+      },
+      toggleDateActions(date) {
+        this.vibrateShort();
+        Object.keys(this.dateShowActions).forEach((key) => {
+          if (key !== date && this.dateShowActions[key]) {
+            this.$set(this.dateShowActions, key, false);
+          }
+        });
+        this.$set(this.dateShowActions, date, !this.dateShowActions[date]);
+      },
+      deleteDate(date, group) {
+        this.vibrateShort();
+        uni.showModal({
+          title: "确认删除",
+          content: `是否删除 ${date} 的所有取件码？`,
+          success: (res) => {
+            if (res.confirm) {
+              this.packageCodes = this.packageCodes.filter((item) => {
+                const itemDate = new Date(item.date);
+                const formattedDate = `${itemDate.getFullYear()}年${itemDate.getMonth() + 1}月${itemDate.getDate()}日`;
+                return formattedDate !== date;
+              });
+              this.saveToStorage();
+              this.$set(this.dateShowActions, date, false);
+            }
+          }
+        });
+      },
+      getCompanyShortName(company) {
+        if (!company)
+          return "";
+        if (/^[a-zA-Z\s]+$/.test(company)) {
+          return company.trim().split(/\s+/)[0].substring(0, 2).toUpperCase();
+        }
+        return company.substring(0, 2);
+      },
+      isLastItem(item) {
+        for (const [date, addressGroups] of Object.entries(this.groupedCodes)) {
+          for (const [address, items] of Object.entries(addressGroups)) {
+            if (items.includes(item) && items.indexOf(item) === items.length - 1) {
+              return true;
+            }
+          }
+        }
+        return false;
+      },
+      clearInput() {
+        this.vibrateShort();
+        this.newCode = "";
       }
     }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_edit_dialog = vue.resolveComponent("edit-dialog");
-    return vue.openBlock(), vue.createElementBlock(
-      vue.Fragment,
-      null,
-      [
-        vue.createElementVNode("view", { class: "page-wrapper" }, [
-          vue.createElementVNode("view", { class: "container" }, [
-            vue.createElementVNode("view", { class: "title" }, "取件码工具"),
-            vue.createCommentVNode(" 输入区域 "),
-            vue.createElementVNode("view", { class: "card" }, [
-              vue.createElementVNode("view", { class: "input-area" }, [
-                vue.withDirectives(vue.createElementVNode(
-                  "input",
-                  {
-                    class: "code-input",
-                    "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.newCode = $event),
-                    type: "number",
-                    placeholder: "请输入取件码"
-                  },
-                  null,
-                  512
-                  /* NEED_PATCH */
-                ), [
-                  [vue.vModelText, $data.newCode]
-                ]),
-                vue.createElementVNode("button", {
-                  class: "add-btn",
-                  onClick: _cache[1] || (_cache[1] = (...args) => $options.addCode && $options.addCode(...args))
-                }, "添加")
-              ])
+    return vue.openBlock(), vue.createElementBlock("view", { class: "page-wrapper" }, [
+      vue.createElementVNode("view", { class: "page-bg" }),
+      vue.createElementVNode("view", { class: "container" }, [
+        vue.createElementVNode("view", { class: "title" }, "取件码工具"),
+        vue.createCommentVNode(" 输入区域 "),
+        vue.createElementVNode("view", { class: "card input-card" }, [
+          vue.createElementVNode("view", { class: "input-area" }, [
+            vue.createElementVNode("view", { class: "input-wrapper" }, [
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "code-input",
+                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.newCode = $event),
+                  type: "number",
+                  placeholder: "请输入取件码"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.newCode]
+              ]),
+              $data.newCode ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "clear-btn",
+                onClick: _cache[1] || (_cache[1] = (...args) => $options.clearInput && $options.clearInput(...args))
+              }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "clear",
+                  size: "14",
+                  color: "#999"
+                })
+              ])) : vue.createCommentVNode("v-if", true)
             ]),
-            vue.createCommentVNode(" 日期显示 "),
-            vue.createCommentVNode(' <view class="card">\r\n        <view class="date-display">\r\n          <text class="date-label">今天是:</text>\r\n          <text class="date">{{ today }}</text>\r\n        </view>\r\n      </view> '),
-            vue.createCommentVNode(" 按日期分组的取件码列表 "),
-            (vue.openBlock(true), vue.createElementBlock(
-              vue.Fragment,
-              null,
-              vue.renderList($options.groupedCodes, (group, date) => {
-                return vue.openBlock(), vue.createElementBlock("view", {
-                  key: date,
-                  class: "card code-card"
-                }, [
-                  vue.createElementVNode("view", { class: "card-header" }, [
+            vue.createElementVNode("button", {
+              class: "add-btn",
+              onClick: _cache[2] || (_cache[2] = (...args) => $options.addCode && $options.addCode(...args))
+            }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "plusempty",
+                size: "18",
+                color: "#fff"
+              }),
+              vue.createElementVNode("text", null, "添加")
+            ]),
+            vue.createElementVNode("button", {
+              class: "read-sms-btn",
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.readSms && $options.readSms(...args))
+            }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "refresh",
+                size: "18",
+                color: "#1673ff"
+              }),
+              vue.createElementVNode("text", null, "自动匹配")
+            ])
+          ])
+        ]),
+        vue.createCommentVNode(" 日期显示 "),
+        vue.createCommentVNode(' <view class="card">\r\n        <view class="date-display">\r\n          <text class="date-label">今天是:</text>\r\n          <text class="date">{{ today }}</text>\r\n        </view>\r\n      </view> '),
+        vue.createCommentVNode(" 按日期分组的取件码列表 "),
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($options.groupedCodes, (dateGroup, date) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              key: date,
+              class: "card code-card"
+            }, [
+              vue.createElementVNode("view", { class: "card-header" }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "card-title" },
+                  vue.toDisplayString(date),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode("view", { class: "header-right" }, [
+                  vue.createElementVNode("text", { class: "card-extra" }, [
                     vue.createElementVNode(
                       "text",
-                      { class: "card-title" },
-                      vue.toDisplayString(date),
+                      { class: "pending-count" },
+                      vue.toDisplayString($options.getPendingCount(dateGroup)),
                       1
                       /* TEXT */
                     ),
-                    vue.createElementVNode("text", { class: "card-extra" }, [
-                      vue.createElementVNode(
-                        "text",
-                        { class: "pending-count" },
-                        vue.toDisplayString($options.getPendingCount(group)),
-                        1
-                        /* TEXT */
-                      ),
-                      vue.createElementVNode("text", null, "个待取件")
-                    ])
+                    vue.createElementVNode("text", null, "个待取件")
                   ]),
-                  vue.createElementVNode("view", { class: "code-list" }, [
-                    (vue.openBlock(true), vue.createElementBlock(
-                      vue.Fragment,
-                      null,
-                      vue.renderList(group, (item, index) => {
-                        return vue.openBlock(), vue.createElementBlock("view", {
-                          class: "code-item",
-                          key: index
+                  vue.createCommentVNode(" 添加日期卡片的更多操作按钮 "),
+                  vue.createElementVNode("view", { class: "date-more-actions" }, [
+                    vue.createElementVNode("view", {
+                      class: "more-btn",
+                      onClick: vue.withModifiers(($event) => $options.toggleDateActions(date), ["stop"])
+                    }, [
+                      vue.createElementVNode("view", { class: "dots" }, [
+                        vue.createElementVNode("view", { class: "dot" }),
+                        vue.createElementVNode("view", { class: "dot" }),
+                        vue.createElementVNode("view", { class: "dot" })
+                      ])
+                    ], 8, ["onClick"]),
+                    vue.createCommentVNode(" 日期卡片的操作菜单 "),
+                    $data.dateShowActions[date] ? (vue.openBlock(), vue.createElementBlock(
+                      "view",
+                      {
+                        key: 0,
+                        class: vue.normalizeClass(["action-menu", { "menu-up": $options.isLastItem(dateGroup) }])
+                      },
+                      [
+                        vue.createElementVNode("view", {
+                          class: "action-item delete",
+                          onClick: vue.withModifiers(($event) => $options.deleteDate(date, dateGroup), ["stop"])
                         }, [
-                          vue.createElementVNode("checkbox", {
-                            class: "checkbox",
-                            checked: item.isPicked,
-                            onClick: ($event) => $options.togglePicked(item)
-                          }, null, 8, ["checked", "onClick"]),
-                          vue.createElementVNode(
-                            "text",
-                            {
-                              class: vue.normalizeClass(["code-text", { picked: item.isPicked }])
-                            },
-                            vue.toDisplayString($options.formatCode(item.code)),
-                            3
-                            /* TEXT, CLASS */
-                          ),
-                          vue.createElementVNode("view", { class: "actions" }, [
-                            vue.createVNode(_component_uni_icons, {
-                              type: "compose",
-                              size: "20",
-                              onClick: ($event) => $options.editCode(item)
-                            }, null, 8, ["onClick"]),
-                            vue.createVNode(_component_uni_icons, {
-                              type: "trash",
-                              size: "20",
-                              color: "#ff5a5f",
-                              onClick: ($event) => $options.deleteCode(item)
-                            }, null, 8, ["onClick"])
-                          ])
-                        ]);
-                      }),
-                      128
-                      /* KEYED_FRAGMENT */
-                    ))
+                          vue.createVNode(_component_uni_icons, {
+                            type: "trash",
+                            size: "16"
+                          }),
+                          vue.createElementVNode("text", null, "删除")
+                        ], 8, ["onClick"])
+                      ],
+                      2
+                      /* CLASS */
+                    )) : vue.createCommentVNode("v-if", true)
                   ])
-                ]);
-              }),
-              128
-              /* KEYED_FRAGMENT */
-            ))
-          ]),
-          vue.createElementVNode("button", {
-            onClick: _cache[2] || (_cache[2] = (...args) => $options.readSms && $options.readSms(...args))
-          }, "读取短信")
-        ]),
-        vue.createCommentVNode(" 添加 Dialog 组件 "),
-        vue.createVNode(_component_edit_dialog, {
-          show: $data.showEditDialog,
-          "onUpdate:show": _cache[3] || (_cache[3] = ($event) => $data.showEditDialog = $event),
-          value: $data.editingCode,
-          onConfirm: $options.handleEditConfirm
-        }, null, 8, ["show", "value", "onConfirm"])
-      ],
-      64
-      /* STABLE_FRAGMENT */
-    );
+                ])
+              ]),
+              vue.createElementVNode("view", { class: "code-list" }, [
+                vue.createCommentVNode(" 按地址分组显示 "),
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList(dateGroup, (items, address) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      key: address,
+                      class: "address-group"
+                    }, [
+                      vue.createElementVNode("view", { class: "address-header" }, [
+                        vue.createElementVNode("image", {
+                          class: "address-icon",
+                          src: $data.yizhanIcon,
+                          mode: "aspectFit"
+                        }, null, 8, ["src"]),
+                        vue.createElementVNode(
+                          "text",
+                          { class: "address-text" },
+                          vue.toDisplayString(address),
+                          1
+                          /* TEXT */
+                        )
+                      ]),
+                      (vue.openBlock(true), vue.createElementBlock(
+                        vue.Fragment,
+                        null,
+                        vue.renderList(items, (item, index) => {
+                          return vue.openBlock(), vue.createElementBlock("view", {
+                            class: "code-item",
+                            key: index
+                          }, [
+                            vue.createElementVNode(
+                              "view",
+                              {
+                                class: vue.normalizeClass(["code-content", { picked: item.isPicked }])
+                              },
+                              [
+                                vue.createElementVNode("view", { class: "code-main" }, [
+                                  vue.createElementVNode(
+                                    "view",
+                                    {
+                                      class: vue.normalizeClass(["company-icon", { picked: item.isPicked }])
+                                    },
+                                    vue.toDisplayString($options.getCompanyShortName(item.company)),
+                                    3
+                                    /* TEXT, CLASS */
+                                  ),
+                                  vue.createElementVNode("view", { class: "code-info" }, [
+                                    vue.createElementVNode(
+                                      "view",
+                                      { class: "code-text" },
+                                      vue.toDisplayString($options.formatCode(item.code)),
+                                      1
+                                      /* TEXT */
+                                    ),
+                                    vue.createElementVNode(
+                                      "view",
+                                      {
+                                        class: vue.normalizeClass(["code-desc", { picked: item.isPicked }])
+                                      },
+                                      [
+                                        vue.createElementVNode(
+                                          "text",
+                                          null,
+                                          vue.toDisplayString(item.sendDate ? item.sendDate.split(" ")[1] : "") + " 进站",
+                                          1
+                                          /* TEXT */
+                                        )
+                                      ],
+                                      2
+                                      /* CLASS */
+                                    )
+                                  ])
+                                ])
+                              ],
+                              2
+                              /* CLASS */
+                            ),
+                            vue.createElementVNode("view", { class: "right-actions" }, [
+                              vue.createCommentVNode(" 已取按钮 "),
+                              vue.createElementVNode("view", {
+                                class: vue.normalizeClass(["picked-btn", { "is-picked": item.isPicked }]),
+                                onClick: ($event) => $options.togglePicked(item)
+                              }, [
+                                vue.createElementVNode(
+                                  "text",
+                                  null,
+                                  vue.toDisplayString(item.isPicked ? "已取" : "取件"),
+                                  1
+                                  /* TEXT */
+                                ),
+                                item.isPicked ? (vue.openBlock(), vue.createElementBlock("text", {
+                                  key: 0,
+                                  class: "picked-icon"
+                                }, "✓")) : vue.createCommentVNode("v-if", true)
+                              ], 10, ["onClick"]),
+                              vue.createCommentVNode(" 更多操作按钮 "),
+                              vue.createElementVNode("view", { class: "more-actions" }, [
+                                vue.createElementVNode("view", {
+                                  class: "more-btn",
+                                  onClick: vue.withModifiers(($event) => $options.toggleMoreActions(item), ["stop"])
+                                }, [
+                                  vue.createElementVNode("view", { class: "dots" }, [
+                                    vue.createElementVNode("view", { class: "dot" }),
+                                    vue.createElementVNode("view", { class: "dot" }),
+                                    vue.createElementVNode("view", { class: "dot" })
+                                  ])
+                                ], 8, ["onClick"]),
+                                vue.createCommentVNode(" 操作菜单 "),
+                                item.showActions ? (vue.openBlock(), vue.createElementBlock(
+                                  "view",
+                                  {
+                                    key: 0,
+                                    class: vue.normalizeClass(["action-menu", { "menu-up": $options.isLastItem(item) }])
+                                  },
+                                  [
+                                    vue.createElementVNode("view", {
+                                      class: "action-item",
+                                      onClick: vue.withModifiers(($event) => $options.editCode(item), ["stop"])
+                                    }, [
+                                      vue.createVNode(_component_uni_icons, {
+                                        type: "compose",
+                                        size: "16"
+                                      }),
+                                      vue.createElementVNode("text", null, "修改")
+                                    ], 8, ["onClick"]),
+                                    vue.createElementVNode("view", {
+                                      class: "action-item delete",
+                                      onClick: vue.withModifiers(($event) => $options.deleteCode(item), ["stop"])
+                                    }, [
+                                      vue.createVNode(_component_uni_icons, {
+                                        type: "trash",
+                                        size: "16"
+                                      }),
+                                      vue.createElementVNode("text", null, "删除")
+                                    ], 8, ["onClick"])
+                                  ],
+                                  2
+                                  /* CLASS */
+                                )) : vue.createCommentVNode("v-if", true)
+                              ])
+                            ])
+                          ]);
+                        }),
+                        128
+                        /* KEYED_FRAGMENT */
+                      ))
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ])
+            ]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ]),
+      vue.createCommentVNode(" 添加 Dialog 组件 "),
+      vue.createVNode(_component_edit_dialog, {
+        show: $data.showEditDialog,
+        "onUpdate:show": _cache[4] || (_cache[4] = ($event) => $data.showEditDialog = $event),
+        value: $data.editingCode,
+        onConfirm: $options.handleEditConfirm
+      }, null, 8, ["show", "value", "onConfirm"])
+    ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "E:/A0MyCodes/pick-up-code-app/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   const _sfc_main = {
     onLaunch: function() {
@@ -1468,7 +1766,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:11", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "E:/A0MyCodes/pick-up-code-app/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/mygitee/项目大全/pickUpCode/取件码/App.vue"]]);
   function createApp() {
     const app = vue.createVueApp(App);
     return {
