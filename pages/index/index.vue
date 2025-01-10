@@ -411,76 +411,76 @@ export default {
       return code;
     },
     async readSms() {
-      this.vibrateShort(); // 添加震动
+      this.vibrateShort();
       let that = this;
       var result = await permision.requestAndroidPermission(
         "android.permission.READ_SMS"
       );
       var msgList = [];
       if (result == 1) {
-        //获得短信内容
         var main = plus.android.runtimeMainActivity();
         var Uri = plus.android.importClass("android.net.Uri");
-        var ContactsContract = plus.android.importClass(
-          "android.provider.ContactsContract"
-        );
         var uri = Uri.parse("content://sms/");
         var cr = main.getContentResolver();
         plus.android.importClass(cr);
-        var cur = cr.query(uri, null, null, null, null);
-        plus.android.importClass(cur);
-        cur.moveToFirst();
 
         uni.showLoading({
           title: "匹配短信記錄中..",
         });
 
         try {
-          // 这一块设置了拿到当前时间的前五分钟，默认是获取全部的短信信息
-          // 小米系统默认拿到的不是全部短信信息，需要在权限中开启"通知类短信"这个权限才能拿到全部
-          let newdata = new Date().getTime();
-          // 拿到当天的短信
-          let fiveMinsAgo = newdata - that.readDayCount * 24 * 60 * 60 * 1000;
-          var selection = "date > " + fiveMinsAgo;
+          // 获取4天前的凌晨时间
+          const now = new Date();
+          const fourDaysAgo = new Date(now);
+          fourDaysAgo.setDate(now.getDate() - this.readDayCount);
+          fourDaysAgo.setHours(0, 0, 1, 0); // 设置为凌晨 00:00:01
+
+          // 转换为时间戳
+          const startTime = fourDaysAgo.getTime();
+          
+          // 设置查询条件
+          var selection = "date > " + startTime;
           var cur = cr.query(uri, null, selection, null, null);
+          plus.android.importClass(cur); // 导入游标类
 
-          while (cur.moveToNext()) {
-            let newObj = {};
-            // 发送人号码
-            var index_Address = cur.getColumnIndex("address");
-            var address = cur.getString(index_Address);
-            newObj.telphone = address;
+          if (cur.moveToFirst()) { // 移动到第一条记录
+            do {
+              let newObj = {};
+              // 发送人号码
+              var index_Address = cur.getColumnIndex("address");
+              var address = cur.getString(index_Address);
+              newObj.telphone = address;
 
-            //短信内容
-            var index_Body = cur.getColumnIndex("body");
-            var body = cur.getString(index_Body);
-            newObj.content = body;
-            // console.log('短信内容:' + body);
+              //短信内容
+              var index_Body = cur.getColumnIndex("body");
+              var body = cur.getString(index_Body);
+              newObj.content = body;
 
-            if (body.includes("兔喜生活") || body.includes("递管家")) {
-              //短信类型1接收 2发送
-              var index_Type = cur.getColumnIndex("type");
-              var type = cur.getString(index_Type);
-              newObj.type = type == 1 ? "接收" : "發送";
+              if (body.includes("兔喜生活") || body.includes("递管家")) {
+                //短信类型1接收 2发送
+                var index_Type = cur.getColumnIndex("type");
+                var type = cur.getString(index_Type);
+                newObj.type = type == 1 ? "接收" : "發送";
 
-              // 发送日期
-              var smsDate = cur.getString(cur.getColumnIndex("date"));
-              smsDate = parseTime(smsDate);
-              newObj.sendDate = smsDate;
+                // 发送日期
+                var smsDate = cur.getString(cur.getColumnIndex("date"));
+                smsDate = parseTime(smsDate);
+                newObj.sendDate = smsDate;
 
-              // 匹配取件码
-              let extractInfo = await that.extractInfoStrict(body);
-              newObj.company = extractInfo.company;
-              newObj.address = extractInfo.address;
-              newObj.code = extractInfo.code;
+                // 匹配取件码
+                let extractInfo = await that.extractInfoStrict(body);
+                newObj.company = extractInfo.company;
+                newObj.address = extractInfo.address;
+                newObj.code = extractInfo.code;
 
-              // 内容包含 兔喜生活、递管家的短信push进来
-              msgList.push(newObj);
-            }
+                // 内容包含 兔喜生活、递管家的短信push进来
+                msgList.push(newObj);
+              }
+            } while (cur.moveToNext());
           }
-          console.log("获取到的数据", JSON.stringify(msgList));
+          
+          cur.close(); // 关闭游标
           that.dyAddCode(msgList);
-          cur.close();
           uni.hideLoading();
         } catch (e) {
           console.log("获取短信失败", e);
@@ -596,10 +596,9 @@ export default {
               return formattedDate !== date;
             });
             this.saveToStorage();
-            
-            // 关闭操作菜单
-            this.$set(this.dateShowActions, date, false);
           }
+
+          this.$set(this.dateShowActions, date, false);
         }
       });
     },
@@ -683,7 +682,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, #0052d9 0%, #e8f1ff 40%);
+  background: linear-gradient(180deg, #0052d9 0%, #dce2ed 40%);
   z-index: -1;
 }
 
@@ -834,17 +833,26 @@ export default {
 
 .code-list {
   padding: 20rpx;
-
-  .code-item:not(:last-child) {
-    margin-bottom: 30rpx;
-  }
 }
 
 .code-item {
   display: flex;
   align-items: center;
-  padding: 20rpx 0;
+  padding: 24rpx 0;
   position: relative;
+  
+  &:first-child {
+    padding-top: 10rpx;
+  }
+  
+  &:last-child {
+    padding-bottom: 10rpx;
+  }
+  
+  & + .code-item {
+    border-top: 1rpx solid #f1f1f1;
+    margin-top: 6rpx;
+  }
 }
 
 .code-content {
@@ -1083,7 +1091,7 @@ export default {
 
 .address-group {
   & + .address-group {
-    margin-top: 30rpx;
+    margin-top: 40rpx;
     padding-top: 30rpx;
     border-top: 1rpx solid #eee;
   }
@@ -1106,22 +1114,6 @@ export default {
   
   .address-text {
     flex: 1;
-  }
-}
-
-.code-item {
-  padding: 16rpx 0;
-  
-  &:first-child {
-    padding-top: 0;
-  }
-  
-  &:last-child {
-    padding-bottom: 0;
-  }
-  
-  & + .code-item {
-    border-top: 1rpx solid #f5f5f5;
   }
 }
 </style>

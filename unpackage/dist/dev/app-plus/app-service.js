@@ -1292,48 +1292,47 @@ if (uni.restoreGlobal) {
         if (result == 1) {
           var main = plus.android.runtimeMainActivity();
           var Uri = plus.android.importClass("android.net.Uri");
-          plus.android.importClass(
-            "android.provider.ContactsContract"
-          );
           var uri = Uri.parse("content://sms/");
           var cr = main.getContentResolver();
           plus.android.importClass(cr);
-          var cur = cr.query(uri, null, null, null, null);
-          plus.android.importClass(cur);
-          cur.moveToFirst();
           uni.showLoading({
             title: "匹配短信記錄中.."
           });
           try {
-            let newdata = (/* @__PURE__ */ new Date()).getTime();
-            let fiveMinsAgo = newdata - that.readDayCount * 24 * 60 * 60 * 1e3;
-            var selection = "date > " + fiveMinsAgo;
+            const now = /* @__PURE__ */ new Date();
+            const fourDaysAgo = new Date(now);
+            fourDaysAgo.setDate(now.getDate() - this.readDayCount);
+            fourDaysAgo.setHours(0, 0, 1, 0);
+            const startTime = fourDaysAgo.getTime();
+            var selection = "date > " + startTime;
             var cur = cr.query(uri, null, selection, null, null);
-            while (cur.moveToNext()) {
-              let newObj = {};
-              var index_Address = cur.getColumnIndex("address");
-              var address = cur.getString(index_Address);
-              newObj.telphone = address;
-              var index_Body = cur.getColumnIndex("body");
-              var body = cur.getString(index_Body);
-              newObj.content = body;
-              if (body.includes("兔喜生活") || body.includes("递管家")) {
-                var index_Type = cur.getColumnIndex("type");
-                var type = cur.getString(index_Type);
-                newObj.type = type == 1 ? "接收" : "發送";
-                var smsDate = cur.getString(cur.getColumnIndex("date"));
-                smsDate = parseTime(smsDate);
-                newObj.sendDate = smsDate;
-                let extractInfo = await that.extractInfoStrict(body);
-                newObj.company = extractInfo.company;
-                newObj.address = extractInfo.address;
-                newObj.code = extractInfo.code;
-                msgList.push(newObj);
-              }
+            plus.android.importClass(cur);
+            if (cur.moveToFirst()) {
+              do {
+                let newObj = {};
+                var index_Address = cur.getColumnIndex("address");
+                var address = cur.getString(index_Address);
+                newObj.telphone = address;
+                var index_Body = cur.getColumnIndex("body");
+                var body = cur.getString(index_Body);
+                newObj.content = body;
+                if (body.includes("兔喜生活") || body.includes("递管家")) {
+                  var index_Type = cur.getColumnIndex("type");
+                  var type = cur.getString(index_Type);
+                  newObj.type = type == 1 ? "接收" : "發送";
+                  var smsDate = cur.getString(cur.getColumnIndex("date"));
+                  smsDate = parseTime(smsDate);
+                  newObj.sendDate = smsDate;
+                  let extractInfo = await that.extractInfoStrict(body);
+                  newObj.company = extractInfo.company;
+                  newObj.address = extractInfo.address;
+                  newObj.code = extractInfo.code;
+                  msgList.push(newObj);
+                }
+              } while (cur.moveToNext());
             }
-            formatAppLog("log", "at pages/index/index.vue:481", "获取到的数据", JSON.stringify(msgList));
-            that.dyAddCode(msgList);
             cur.close();
+            that.dyAddCode(msgList);
             uni.hideLoading();
           } catch (e) {
             formatAppLog("log", "at pages/index/index.vue:486", "获取短信失败", e);
@@ -1430,8 +1429,8 @@ if (uni.restoreGlobal) {
                 return formattedDate !== date;
               });
               this.saveToStorage();
-              this.$set(this.dateShowActions, date, false);
             }
+            this.$set(this.dateShowActions, date, false);
           }
         });
       },
@@ -1461,7 +1460,7 @@ if (uni.restoreGlobal) {
         try {
           this.version = plus.runtime.version;
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:640", "获取版本号失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:639", "获取版本号失败:", e);
         }
       }
     }
