@@ -34,7 +34,6 @@
     },
     "popGesture": "close",
     "launchwebview": {
-      "render": "always",
       "id": "1",
       "kernel": "WKWebview"
     },
@@ -101,10 +100,16 @@
     },
     "statusbar": {
       "immersed": "supportedDevice",
-      "style": "light",
+      "style": "dark",
       "background": "#000000"
     },
     "allowsInlineMediaPlayback": true,
+    "safearea": {
+      "background": "#ffffff",
+      "bottom": {
+        "offset": "auto"
+      }
+    },
     "uni-app": {
       "control": "uni-v3",
       "vueVersion": "3",
@@ -118,6 +123,38 @@
       "webView": {
         "minUserAgentVersion": "49.0"
       }
+    },
+    "tabBar": {
+      "position": "bottom",
+      "color": "#999999",
+      "selectedColor": "#1673ff",
+      "borderStyle": "rgba(255,255,255,0.4)",
+      "blurEffect": "none",
+      "fontSize": "10px",
+      "iconWidth": "24px",
+      "spacing": "3px",
+      "height": "50px",
+      "list": [
+        {
+          "pagePath": "pages/index/index",
+          "text": "取件列表",
+          "iconPath": "/static/images/pickup.png",
+          "selectedIconPath": "/static/images/pickup-active.png"
+        },
+        {
+          "pagePath": "pages/packages/index",
+          "text": "包裹记录",
+          "iconPath": "/static/images/package.png",
+          "selectedIconPath": "/static/images/package-active.png"
+        }
+      ],
+      "backgroundColor": "#ffffff",
+      "selectedIndex": 0,
+      "shown": true,
+      "child": [
+        "lauchwebview"
+      ],
+      "selected": 0
     }
   },
   "locale": "auto",

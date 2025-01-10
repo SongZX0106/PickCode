@@ -2,12 +2,29 @@
 	"pages": [{
 		"path": "pages/index/index",
 		"style": {
-			"navigationStyle": "custom",
-			"navigationBarTextStyle": "white"
+			"navigationStyle": "custom"
+		}
+	}, {
+		"path": "pages/packages/index",
+		"style": {
+			"navigationStyle": "custom"
 		}
 	}],
-	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"backgroundColor": "#F8F8F8"
+	"tabBar": {
+		"color": "#999999",
+		"selectedColor": "#1673ff",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "white",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"text": "取件列表",
+			"iconPath": "static/images/pickup.png",
+			"selectedIconPath": "static/images/pickup-active.png"
+		}, {
+			"pagePath": "pages/packages/index",
+			"text": "包裹记录",
+			"iconPath": "static/images/package.png",
+			"selectedIconPath": "static/images/package-active.png"
+		}]
 	}
 }

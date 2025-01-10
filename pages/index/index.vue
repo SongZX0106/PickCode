@@ -1,5 +1,5 @@
 <template>
-  <view class="page-wrapper">
+  <view class="page-wrapper" @click="handlePageClick">
     <view class="page-bg"></view>
 
     <view class="container">
@@ -243,7 +243,6 @@ export default {
       const savedCodes = uni.getStorageSync("packageCodes");
       if (savedCodes) {
         const codes = JSON.parse(savedCodes);
-        // 确保所有项都有 showActions 属性
         codes.forEach(item => {
           if (!item.hasOwnProperty('showActions')) {
             this.$set(item, 'showActions', false);
@@ -254,21 +253,6 @@ export default {
     } catch (e) {
       console.error("读取缓存失败:", e);
     }
-
-    // 添加点击事件监听
-    document.addEventListener("click", () => {
-      this.packageCodes.forEach((item) => {
-        if (item.showActions) {
-          item.showActions = false;
-        }
-      });
-      // 关闭日期操作菜单
-      Object.keys(this.dateShowActions).forEach(key => {
-        if (this.dateShowActions[key]) {
-          this.$set(this.dateShowActions, key, false);
-        }
-      });
-    });
 
     // 获取应用版本号
     this.getAppVersion();
@@ -644,6 +628,20 @@ export default {
       // H5 环境下可以设置一个固定版本号
       this.version = '1.0.0';
       // #endif
+    },
+    handlePageClick() {
+      // 关闭所有打开的菜单
+      this.packageCodes.forEach((item) => {
+        if (item.showActions) {
+          this.$set(item, 'showActions', false);
+        }
+      });
+      // 关闭日期操作菜单
+      Object.keys(this.dateShowActions).forEach(key => {
+        if (this.dateShowActions[key]) {
+          this.$set(this.dateShowActions, key, false);
+        }
+      });
     },
   },
 };
