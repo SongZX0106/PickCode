@@ -146,6 +146,12 @@
           "text": "包裹记录",
           "iconPath": "/static/images/package.png",
           "selectedIconPath": "/static/images/package-active.png"
+        },
+        {
+          "pagePath": "pages/my/index",
+          "text": "我的",
+          "iconPath": "/static/images/my.png",
+          "selectedIconPath": "/static/images/my-active.png"
         }
       ],
       "backgroundColor": "#ffffff",

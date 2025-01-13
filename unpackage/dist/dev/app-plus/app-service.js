@@ -698,7 +698,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$9 = {
+  const _sfc_main$c = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -752,7 +752,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -767,8 +767,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$8 = {
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$b = {
     name: "EditDialog",
     props: {
       show: {
@@ -807,7 +807,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     return $props.show ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       class: "dialog-mask",
@@ -850,7 +850,7 @@ if (uni.restoreGlobal) {
       ])
     ])) : vue.createCommentVNode("v-if", true);
   }
-  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
+  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
   var isIos;
   isIos = plus.os.name == "iOS";
   function judgeIosPermissionPush() {
@@ -1085,7 +1085,7 @@ if (uni.restoreGlobal) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
   const yizhanIcon = "/static/yizhan.png";
-  const _sfc_main$7 = {
+  const _sfc_main$a = {
     components: {
       EditDialog
     },
@@ -1465,7 +1465,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_edit_dialog = vue.resolveComponent("edit-dialog");
     return vue.openBlock(), vue.createElementBlock("view", {
@@ -1768,7 +1768,7 @@ if (uni.restoreGlobal) {
       }, null, 8, ["show", "value", "onConfirm"])
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
   const taobao = "/static/images/taobao.png";
   const jingdong = "/static/images/jd.png";
   const pinduoduo = "/static/images/pinduoduo.png";
@@ -1777,8 +1777,8 @@ if (uni.restoreGlobal) {
   const xiaohongshu = "/static/images/xiaohongshu.png";
   const alibaba = "/static/images/1688.png";
   const other = "/static/images/other.png";
-  const _imports_0 = "/static/images/package-illustration.png";
-  const _sfc_main$6 = {
+  const _imports_0$2 = "/static/images/package-illustration.png";
+  const _sfc_main$9 = {
     data() {
       return {
         version: "1.0.0",
@@ -2044,7 +2044,7 @@ if (uni.restoreGlobal) {
       this.loadData();
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "page-wrapper",
@@ -2055,7 +2055,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "header-illustration" }, [
         vue.createElementVNode("image", {
           class: "illustration",
-          src: _imports_0,
+          src: _imports_0$2,
           mode: "aspectFit"
         })
       ]),
@@ -2246,7 +2246,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "bottom-safe-area" })
     ]);
   }
-  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
+  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
   let Calendar$1 = class Calendar {
     constructor({
       selected,
@@ -2602,7 +2602,7 @@ if (uni.restoreGlobal) {
     }
     return value;
   }
-  const _sfc_main$5 = {
+  const _sfc_main$8 = {
     props: {
       weeks: {
         type: Object,
@@ -2636,7 +2636,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -2692,7 +2692,7 @@ if (uni.restoreGlobal) {
       /* CLASS, NEED_HYDRATION */
     );
   }
-  const calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-3c762a01"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
+  const calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-3c762a01"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -3053,7 +3053,7 @@ if (uni.restoreGlobal) {
   const {
     t: t$1
   } = initVueI18n(i18nMessages);
-  const _sfc_main$4 = {
+  const _sfc_main$7 = {
     name: "UniDatetimePicker",
     data() {
       return {
@@ -3657,7 +3657,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-datetime-picker" }, [
       vue.createElementVNode("view", {
         onClick: _cache[0] || (_cache[0] = (...args) => $options.initTimePicker && $options.initTimePicker(...args))
@@ -3934,11 +3934,11 @@ if (uni.restoreGlobal) {
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-1d532b70"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
+  const TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1d532b70"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
   const {
     t
   } = initVueI18n(i18nMessages);
-  const _sfc_main$3 = {
+  const _sfc_main$6 = {
     components: {
       calendarItem,
       timePicker: TimePicker
@@ -4419,7 +4419,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_calendar_item = vue.resolveComponent("calendar-item");
     const _component_time_picker = vue.resolveComponent("time-picker");
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
@@ -4712,8 +4712,8 @@ if (uni.restoreGlobal) {
       /* NEED_HYDRATION */
     );
   }
-  const Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-1d379219"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
-  const _sfc_main$2 = {
+  const Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-1d379219"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
+  const _sfc_main$5 = {
     name: "UniDatetimePicker",
     options: {
       virtualHost: true
@@ -5369,7 +5369,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_time_picker = vue.resolveComponent("time-picker");
     const _component_Calendar = vue.resolveComponent("Calendar");
@@ -5713,8 +5713,8 @@ if (uni.restoreGlobal) {
       }, null, 8, ["date", "defTime", "start-date", "end-date", "selectableTimes", "startPlaceholder", "endPlaceholder", "default-value", "pleStatus", "range", "hasTime", "hideSecond", "onConfirm", "onMaskClose", "onChange"])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-9802168a"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
-  const _sfc_main$1 = {
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-9802168a"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
+  const _sfc_main$4 = {
     data() {
       return {
         isEdit: false,
@@ -5839,7 +5839,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "page-wrapper" }, [
@@ -5953,10 +5953,727 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPackagesEdit = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/edit.vue"]]);
+  const PagesPackagesEdit = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/edit.vue"]]);
+  const _imports_0$1 = "/static/images/avatar.png";
+  const _sfc_main$3 = {
+    data() {
+      return {
+        version: "1.0.0"
+      };
+    },
+    onLoad(options) {
+      this.getAppVersion();
+    },
+    methods: {
+      navigateTo(url) {
+        uni.navigateTo({
+          url
+        });
+      },
+      handleScan() {
+        uni.scanCode({
+          success: (res) => {
+            formatAppLog("log", "at pages/my/index.vue:77", "扫码结果：", res);
+          }
+        });
+      },
+      getAppVersion() {
+        try {
+          this.version = plus.runtime.version;
+        } catch (e) {
+          formatAppLog("error", "at pages/my/index.vue:88", "获取版本号失败:", e);
+        }
+      }
+    }
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "my-container" }, [
+      vue.createCommentVNode(" 顶部区域 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", { class: "user-info" }, [
+          vue.createElementVNode("image", {
+            class: "avatar",
+            src: _imports_0$1,
+            mode: "aspectFill"
+          }),
+          vue.createElementVNode("text", { class: "nickname" }, "取件码")
+        ]),
+        vue.createElementVNode("view", {
+          class: "scan-btn",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.handleScan && $options.handleScan(...args))
+        }, [
+          vue.createVNode(_component_uni_icons, {
+            type: "scan",
+            size: "24",
+            color: "#fff"
+          })
+        ])
+      ]),
+      vue.createCommentVNode(" 菜单列表 "),
+      vue.createElementVNode("view", { class: "content-wrapper" }, [
+        vue.createElementVNode("view", { class: "menu-list" }, [
+          vue.createElementVNode("view", {
+            class: "menu-item",
+            onClick: _cache[1] || (_cache[1] = ($event) => $options.navigateTo("/pages/my/match-rules"))
+          }, [
+            vue.createElementVNode("view", { class: "menu-left" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "settings",
+                size: "20",
+                color: "#1673ff"
+              }),
+              vue.createElementVNode("text", { class: "menu-text" }, "匹配设置")
+            ]),
+            vue.createVNode(_component_uni_icons, {
+              type: "right",
+              size: "16",
+              color: "#999"
+            })
+          ]),
+          vue.createElementVNode("view", {
+            class: "menu-item",
+            onClick: _cache[2] || (_cache[2] = ($event) => $options.navigateTo("/pages/my/data-export"))
+          }, [
+            vue.createElementVNode("view", { class: "menu-left" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "download",
+                size: "20",
+                color: "#1673ff"
+              }),
+              vue.createElementVNode("text", { class: "menu-text" }, "数据导出")
+            ]),
+            vue.createVNode(_component_uni_icons, {
+              type: "right",
+              size: "16",
+              color: "#999"
+            })
+          ]),
+          vue.createElementVNode("view", {
+            class: "menu-item",
+            onClick: _cache[3] || (_cache[3] = ($event) => $options.navigateTo("/pages/my/faq"))
+          }, [
+            vue.createElementVNode("view", { class: "menu-left" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "help",
+                size: "20",
+                color: "#1673ff"
+              }),
+              vue.createElementVNode("text", { class: "menu-text" }, "常见问题")
+            ]),
+            vue.createVNode(_component_uni_icons, {
+              type: "right",
+              size: "16",
+              color: "#999"
+            })
+          ]),
+          vue.createElementVNode("view", {
+            class: "menu-item",
+            onClick: _cache[4] || (_cache[4] = ($event) => $options.navigateTo("/pages/my/contact"))
+          }, [
+            vue.createElementVNode("view", { class: "menu-left" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "chat",
+                size: "20",
+                color: "#1673ff"
+              }),
+              vue.createElementVNode("text", { class: "menu-text" }, "联系作者")
+            ]),
+            vue.createVNode(_component_uni_icons, {
+              type: "right",
+              size: "16",
+              color: "#999"
+            })
+          ])
+        ]),
+        vue.createElementVNode("view", { class: "version" }, [
+          vue.createElementVNode(
+            "text",
+            null,
+            "v" + vue.toDisplayString($data.version),
+            1
+            /* TEXT */
+          )
+        ])
+      ])
+    ]);
+  }
+  const PagesMyIndex = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/index.vue"]]);
+  const _sfc_main$2 = {
+    data() {
+      return {
+        mode: "add",
+        // add 或 edit
+        ruleId: "",
+        // 编辑时的规则ID
+        ruleName: "",
+        // 规则名称
+        smsContent: "",
+        rules: {
+          code: {
+            start: "",
+            end: ""
+          },
+          express: {
+            start: "",
+            end: ""
+          },
+          address: {
+            start: "",
+            end: ""
+          }
+        },
+        matchResults: {
+          code: "",
+          express: "",
+          address: ""
+        }
+      };
+    },
+    onLoad(options) {
+      this.mode = options.mode || "add";
+      if (this.mode === "edit" && options.id) {
+        this.ruleId = options.id;
+        this.loadRule(options.id);
+      }
+      this.loadRules();
+    },
+    methods: {
+      // 加载单个规则
+      loadRule(id) {
+        const rulesList = JSON.parse(
+          uni.getStorageSync("matchRulesList") || "[]"
+        );
+        const rule = rulesList.find((item) => item.id === id);
+        if (rule) {
+          this.ruleName = rule.name;
+          this.rules = rule.rules;
+          this.smsContent = rule.smsContent || "";
+          this.$nextTick(() => {
+            this.updateMatchResults();
+          });
+        }
+      },
+      // 处理短信输入
+      handleSmsInput() {
+        this.updateMatchResults();
+      },
+      // 处理规则输入变化
+      handleRuleChange() {
+        this.updateMatchResults();
+      },
+      // 更新匹配结果
+      updateMatchResults() {
+        if (!this.smsContent) {
+          this.matchResults = { code: "", express: "", address: "" };
+          return;
+        }
+        Object.keys(this.rules).forEach((key) => {
+          const rule = this.rules[key];
+          if (rule.start && rule.end) {
+            const startIndex = this.smsContent.indexOf(rule.start);
+            const endIndex = this.smsContent.indexOf(
+              rule.end,
+              startIndex + rule.start.length
+            );
+            if (startIndex !== -1 && endIndex !== -1) {
+              this.matchResults[key] = this.smsContent.substring(startIndex + rule.start.length, endIndex).trim();
+            } else {
+              this.matchResults[key] = "";
+            }
+          } else {
+            this.matchResults[key] = "";
+          }
+        });
+      },
+      // 保存设置
+      handleSave() {
+        if (!this.ruleName.trim()) {
+          uni.showToast({
+            title: "请输入规则名称",
+            icon: "none"
+          });
+          return;
+        }
+        const enabledRules = Object.entries(this.rules).filter(
+          ([_, rule]) => rule.start && rule.end
+        );
+        if (enabledRules.length === 0) {
+          uni.showToast({
+            title: "请至少设置一个有效的匹配规则",
+            icon: "none"
+          });
+          return;
+        }
+        const hasMatchError = enabledRules.some(([key, _]) => !this.matchResults[key]);
+        if (hasMatchError) {
+          uni.showToast({
+            title: "存在匹配失败的规则，请检查",
+            icon: "none"
+          });
+          return;
+        }
+        const rulesList = JSON.parse(
+          uni.getStorageSync("matchRulesList") || "[]"
+        );
+        const ruleData = {
+          id: this.mode === "edit" ? this.ruleId : Date.now().toString(),
+          name: this.ruleName,
+          rules: this.rules,
+          smsContent: this.smsContent,
+          enabled: true,
+          createTime: (/* @__PURE__ */ new Date()).toLocaleString()
+        };
+        if (this.mode === "edit") {
+          const index = rulesList.findIndex((item) => item.id === this.ruleId);
+          if (index !== -1) {
+            rulesList[index] = ruleData;
+          }
+        } else {
+          rulesList.push(ruleData);
+        }
+        uni.setStorageSync("matchRulesList", JSON.stringify(rulesList));
+        uni.showToast({
+          title: "保存成功",
+          icon: "success",
+          complete: () => {
+            setTimeout(() => {
+              uni.navigateBack();
+            }, 1e3);
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "match-settings" }, [
+      vue.createCommentVNode(" 规则名称输入区 "),
+      vue.createElementVNode("view", { class: "input-section" }, [
+        vue.createElementVNode("text", { class: "section-title" }, "规则名称"),
+        vue.withDirectives(vue.createElementVNode(
+          "input",
+          {
+            class: "rule-name-input",
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.ruleName = $event),
+            placeholder: "请输入规则名称",
+            type: "text"
+          },
+          null,
+          512
+          /* NEED_PATCH */
+        ), [
+          [vue.vModelText, $data.ruleName]
+        ])
+      ]),
+      vue.createCommentVNode(" 短信内容输入区 "),
+      vue.createElementVNode("view", { class: "input-section" }, [
+        vue.createElementVNode("text", { class: "section-title" }, "短信内容"),
+        vue.createElementVNode("text", { class: "section-desc" }, "请输入完整的短信内容，然后设置匹配规则"),
+        vue.withDirectives(vue.createElementVNode(
+          "textarea",
+          {
+            class: "sms-input",
+            "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.smsContent = $event),
+            placeholder: "请输入完整的短信内容",
+            maxlength: -1,
+            onInput: _cache[2] || (_cache[2] = (...args) => $options.handleSmsInput && $options.handleSmsInput(...args))
+          },
+          null,
+          544
+          /* NEED_HYDRATION, NEED_PATCH */
+        ), [
+          [vue.vModelText, $data.smsContent]
+        ])
+      ]),
+      vue.createCommentVNode(" 匹配规则设置区 "),
+      vue.createElementVNode("view", { class: "rules-section" }, [
+        vue.createElementVNode("view", { class: "rules-desc" }, [
+          vue.createElementVNode("text", null, "设置规则说明："),
+          vue.createElementVNode("text", null, "1. 输入要匹配内容的前后文字"),
+          vue.createElementVNode("text", null, "2. 系统将自动提取这两段文字之间的内容"),
+          vue.createElementVNode("text", null, "3. 例如：取件码123456领取，可以输入 取件码 和 领取")
+        ]),
+        vue.createCommentVNode(" 取件码设置 "),
+        vue.createElementVNode("view", { class: "rule-item" }, [
+          vue.createElementVNode("view", { class: "rule-header" }, [
+            vue.createElementVNode("text", { class: "rule-title" }, "取件码")
+          ]),
+          vue.createElementVNode("view", { class: "rule-content" }, [
+            vue.createElementVNode("view", { class: "rule-inputs" }, [
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.rules.code.start = $event),
+                  placeholder: "起始文字",
+                  onInput: _cache[4] || (_cache[4] = (...args) => $options.handleRuleChange && $options.handleRuleChange(...args))
+                },
+                null,
+                544
+                /* NEED_HYDRATION, NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.rules.code.start]
+              ]),
+              vue.createElementVNode("text", null, "至"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.rules.code.end = $event),
+                  placeholder: "结束文字",
+                  onInput: _cache[6] || (_cache[6] = (...args) => $options.handleRuleChange && $options.handleRuleChange(...args))
+                },
+                null,
+                544
+                /* NEED_HYDRATION, NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.rules.code.end]
+              ])
+            ]),
+            $data.rules.code.start && $data.rules.code.end ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "match-result"
+            }, [
+              $data.matchResults.code ? (vue.openBlock(), vue.createElementBlock(
+                vue.Fragment,
+                { key: 0 },
+                [
+                  vue.createTextVNode(" 匹配结果："),
+                  vue.createElementVNode(
+                    "text",
+                    { class: "result-text success" },
+                    vue.toDisplayString($data.matchResults.code),
+                    1
+                    /* TEXT */
+                  )
+                ],
+                64
+                /* STABLE_FRAGMENT */
+              )) : (vue.openBlock(), vue.createElementBlock("text", {
+                key: 1,
+                class: "result-text error"
+              }, "匹配失败，请检查规则设置"))
+            ])) : vue.createCommentVNode("v-if", true)
+          ])
+        ]),
+        vue.createCommentVNode(" 快递名称设置 "),
+        vue.createElementVNode("view", { class: "rule-item" }, [
+          vue.createElementVNode("view", { class: "rule-header" }, [
+            vue.createElementVNode("text", { class: "rule-title" }, "快递名称")
+          ]),
+          vue.createElementVNode("view", { class: "rule-content" }, [
+            vue.createElementVNode("view", { class: "rule-inputs" }, [
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.rules.express.start = $event),
+                  placeholder: "起始文字",
+                  onInput: _cache[8] || (_cache[8] = (...args) => $options.handleRuleChange && $options.handleRuleChange(...args))
+                },
+                null,
+                544
+                /* NEED_HYDRATION, NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.rules.express.start]
+              ]),
+              vue.createElementVNode("text", null, "至"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.rules.express.end = $event),
+                  placeholder: "结束文字",
+                  onInput: _cache[10] || (_cache[10] = (...args) => $options.handleRuleChange && $options.handleRuleChange(...args))
+                },
+                null,
+                544
+                /* NEED_HYDRATION, NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.rules.express.end]
+              ])
+            ]),
+            $data.rules.express.start && $data.rules.express.end ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "match-result"
+            }, [
+              $data.matchResults.express ? (vue.openBlock(), vue.createElementBlock(
+                vue.Fragment,
+                { key: 0 },
+                [
+                  vue.createTextVNode(" 匹配结果："),
+                  vue.createElementVNode(
+                    "text",
+                    { class: "result-text success" },
+                    vue.toDisplayString($data.matchResults.express),
+                    1
+                    /* TEXT */
+                  )
+                ],
+                64
+                /* STABLE_FRAGMENT */
+              )) : (vue.openBlock(), vue.createElementBlock("text", {
+                key: 1,
+                class: "result-text error"
+              }, "匹配失败，请检查规则设置"))
+            ])) : vue.createCommentVNode("v-if", true)
+          ])
+        ]),
+        vue.createCommentVNode(" 地址设置 "),
+        vue.createElementVNode("view", { class: "rule-item" }, [
+          vue.createElementVNode("view", { class: "rule-header" }, [
+            vue.createElementVNode("text", { class: "rule-title" }, "地址")
+          ]),
+          vue.createElementVNode("view", { class: "rule-content" }, [
+            vue.createElementVNode("view", { class: "rule-inputs" }, [
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => $data.rules.address.start = $event),
+                  placeholder: "起始文字",
+                  onInput: _cache[12] || (_cache[12] = (...args) => $options.handleRuleChange && $options.handleRuleChange(...args))
+                },
+                null,
+                544
+                /* NEED_HYDRATION, NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.rules.address.start]
+              ]),
+              vue.createElementVNode("text", null, "至"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => $data.rules.address.end = $event),
+                  placeholder: "结束文字",
+                  onInput: _cache[14] || (_cache[14] = (...args) => $options.handleRuleChange && $options.handleRuleChange(...args))
+                },
+                null,
+                544
+                /* NEED_HYDRATION, NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.rules.address.end]
+              ])
+            ]),
+            $data.rules.address.start && $data.rules.address.end ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "match-result"
+            }, [
+              $data.matchResults.address ? (vue.openBlock(), vue.createElementBlock(
+                vue.Fragment,
+                { key: 0 },
+                [
+                  vue.createTextVNode(" 匹配结果："),
+                  vue.createElementVNode(
+                    "text",
+                    { class: "result-text success" },
+                    vue.toDisplayString($data.matchResults.address),
+                    1
+                    /* TEXT */
+                  )
+                ],
+                64
+                /* STABLE_FRAGMENT */
+              )) : (vue.openBlock(), vue.createElementBlock("text", {
+                key: 1,
+                class: "result-text error"
+              }, "匹配失败，请检查规则设置"))
+            ])) : vue.createCommentVNode("v-if", true)
+          ])
+        ])
+      ]),
+      vue.createCommentVNode(" 保存按钮 "),
+      vue.createElementVNode("view", { class: "btn-section" }, [
+        vue.createElementVNode("button", {
+          class: "save-btn",
+          onClick: _cache[15] || (_cache[15] = (...args) => $options.handleSave && $options.handleSave(...args))
+        }, "保存设置")
+      ])
+    ]);
+  }
+  const PagesMyMatchSettings = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-settings.vue"]]);
+  const _imports_0 = "/static/images/empty.png";
+  const _sfc_main$1 = {
+    data() {
+      return {
+        rulesList: []
+      };
+    },
+    onShow() {
+      this.loadRulesList();
+    },
+    methods: {
+      // 格式化日期
+      formatDate(date) {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${year}年${month}月${day}日`;
+      },
+      // 处理规则启用状态变化
+      handleStatusChange(index, event) {
+        const enabled = event.detail.value;
+        this.rulesList[index].enabled = enabled;
+        uni.setStorageSync("matchRulesList", JSON.stringify(this.rulesList));
+        uni.showToast({
+          title: enabled ? "规则已启用" : "规则已禁用",
+          icon: "none"
+        });
+      },
+      // 加载规则列表
+      loadRulesList() {
+        const savedRules = uni.getStorageSync("matchRulesList") || "[]";
+        const rules = JSON.parse(savedRules);
+        this.rulesList = rules.map((rule) => ({
+          ...rule,
+          enabled: rule.enabled !== void 0 ? rule.enabled : true,
+          createTime: this.formatDate(rule.createTime)
+        }));
+      },
+      // 添加规则
+      handleAdd() {
+        uni.navigateTo({
+          url: "/pages/my/match-settings?mode=add"
+        });
+      },
+      // 编辑规则
+      handleEdit(rule) {
+        if (!rule.enabled) {
+          uni.showToast({
+            title: "请先启用该规则",
+            icon: "none"
+          });
+          return;
+        }
+        uni.navigateTo({
+          url: `/pages/my/match-settings?mode=edit&id=${rule.id}`
+        });
+      },
+      // 删除规则
+      handleDelete(index) {
+        uni.showModal({
+          title: "提示",
+          content: "确定要删除这条规则吗？",
+          success: (res) => {
+            if (res.confirm) {
+              this.rulesList.splice(index, 1);
+              uni.setStorageSync("matchRulesList", JSON.stringify(this.rulesList));
+              uni.showToast({
+                title: "删除成功",
+                icon: "success"
+              });
+            }
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "match-rules" }, [
+      vue.createCommentVNode(" 规则列表 "),
+      $data.rulesList.length > 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "rules-list"
+      }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.rulesList, (rule, index) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              class: "rule-card",
+              key: index
+            }, [
+              vue.createElementVNode("view", { class: "rule-info" }, [
+                vue.createElementVNode("view", { class: "rule-header" }, [
+                  vue.createElementVNode(
+                    "view",
+                    { class: "rule-name" },
+                    vue.toDisplayString(rule.name),
+                    1
+                    /* TEXT */
+                  ),
+                  vue.createElementVNode("switch", {
+                    checked: rule.enabled,
+                    onChange: (e) => $options.handleStatusChange(index, e),
+                    color: "#0052d9"
+                  }, null, 40, ["checked", "onChange"])
+                ]),
+                vue.createElementVNode(
+                  "view",
+                  { class: "rule-time" },
+                  "添加时间 " + vue.toDisplayString(rule.createTime),
+                  1
+                  /* TEXT */
+                )
+              ]),
+              vue.createElementVNode("view", { class: "rule-actions" }, [
+                vue.createElementVNode("view", {
+                  class: "action-btn edit",
+                  onClick: ($event) => $options.handleEdit(rule)
+                }, [
+                  vue.createVNode(_component_uni_icons, {
+                    type: "compose",
+                    size: "18",
+                    color: "#0052d9"
+                  }),
+                  vue.createElementVNode("text", null, "编辑")
+                ], 8, ["onClick"]),
+                vue.createElementVNode("view", {
+                  class: "action-btn delete",
+                  onClick: ($event) => $options.handleDelete(index)
+                }, [
+                  vue.createVNode(_component_uni_icons, {
+                    type: "trash",
+                    size: "18",
+                    color: "#ff4d4f"
+                  }),
+                  vue.createElementVNode("text", null, "删除")
+                ], 8, ["onClick"])
+              ])
+            ]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ])) : (vue.openBlock(), vue.createElementBlock(
+        vue.Fragment,
+        { key: 1 },
+        [
+          vue.createCommentVNode(" 空状态 "),
+          vue.createElementVNode("view", { class: "empty-state" }, [
+            vue.createElementVNode("image", {
+              src: _imports_0,
+              mode: "aspectFit"
+            }),
+            vue.createElementVNode("text", null, "暂无匹配规则")
+          ])
+        ],
+        2112
+        /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+      )),
+      vue.createCommentVNode(" 添加按钮 "),
+      vue.createElementVNode("view", {
+        class: "add-btn",
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.handleAdd && $options.handleAdd(...args))
+      }, [
+        vue.createVNode(_component_uni_icons, {
+          type: "plusempty",
+          size: "24",
+          color: "#fff"
+        })
+      ])
+    ]);
+  }
+  const PagesMyMatchRules = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-rules.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/packages/index", PagesPackagesIndex);
   __definePage("pages/packages/edit", PagesPackagesEdit);
+  __definePage("pages/my/index", PagesMyIndex);
+  __definePage("pages/my/match-settings", PagesMyMatchSettings);
+  __definePage("pages/my/match-rules", PagesMyMatchRules);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("warn", "at App.vue:4", "当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！");

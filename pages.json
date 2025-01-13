@@ -1,43 +1,74 @@
 {
-	"pages": [{
-		"path": "pages/index/index",
-		"style": {
-			"navigationStyle": "custom"
-		}
-	}, {
-		"path": "pages/packages/index",
-		"style": {
-			"navigationStyle": "custom"
-		}
-	}, {
-		"path": "pages/packages/edit",
-		"style": {
-			"navigationBarTitleText": "添加包裹"
-		}
-	}],
-	"tabBar": {
-		"color": "#999999",
-		"selectedColor": "#1673ff",
-		"backgroundColor": "#ffffff",
-		"borderStyle": "white",
-		"list": [{
-			"pagePath": "pages/index/index",
-			"text": "取件列表",
-			"iconPath": "static/images/pickup.png",
-			"selectedIconPath": "static/images/pickup-active.png"
-		}, {
-			"pagePath": "pages/packages/index",
-			"text": "包裹记录",
-			"iconPath": "static/images/package.png",
-			"selectedIconPath": "static/images/package-active.png"
-		}]
-	},
-	"globalStyle": {
-		"pageAnimation": true,
-		"app-plus": {
-			"animationType": "slide-in-right",
-			"animationDuration": 300,
-			"bounce": "none"
-		}
-	}
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/packages/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/packages/edit",
+      "style": {
+        "navigationBarTitleText": "添加包裹"
+      }
+    },
+    {
+      "path": "pages/my/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/my/match-settings",
+      "style": {
+        "navigationBarTitleText": "匹配设置"
+      }
+    },
+    {
+      "path": "pages/my/match-rules",
+      "style": {
+        "navigationBarTitleText": "匹配规则"
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1673ff",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "取件列表",
+        "iconPath": "static/images/pickup.png",
+        "selectedIconPath": "static/images/pickup-active.png"
+      },
+      {
+        "pagePath": "pages/packages/index",
+        "text": "包裹记录",
+        "iconPath": "static/images/package.png",
+        "selectedIconPath": "static/images/package-active.png"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的",
+        "iconPath": "static/images/my.png",
+        "selectedIconPath": "static/images/my-active.png"
+      }
+    ]
+  },
+  "globalStyle": {
+    "pageAnimation": true,
+    "app-plus": {
+      "animationType": "slide-in-right",
+      "animationDuration": 300,
+      "bounce": "none"
+    }
+  }
 }
