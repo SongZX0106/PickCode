@@ -45,6 +45,22 @@
             placeholder="请输入价格"
           />
         </view>
+
+        <!-- 添加日期选择 -->
+        <view class="form-item">
+          <text class="label">日期</text>
+          <uni-datetime-picker
+            type="date"
+            v-model="formData.date"
+            :border="false"
+            @change="handleDateChange"
+          >
+            <view class="date-picker">
+              <text class="date-text">{{ formatDate(formData.date) }}</text>
+              <uni-icons type="calendar" size="16" color="#666" />
+            </view>
+          </uni-datetime-picker>
+        </view>
       </view>
 
       <!-- 底部按钮 -->
@@ -74,6 +90,7 @@ export default {
         price: "",
         time: "",
         checked: false,
+        date: new Date().toISOString().split('T')[0],
       },
       platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
       taobao,
@@ -129,6 +146,14 @@ export default {
       };
       return icons[platform] || this.other;
     },
+    formatDate(dateStr) {
+      const [year, month, day] = dateStr.split('-');
+      return `${year}年${parseInt(month)}月${parseInt(day)}日`;
+    },
+    handleDateChange(value) {
+      this.formData.date = value;
+      this.vibrateShort();
+    },
     submitForm() {
       if (!this.formData.name) {
         uni.showToast({
@@ -149,7 +174,8 @@ export default {
             name: this.formData.name,
             price: this.formData.price,
             time: this.formData.time,
-            checked: this.formData.checked
+            checked: this.formData.checked,
+            date: this.formData.date,
           },
           isEdit: this.isEdit,
           editDate: this.editDate,
@@ -295,6 +321,40 @@ $theme-light: rgba(0, 82, 217, 0.1);
 
   &:active {
     background: #0049c6;
+  }
+}
+
+// 添加日期选择器样式
+.date-picker {
+  height: 80rpx;
+  border: 1rpx solid #eee;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  background: #f8f9fc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  .date-text {
+    font-size: 28rpx;
+    color: #333;
+  }
+  
+  &:active {
+    background: #f0f0f0;
+  }
+}
+
+// 覆盖 uni-datetime-picker 默认样式
+::v-deep .uni-date {
+  width: 100%;
+  
+  .uni-date-editor {
+    width: 100%;
+  }
+  
+  .uni-date__x-input {
+    display: none;
   }
 }
 </style> 

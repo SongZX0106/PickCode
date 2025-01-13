@@ -267,45 +267,69 @@ export default {
       const packageData = {
         ...data,
         price: data.price || '0.00',
-        platformIcon, // 使用获取到的图标
+        platformIcon,
         showActions: false
       };
 
       if (isEdit) {
         // 编辑模式
-        const dateGroup = this.tableData.find(group => group.date === editDate);
-        if (dateGroup && editIndex !== -1) {
-          this.$set(dateGroup.list, editIndex, packageData);
+        if (editDate === data.date) {
+          // 如果日期没变，直接修改原位置的数据
+          const dateGroup = this.tableData.find(group => group.date === editDate);
+          if (dateGroup && editIndex !== -1) {
+            this.$set(dateGroup.list, editIndex, packageData);
+          }
+        } else {
+          // 如果日期变了，需要删除原数据并在新日期添加
+          // 1. 删除原数据
+          const oldDateGroup = this.tableData.find(group => group.date === editDate);
+          if (oldDateGroup && editIndex !== -1) {
+            oldDateGroup.list.splice(editIndex, 1);
+            // 如果该日期没有数据了，删除整个日期组
+            if (oldDateGroup.list.length === 0) {
+              const index = this.tableData.findIndex(group => group.date === editDate);
+              if (index !== -1) {
+                this.tableData.splice(index, 1);
+              }
+            }
+          }
+
+          // 2. 在新日期添加数据
+          let newDateGroup = this.tableData.find(group => group.date === data.date);
+          if (!newDateGroup) {
+            newDateGroup = {
+              date: data.date,
+              list: []
+            };
+            // 按日期顺序插入
+            const index = this.tableData.findIndex(group => group.date < data.date);
+            if (index === -1) {
+              this.tableData.push(newDateGroup);
+            } else {
+              this.tableData.splice(index, 0, newDateGroup);
+            }
+          }
+          newDateGroup.list.unshift(packageData);
         }
       } else {
         // 添加模式
-        const now = new Date();
-        const today = now.toISOString().split('T')[0];
-        
-        let dateGroup = this.tableData.find(group => group.date === today);
+        let dateGroup = this.tableData.find(group => group.date === data.date);
         
         if (!dateGroup) {
           dateGroup = {
-            date: today,
+            date: data.date,
             list: []
           };
-          this.tableData.unshift(dateGroup);
+          // 按日期顺序插入
+          const index = this.tableData.findIndex(group => group.date < data.date);
+          if (index === -1) {
+            this.tableData.push(dateGroup);
+          } else {
+            this.tableData.splice(index, 0, dateGroup);
+          }
         }
 
         dateGroup.list.unshift(packageData);
-
-        // 等待DOM更新后滚动到新添加的内容
-        this.$nextTick(() => {
-          const query = uni.createSelectorQuery();
-          query.select('.timeline').boundingClientRect(data => {
-            if (data) {
-              uni.pageScrollTo({
-                scrollTop: data.top,
-                duration: 300
-              });
-            }
-          }).exec();
-        });
       }
 
       this.saveData();

@@ -4,7 +4,7 @@
 
     <view class="container">
       <view class="title-wrapper">
-        <text class="title">取件码工具</text>
+        <text class="title">取件列表</text>
       </view>
       
       <!-- 输入区域 -->
