@@ -1270,100 +1270,95 @@ if (uni.restoreGlobal) {
         }
         return code;
       },
+      // 使用匹配规则提取信息
+      extractInfoByRules(content) {
+        const info = {
+          code: "",
+          express: "",
+          address: ""
+        };
+        const rulesList = JSON.parse(uni.getStorageSync("matchRulesList") || "[]");
+        const enabledRule = rulesList.find((rule) => rule.enabled);
+        if (!enabledRule) {
+          return info;
+        }
+        Object.keys(enabledRule.rules).forEach((key) => {
+          const rule = enabledRule.rules[key];
+          if (rule.start && rule.end) {
+            const startIndex = content.indexOf(rule.start);
+            const endIndex = content.indexOf(rule.end, startIndex + rule.start.length);
+            if (startIndex !== -1 && endIndex !== -1) {
+              info[key] = content.substring(startIndex + rule.start.length, endIndex).trim();
+            }
+          }
+        });
+        return info;
+      },
+      // 读取短信
       async readSms() {
         this.vibrateShort();
-        let that = this;
-        var result = await permision.requestAndroidPermission(
-          "android.permission.READ_SMS"
-        );
-        var msgList = [];
-        if (result == 1) {
-          var main = plus.android.runtimeMainActivity();
-          var Uri = plus.android.importClass("android.net.Uri");
-          var uri = Uri.parse("content://sms/");
-          var cr = main.getContentResolver();
-          plus.android.importClass(cr);
-          uni.showLoading({
-            title: "匹配短信記錄中.."
-          });
-          try {
-            const now = /* @__PURE__ */ new Date();
-            const fourDaysAgo = new Date(now);
-            fourDaysAgo.setDate(now.getDate() - this.readDayCount);
-            fourDaysAgo.setHours(0, 0, 1, 0);
-            const startTime = fourDaysAgo.getTime();
-            var selection = "date > " + startTime;
-            var cur = cr.query(uri, null, selection, null, null);
-            plus.android.importClass(cur);
-            if (cur.moveToFirst()) {
-              do {
-                let newObj = {};
-                var index_Address = cur.getColumnIndex("address");
-                var address = cur.getString(index_Address);
-                newObj.telphone = address;
-                var index_Body = cur.getColumnIndex("body");
-                var body = cur.getString(index_Body);
-                newObj.content = body;
-                if (body.includes("兔喜生活") || body.includes("递管家")) {
-                  var index_Type = cur.getColumnIndex("type");
-                  var type = cur.getString(index_Type);
-                  newObj.type = type == 1 ? "接收" : "發送";
+        if (plus.os.name === "Android") {
+          var result = await permision.requestAndroidPermission("android.permission.READ_SMS");
+          if (result == 1) {
+            var main = plus.android.runtimeMainActivity();
+            var Uri = plus.android.importClass("android.net.Uri");
+            var uri = Uri.parse("content://sms/");
+            var cr = main.getContentResolver();
+            plus.android.importClass(cr);
+            uni.showLoading({
+              title: "匹配短信记录中.."
+            });
+            try {
+              const now = /* @__PURE__ */ new Date();
+              const fourDaysAgo = new Date(now);
+              fourDaysAgo.setDate(now.getDate() - this.readDayCount);
+              fourDaysAgo.setHours(0, 0, 1, 0);
+              const startTime = fourDaysAgo.getTime();
+              var selection = "date > " + startTime;
+              var cur = cr.query(uri, null, selection, null, null);
+              plus.android.importClass(cur);
+              if (cur.moveToFirst()) {
+                let msgList = [];
+                do {
+                  let newObj = {};
+                  var index_Address = cur.getColumnIndex("address");
+                  var address = cur.getString(index_Address);
+                  newObj.telphone = address;
+                  var index_Body = cur.getColumnIndex("body");
+                  var body = cur.getString(index_Body);
+                  newObj.content = body;
                   var smsDate = cur.getString(cur.getColumnIndex("date"));
                   smsDate = parseTime(smsDate);
                   newObj.sendDate = smsDate;
-                  let extractInfo = await that.extractInfoStrict(body);
-                  newObj.company = extractInfo.company;
-                  newObj.address = extractInfo.address;
-                  newObj.code = extractInfo.code;
-                  msgList.push(newObj);
-                }
-              } while (cur.moveToNext());
+                  let extractInfo = this.extractInfoByRules(body);
+                  if (extractInfo.code) {
+                    newObj.code = extractInfo.code;
+                    newObj.company = extractInfo.express || "未知快递";
+                    newObj.address = extractInfo.address || "未知地址";
+                    msgList.push(newObj);
+                  }
+                } while (cur.moveToNext());
+                this.dyAddCode(msgList);
+              }
+              cur.close();
+              uni.hideLoading();
+            } catch (e) {
+              formatAppLog("error", "at pages/index/index.vue:496", "获取短信失败", e);
+              uni.hideLoading();
+              uni.showToast({
+                title: "读取短信失败",
+                icon: "none"
+              });
             }
-            cur.close();
-            that.dyAddCode(msgList);
-            uni.hideLoading();
-          } catch (e) {
-            formatAppLog("log", "at pages/index/index.vue:469", "获取短信失败", e);
-            uni.hideLoading();
+          } else {
+            uni.showToast({
+              title: "请授权读取短信权限",
+              icon: "none"
+            });
           }
-        } else {
-          uni.showToast({
-            title: "请授权读取短信,仅用于匹配取件码",
-            icon: "none"
-          });
-          setTimeout(() => {
-            uni.hideToast();
-          }, 3e3);
         }
       },
-      extractInfoStrict(text) {
-        const regexDiGuanjia = /您的([^已]+)已到([^，]+)，(?:请凭取件码|凭取件码|凭码|取件码)(\d{8})(?:到|取|有问题联系)/;
-        const regexTuXilife = /您的([^，]+)包裹已到([^，]+)，凭([^，]+)来取/;
-        if (text.includes("递管家")) {
-          const matchDiGuanjia = text.match(regexDiGuanjia);
-          if (matchDiGuanjia) {
-            return {
-              company: matchDiGuanjia[1],
-              address: matchDiGuanjia[2],
-              code: matchDiGuanjia[3]
-            };
-          }
-        }
-        if (text.includes("兔喜生活")) {
-          const matchTuXilife = text.match(regexTuXilife);
-          if (matchTuXilife) {
-            formatAppLog("log", "at pages/index/index.vue:505", "兔喜生活匹配结果:", matchTuXilife);
-            return {
-              company: matchTuXilife[1],
-              address: matchTuXilife[2],
-              code: matchTuXilife[3]
-            };
-          }
-        }
-        return {
-          code: ""
-        };
-      },
+      // 动态添加取件码
       dyAddCode(msgList) {
         for (let item of msgList) {
           if (this.packageCodes.some((i) => i.code === item.code)) {
@@ -1373,14 +1368,19 @@ if (uni.restoreGlobal) {
             code: item.code,
             date: new Date(item.sendDate).toLocaleString(),
             sendDate: item.sendDate,
-            company: item.company || "",
-            address: item.address || "",
+            company: item.company,
+            address: item.address,
             isPicked: false,
             showActions: false
-            // 添加 showActions 属性
           };
           this.packageCodes.unshift(newItem);
           this.saveToStorage();
+        }
+        if (msgList.length === 0) {
+          uni.showToast({
+            title: "暂无匹配结果",
+            icon: "none"
+          });
         }
       },
       toggleMoreActions(item) {
@@ -1448,7 +1448,7 @@ if (uni.restoreGlobal) {
         try {
           this.version = plus.runtime.version;
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:622", "获取版本号失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:624", "获取版本号失败:", e);
         }
       },
       handlePageClick() {

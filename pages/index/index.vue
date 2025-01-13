@@ -393,128 +393,123 @@ export default {
       }
       return code;
     },
+    // 使用匹配规则提取信息
+    extractInfoByRules(content) {
+      const info = {
+        code: '',
+        express: '',
+        address: ''
+      };
+
+      // 获取启用的匹配规则
+      const rulesList = JSON.parse(uni.getStorageSync('matchRulesList') || '[]');
+      const enabledRule = rulesList.find(rule => rule.enabled);
+      
+      if (!enabledRule) {
+        return info;
+      }
+
+      // 使用规则进行匹配
+      Object.keys(enabledRule.rules).forEach(key => {
+        const rule = enabledRule.rules[key];
+        if (rule.start && rule.end) {
+          const startIndex = content.indexOf(rule.start);
+          const endIndex = content.indexOf(rule.end, startIndex + rule.start.length);
+          
+          if (startIndex !== -1 && endIndex !== -1) {
+            info[key] = content.substring(startIndex + rule.start.length, endIndex).trim();
+          }
+        }
+      });
+
+      return info;
+    },
+    // 读取短信
     async readSms() {
       this.vibrateShort();
-      let that = this;
-      var result = await permision.requestAndroidPermission(
-        "android.permission.READ_SMS"
-      );
-      var msgList = [];
-      if (result == 1) {
-        var main = plus.android.runtimeMainActivity();
-        var Uri = plus.android.importClass("android.net.Uri");
-        var uri = Uri.parse("content://sms/");
-        var cr = main.getContentResolver();
-        plus.android.importClass(cr);
+      
+      // #ifdef APP-PLUS
+      if (plus.os.name === 'Android') {
+        let that = this;
+        var result = await permision.requestAndroidPermission("android.permission.READ_SMS");
+        if (result == 1) {
+          var main = plus.android.runtimeMainActivity();
+          var Uri = plus.android.importClass("android.net.Uri");
+          var uri = Uri.parse("content://sms/");
+          var cr = main.getContentResolver();
+          plus.android.importClass(cr);
 
-        uni.showLoading({
-          title: "匹配短信記錄中..",
-        });
+          uni.showLoading({
+            title: "匹配短信记录中..",
+          });
 
-        try {
-          // 获取4天前的凌晨时间
-          const now = new Date();
-          const fourDaysAgo = new Date(now);
-          fourDaysAgo.setDate(now.getDate() - this.readDayCount);
-          fourDaysAgo.setHours(0, 0, 1, 0); // 设置为凌晨 00:00:01
+          try {
+            // 获取4天前的凌晨时间
+            const now = new Date();
+            const fourDaysAgo = new Date(now);
+            fourDaysAgo.setDate(now.getDate() - this.readDayCount);
+            fourDaysAgo.setHours(0, 0, 1, 0); // 设置为凌晨 00:00:01
 
-          // 转换为时间戳
-          const startTime = fourDaysAgo.getTime();
-          
-          // 设置查询条件
-          var selection = "date > " + startTime;
-          var cur = cr.query(uri, null, selection, null, null);
-          plus.android.importClass(cur); // 导入游标类
+            // 转换为时间戳
+            const startTime = fourDaysAgo.getTime();
+            
+            // 设置查询条件
+            var selection = "date > " + startTime;
+            var cur = cr.query(uri, null, selection, null, null);
+            plus.android.importClass(cur);
 
-          if (cur.moveToFirst()) { // 移动到第一条记录
-            do {
-              let newObj = {};
-              // 发送人号码
-              var index_Address = cur.getColumnIndex("address");
-              var address = cur.getString(index_Address);
-              newObj.telphone = address;
+            if (cur.moveToFirst()) {
+              let msgList = [];
+              do {
+                let newObj = {};
+                // 发送人号码
+                var index_Address = cur.getColumnIndex("address");
+                var address = cur.getString(index_Address);
+                newObj.telphone = address;
 
-              //短信内容
-              var index_Body = cur.getColumnIndex("body");
-              var body = cur.getString(index_Body);
-              newObj.content = body;
-
-              if (body.includes("兔喜生活") || body.includes("递管家")) {
-                //短信类型1接收 2发送
-                var index_Type = cur.getColumnIndex("type");
-                var type = cur.getString(index_Type);
-                newObj.type = type == 1 ? "接收" : "發送";
+                //短信内容
+                var index_Body = cur.getColumnIndex("body");
+                var body = cur.getString(index_Body);
+                newObj.content = body;
 
                 // 发送日期
                 var smsDate = cur.getString(cur.getColumnIndex("date"));
                 smsDate = parseTime(smsDate);
                 newObj.sendDate = smsDate;
 
-                // 匹配取件码
-                let extractInfo = await that.extractInfoStrict(body);
-                newObj.company = extractInfo.company;
-                newObj.address = extractInfo.address;
-                newObj.code = extractInfo.code;
+                // 匹配信息
+                let extractInfo = this.extractInfoByRules(body);
+                if (extractInfo.code) {
+                  newObj.code = extractInfo.code;
+                  newObj.company = extractInfo.express || '未知快递';
+                  newObj.address = extractInfo.address || '未知地址';
+                  msgList.push(newObj);
+                }
+              } while (cur.moveToNext());
 
-                // 内容包含 兔喜生活、递管家的短信push进来
-                msgList.push(newObj);
-              }
-            } while (cur.moveToNext());
+              // 添加到列表
+              this.dyAddCode(msgList);
+            }
+            cur.close();
+            uni.hideLoading();
+          } catch (e) {
+            console.error("获取短信失败", e);
+            uni.hideLoading();
+            uni.showToast({
+              title: "读取短信失败",
+              icon: "none"
+            });
           }
-          
-          cur.close(); // 关闭游标
-          that.dyAddCode(msgList);
-          uni.hideLoading();
-        } catch (e) {
-          console.log("获取短信失败", e);
-          uni.hideLoading();
+        } else {
+          uni.showToast({
+            title: "请授权读取短信权限",
+            icon: "none",
+          });
         }
-      } else {
-        uni.showToast({
-          title: "请授权读取短信,仅用于匹配取件码",
-          icon: "none",
-        });
-        setTimeout(() => {
-          uni.hideToast();
-        }, 3000);
       }
+      // #endif
     },
-    extractInfoStrict(text) {
-      // 定义递管家的正则表达式，支持更多快递公司名称和取件码描述方式
-      const regexDiGuanjia =
-        /您的([^已]+)已到([^，]+)，(?:请凭取件码|凭取件码|凭码|取件码)(\d{8})(?:到|取|有问题联系)/;
-      // 定义兔喜生活的正则表达式
-      const regexTuXilife = /您的([^，]+)包裹已到([^，]+)，凭([^，]+)来取/;
-
-      if (text.includes("递管家")) {
-        // 尝试匹配递管家的通知
-        const matchDiGuanjia = text.match(regexDiGuanjia);
-        if (matchDiGuanjia) {
-          return {
-            company: matchDiGuanjia[1],
-            address: matchDiGuanjia[2],
-            code: matchDiGuanjia[3],
-          };
-        }
-      }
-
-      if (text.includes("兔喜生活")) {
-        // 尝试匹配兔喜生活的通知
-        const matchTuXilife = text.match(regexTuXilife);
-        if (matchTuXilife) {
-          console.log("兔喜生活匹配结果:", matchTuXilife);
-          return {
-            company: matchTuXilife[1],
-            address: matchTuXilife[2],
-            code: matchTuXilife[3],
-          };
-        }
-      }
-
-      return {
-        code: "",
-      };
-    },
+    // 动态添加取件码
     dyAddCode(msgList) {
       for (let item of msgList) {
         if (this.packageCodes.some((i) => i.code === item.code)) {
@@ -524,13 +519,20 @@ export default {
           code: item.code,
           date: new Date(item.sendDate).toLocaleString(),
           sendDate: item.sendDate,
-          company: item.company || '',
-          address: item.address || '',
+          company: item.company,
+          address: item.address,
           isPicked: false,
-          showActions: false, // 添加 showActions 属性
+          showActions: false,
         };
         this.packageCodes.unshift(newItem);
         this.saveToStorage();
+      }
+      
+      if (msgList.length === 0) {
+        uni.showToast({
+          title: "暂无匹配结果",
+          icon: "none"
+        });
       }
     },
     toggleMoreActions(item) {
