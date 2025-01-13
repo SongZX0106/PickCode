@@ -1814,22 +1814,6 @@ if (uni.restoreGlobal) {
           });
         });
         this.$set(item, "showActions", !item.showActions);
-        if (item.showActions) {
-          this.$nextTick(() => {
-            const query = uni.createSelectorQuery();
-            query.select(".more-btn").boundingClientRect((btnData) => {
-              if (btnData) {
-                query.select(".action-menu").boundingClientRect((menuData) => {
-                  if (menuData) {
-                    this.menuStyle = {
-                      right: "25px"
-                    };
-                  }
-                }).exec();
-              }
-            }).exec();
-          });
-        }
       },
       showAddPackage() {
         this.vibrateShort();
@@ -1847,6 +1831,13 @@ if (uni.restoreGlobal) {
             index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
           })
         );
+        this.tableData.forEach((group) => {
+          group.list.forEach((item2) => {
+            if (item2.showActions) {
+              this.$set(item2, "showActions", false);
+            }
+          });
+        });
         uni.navigateTo({
           url: "/pages/packages/edit?type=edit"
         });
@@ -1865,7 +1856,7 @@ if (uni.restoreGlobal) {
         try {
           uni.removeStorageSync("packageData");
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:249", "清除缓存失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:231", "清除缓存失败:", e);
         }
       },
       confirmDeleteDateGroup(date) {
@@ -1990,7 +1981,7 @@ if (uni.restoreGlobal) {
         try {
           uni.setStorageSync("packageData", JSON.stringify(this.tableData));
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:390", "保存数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:372", "保存数据失败:", e);
         }
       },
       loadData() {
@@ -2000,7 +1991,7 @@ if (uni.restoreGlobal) {
             this.tableData = JSON.parse(data);
           }
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:400", "读取数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:382", "读取数据失败:", e);
         }
       },
       toggleCheck(item) {
@@ -2031,9 +2022,20 @@ if (uni.restoreGlobal) {
       vibrateShort() {
         uni.vibrateShort({
           success: function() {
-            formatAppLog("log", "at pages/packages/index.vue:438", "振动成功");
+            formatAppLog("log", "at pages/packages/index.vue:420", "振动成功");
           }
         });
+      },
+      isLastItem(item) {
+        const query = uni.createSelectorQuery();
+        let isUp = false;
+        query.select(".goods-actions").boundingClientRect((data) => {
+          if (data) {
+            const windowHeight = uni.getSystemInfoSync().windowHeight;
+            isUp = windowHeight - data.bottom < 300;
+          }
+        }).exec();
+        return isUp;
       }
     },
     created() {
@@ -2168,8 +2170,7 @@ if (uni.restoreGlobal) {
                                   "view",
                                   {
                                     key: 0,
-                                    class: "action-menu",
-                                    style: vue.normalizeStyle($data.menuStyle)
+                                    class: vue.normalizeClass(["action-menu", { "menu-up": $options.isLastItem(list) }])
                                   },
                                   [
                                     vue.createElementVNode("view", {
@@ -2184,7 +2185,7 @@ if (uni.restoreGlobal) {
                                       vue.createElementVNode("text", null, "修改")
                                     ], 8, ["onClick"]),
                                     vue.createElementVNode("view", {
-                                      class: "action-item",
+                                      class: "action-item delete",
                                       onClick: vue.withModifiers(($event) => $options.deletePackage(list, item.date), ["stop"])
                                     }, [
                                       vue.createVNode(_component_uni_icons, {
@@ -2195,8 +2196,8 @@ if (uni.restoreGlobal) {
                                       vue.createElementVNode("text", { style: { "color": "#ff0000" } }, "删除")
                                     ], 8, ["onClick"])
                                   ],
-                                  4
-                                  /* STYLE */
+                                  2
+                                  /* CLASS */
                                 )) : vue.createCommentVNode("v-if", true)
                               ])
                             ]);

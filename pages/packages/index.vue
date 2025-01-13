@@ -88,7 +88,7 @@
                   <view
                     class="action-menu"
                     v-if="list.showActions"
-                    :style="menuStyle"
+                    :class="{ 'menu-up': isLastItem(list) }"
                   >
                     <view
                       class="action-item"
@@ -98,7 +98,7 @@
                       <text>修改</text>
                     </view>
                     <view
-                      class="action-item"
+                      class="action-item delete"
                       @click.stop="deletePackage(list, item.date)"
                     >
                       <uni-icons type="trash" size="16" color="#ff0000" />
@@ -180,32 +180,6 @@ export default {
 
       // 切换当前菜单
       this.$set(item, "showActions", !item.showActions);
-
-      // 如果是打开菜单，计算菜单位置
-      if (item.showActions) {
-        this.$nextTick(() => {
-          const query = uni.createSelectorQuery();
-          query
-            .select(".more-btn")
-            .boundingClientRect((btnData) => {
-              if (btnData) {
-                // 获取菜单高度
-                query
-                  .select(".action-menu")
-                  .boundingClientRect((menuData) => {
-                    if (menuData) {
-                      // 直接设置位置，不需要透明度过渡
-                      this.menuStyle = {
-                        right: "25px",
-                      };
-                    }
-                  })
-                  .exec();
-              }
-            })
-            .exec();
-        });
-      }
     },
     showAddPackage() {
       this.vibrateShort();
@@ -225,6 +199,14 @@ export default {
             .list.findIndex((i) => i === item),
         })
       );
+      // 关闭菜单栏
+      this.tableData.forEach((group) => {
+        group.list.forEach((item) => {
+          if (item.showActions) {
+            this.$set(item, "showActions", false);
+          }
+        });
+      });
 
       uni.navigateTo({
         url: "/pages/packages/edit?type=edit",
@@ -439,6 +421,21 @@ export default {
         },
       });
     },
+    isLastItem(item) {
+      // 获取当前元素的位置信息
+      const query = uni.createSelectorQuery();
+      let isUp = false;
+      
+      query.select('.goods-actions').boundingClientRect(data => {
+        if (data) {
+          // 如果按钮距离底部小于300rpx，菜单向上显示
+          const windowHeight = uni.getSystemInfoSync().windowHeight;
+          isUp = windowHeight - data.bottom < 300;
+        }
+      }).exec();
+      
+      return isUp;
+    },
   },
   created() {
     this.loadData();
@@ -494,6 +491,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 .page-wrapper {
   min-height: 100vh;
   position: relative;
+  overflow-x: hidden;
 }
 
 .page-bg {
@@ -507,11 +505,12 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 }
 
 .container {
-  padding: 40rpx 30rpx 20rpx;
+  padding: 40rpx 20rpx 20rpx;
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  width: 100%;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .add-package-btn {
@@ -583,16 +582,6 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   background: #fff;
   border-radius: 16rpx;
   margin-bottom: 20rpx;
-  overflow: hidden;
-}
-
-.card-header {
-  background: #fff;
-  padding: 24rpx 30rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1rpx solid #eee;
 }
 
 .card-title {
@@ -623,28 +612,6 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
     padding-top: 24rpx;
     border-top: 1rpx solid #eee;
   }
-}
-
-.platform-header {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  padding: 16rpx 20rpx;
-  background: rgba(0, 82, 217, 0.03);
-  border-bottom: 1rpx solid rgba(0, 82, 217, 0.08);
-}
-
-.platform-icon {
-  width: 32rpx;
-  height: 32rpx;
-  border-radius: 6rpx;
-  margin-right: 12rpx;
-}
-
-.platform-name {
-  font-size: 26rpx;
-  color: #666;
-  font-weight: normal;
 }
 
 .package-item {
@@ -768,28 +735,31 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 // 平台卡片样式
 .platform-cards {
   padding-left: 48rpx;
+  padding-right: 30rpx;
   display: flex;
   flex-direction: column;
   gap: 24rpx;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .platform-card {
   background: #fff;
   border-radius: 12rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.03);
 }
 
 .platform-header {
   padding: 16rpx 20rpx;
-  background: rgba(0, 82, 217, 0.03);
+  background: linear-gradient(to right, #dce8ff, #cde0ff);
   border-bottom: 1rpx solid rgba(0, 82, 217, 0.08);
   display: flex;
   align-items: center;
+  border-top-left-radius: 12rpx;
+  border-top-right-radius: 12rpx;
 
   .platform-icon {
     width: 36rpx;
     height: 36rpx;
-    border-radius: 6rpx;
     margin-right: 12rpx;
   }
 
@@ -810,6 +780,8 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 // 商品列表样式
 .goods-list {
   padding: 0 20rpx;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .goods-item {
@@ -829,12 +801,14 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   gap: 12rpx;
   margin-right: 20rpx;
   min-height: 64rpx;
+  min-width: 0;
 }
 
 .goods-info {
   flex: 1;
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .goods-name {
@@ -843,55 +817,80 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   font-weight: normal;
   line-height: 1.4;
   margin: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .goods-price {
   font-size: 28rpx;
   color: #666;
   font-weight: normal;
-  margin-left: auto;
-  padding-left: 16rpx;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 // 操作按钮样式
 .goods-actions {
   position: relative;
+  flex-shrink: 0;
+  margin-left: auto;
 
+  // 修改操作菜单样式
   .action-menu {
-    position: fixed;
+    position: absolute;
+    top: calc(100% + 10rpx); // 默认显示在下方
+    bottom: auto;
+    right: 0;
     width: 160rpx;
     background: #fff;
     border-radius: 12rpx;
     box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
     z-index: 100;
     overflow: hidden;
-    transform-origin: top right;
+    
+    &.menu-up {
+      top: auto;
+      bottom: calc(100% + 10rpx); // 向上显示
+      
+      &::before {
+        top: auto;
+        bottom: -6rpx;
+        box-shadow: 2rpx 2rpx 5rpx rgba(0, 0, 0, 0.05);
+      }
+    }
+    
+    &::before {
+      content: "";
+      position: absolute;
+      top: -6rpx;
+      bottom: auto;
+      right: 10rpx;
+      width: 12rpx;
+      height: 12rpx;
+      background: #fff;
+      transform: rotate(45deg);
+      box-shadow: -2rpx -2rpx 5rpx rgba(0, 0, 0, 0.05);
+    }
 
     .action-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8rpx;
-      padding: 20rpx 16rpx;
+      gap: 10rpx;
+      padding: 20rpx;
       font-size: 28rpx;
       color: #333;
 
       &:active {
-        background: #f5f5f5;
+        background-color: #f5f5f5;
       }
 
-      &:not(:last-child) {
-        border-bottom: 1rpx solid #eee;
-      }
-
-      text {
-        font-size: 26rpx;
-      }
-
-      .uni-icons {
-        width: 32rpx;
-        display: flex;
-        justify-content: center;
+      &.delete {
+        color: #ff5a5f;
       }
     }
   }
@@ -927,6 +926,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   justify-content: flex-end;
   gap: 4rpx;
   font-size: 28rpx;
+  padding-right: 18px;
 }
 
 .date-delete {
