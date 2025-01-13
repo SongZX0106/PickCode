@@ -9,6 +9,11 @@
 		"style": {
 			"navigationStyle": "custom"
 		}
+	}, {
+		"path": "pages/packages/edit",
+		"style": {
+			"navigationBarTitleText": "添加包裹"
+		}
 	}],
 	"tabBar": {
 		"color": "#999999",

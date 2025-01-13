@@ -698,7 +698,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$6 = {
+  const _sfc_main$5 = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -752,7 +752,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -767,8 +767,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$5 = {
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$4 = {
     name: "EditDialog",
     props: {
       show: {
@@ -807,7 +807,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     return $props.show ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       class: "dialog-mask",
@@ -850,7 +850,7 @@ if (uni.restoreGlobal) {
       ])
     ])) : vue.createCommentVNode("v-if", true);
   }
-  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
+  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
   var isIos;
   isIos = plus.os.name == "iOS";
   function judgeIosPermissionPush() {
@@ -1085,7 +1085,7 @@ if (uni.restoreGlobal) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
   const yizhanIcon = "/static/yizhan.png";
-  const _sfc_main$4 = {
+  const _sfc_main$3 = {
     components: {
       EditDialog
     },
@@ -1147,7 +1147,7 @@ if (uni.restoreGlobal) {
           this.packageCodes = codes;
         }
       } catch (e) {
-        formatAppLog("error", "at pages/index/index.vue:254", "读取缓存失败:", e);
+        formatAppLog("error", "at pages/index/index.vue:253", "读取缓存失败:", e);
       }
       this.getAppVersion();
     },
@@ -1156,17 +1156,17 @@ if (uni.restoreGlobal) {
         try {
           uni.setStorageSync("packageCodes", JSON.stringify(this.packageCodes));
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:265", "保存缓存失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:264", "保存缓存失败:", e);
         }
       },
       vibrateShort() {
         if (uni.getSystemInfoSync().platform !== "web") {
           uni.vibrateShort({
             success: function() {
-              formatAppLog("log", "at pages/index/index.vue:273", "震动成功");
+              formatAppLog("log", "at pages/index/index.vue:272", "震动成功");
             },
             fail: function() {
-              formatAppLog("log", "at pages/index/index.vue:276", "震动失败");
+              formatAppLog("log", "at pages/index/index.vue:275", "震动失败");
             }
           });
         }
@@ -1323,7 +1323,7 @@ if (uni.restoreGlobal) {
             that.dyAddCode(msgList);
             uni.hideLoading();
           } catch (e) {
-            formatAppLog("log", "at pages/index/index.vue:470", "获取短信失败", e);
+            formatAppLog("log", "at pages/index/index.vue:469", "获取短信失败", e);
             uni.hideLoading();
           }
         } else {
@@ -1352,7 +1352,7 @@ if (uni.restoreGlobal) {
         if (text.includes("兔喜生活")) {
           const matchTuXilife = text.match(regexTuXilife);
           if (matchTuXilife) {
-            formatAppLog("log", "at pages/index/index.vue:506", "兔喜生活匹配结果:", matchTuXilife);
+            formatAppLog("log", "at pages/index/index.vue:505", "兔喜生活匹配结果:", matchTuXilife);
             return {
               company: matchTuXilife[1],
               address: matchTuXilife[2],
@@ -1448,7 +1448,7 @@ if (uni.restoreGlobal) {
         try {
           this.version = plus.runtime.version;
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:623", "获取版本号失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:622", "获取版本号失败:", e);
         }
       },
       handlePageClick() {
@@ -1465,8 +1465,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_edit_dialog = vue.resolveComponent("edit-dialog");
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "page-wrapper",
@@ -1475,14 +1475,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "page-bg" }),
       vue.createElementVNode("view", { class: "container" }, [
         vue.createElementVNode("view", { class: "title-wrapper" }, [
-          vue.createElementVNode("text", { class: "title" }, "取件码工具"),
-          vue.createElementVNode(
-            "text",
-            { class: "version-text" },
-            "V" + vue.toDisplayString($data.version),
-            1
-            /* TEXT */
-          )
+          vue.createElementVNode("text", { class: "title" }, "取件码工具")
         ]),
         vue.createCommentVNode(" 输入区域 "),
         vue.createElementVNode("view", { class: "card input-card" }, [
@@ -1775,865 +1768,24 @@ if (uni.restoreGlobal) {
       }, null, 8, ["show", "value", "onConfirm"])
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
-  class MPAnimation {
-    constructor(options, _this) {
-      this.options = options;
-      this.animation = uni.createAnimation({
-        ...options
-      });
-      this.currentStepAnimates = {};
-      this.next = 0;
-      this.$ = _this;
-    }
-    _nvuePushAnimates(type, args) {
-      let aniObj = this.currentStepAnimates[this.next];
-      let styles = {};
-      if (!aniObj) {
-        styles = {
-          styles: {},
-          config: {}
-        };
-      } else {
-        styles = aniObj;
-      }
-      if (animateTypes1.includes(type)) {
-        if (!styles.styles.transform) {
-          styles.styles.transform = "";
-        }
-        let unit = "";
-        if (type === "rotate") {
-          unit = "deg";
-        }
-        styles.styles.transform += `${type}(${args + unit}) `;
-      } else {
-        styles.styles[type] = `${args}`;
-      }
-      this.currentStepAnimates[this.next] = styles;
-    }
-    _animateRun(styles = {}, config = {}) {
-      let ref = this.$.$refs["ani"].ref;
-      if (!ref)
-        return;
-      return new Promise((resolve, reject) => {
-        nvueAnimation.transition(ref, {
-          styles,
-          ...config
-        }, (res) => {
-          resolve();
-        });
-      });
-    }
-    _nvueNextAnimate(animates, step = 0, fn) {
-      let obj = animates[step];
-      if (obj) {
-        let {
-          styles,
-          config
-        } = obj;
-        this._animateRun(styles, config).then(() => {
-          step += 1;
-          this._nvueNextAnimate(animates, step, fn);
-        });
-      } else {
-        this.currentStepAnimates = {};
-        typeof fn === "function" && fn();
-        this.isEnd = true;
-      }
-    }
-    step(config = {}) {
-      this.animation.step(config);
-      return this;
-    }
-    run(fn) {
-      this.$.animationData = this.animation.export();
-      this.$.timer = setTimeout(() => {
-        typeof fn === "function" && fn();
-      }, this.$.durationTime);
-    }
-  }
-  const animateTypes1 = [
-    "matrix",
-    "matrix3d",
-    "rotate",
-    "rotate3d",
-    "rotateX",
-    "rotateY",
-    "rotateZ",
-    "scale",
-    "scale3d",
-    "scaleX",
-    "scaleY",
-    "scaleZ",
-    "skew",
-    "skewX",
-    "skewY",
-    "translate",
-    "translate3d",
-    "translateX",
-    "translateY",
-    "translateZ"
-  ];
-  const animateTypes2 = ["opacity", "backgroundColor"];
-  const animateTypes3 = ["width", "height", "left", "right", "top", "bottom"];
-  animateTypes1.concat(animateTypes2, animateTypes3).forEach((type) => {
-    MPAnimation.prototype[type] = function(...args) {
-      this.animation[type](...args);
-      return this;
-    };
-  });
-  function createAnimation(option, _this) {
-    if (!_this)
-      return;
-    clearTimeout(_this.timer);
-    return new MPAnimation(option, _this);
-  }
-  const _sfc_main$3 = {
-    name: "uniTransition",
-    emits: ["click", "change"],
-    props: {
-      show: {
-        type: Boolean,
-        default: false
-      },
-      modeClass: {
-        type: [Array, String],
-        default() {
-          return "fade";
-        }
-      },
-      duration: {
-        type: Number,
-        default: 300
-      },
-      styles: {
-        type: Object,
-        default() {
-          return {};
-        }
-      },
-      customClass: {
-        type: String,
-        default: ""
-      },
-      onceRender: {
-        type: Boolean,
-        default: false
-      }
-    },
-    data() {
-      return {
-        isShow: false,
-        transform: "",
-        opacity: 1,
-        animationData: {},
-        durationTime: 300,
-        config: {}
-      };
-    },
-    watch: {
-      show: {
-        handler(newVal) {
-          if (newVal) {
-            this.open();
-          } else {
-            if (this.isShow) {
-              this.close();
-            }
-          }
-        },
-        immediate: true
-      }
-    },
-    computed: {
-      // 生成样式数据
-      stylesObject() {
-        let styles = {
-          ...this.styles,
-          "transition-duration": this.duration / 1e3 + "s"
-        };
-        let transform = "";
-        for (let i in styles) {
-          let line = this.toLine(i);
-          transform += line + ":" + styles[i] + ";";
-        }
-        return transform;
-      },
-      // 初始化动画条件
-      transformStyles() {
-        return "transform:" + this.transform + ";opacity:" + this.opacity + ";" + this.stylesObject;
-      }
-    },
-    created() {
-      this.config = {
-        duration: this.duration,
-        timingFunction: "ease",
-        transformOrigin: "50% 50%",
-        delay: 0
-      };
-      this.durationTime = this.duration;
-    },
-    methods: {
-      /**
-       *  ref 触发 初始化动画
-       */
-      init(obj = {}) {
-        if (obj.duration) {
-          this.durationTime = obj.duration;
-        }
-        this.animation = createAnimation(Object.assign(this.config, obj), this);
-      },
-      /**
-       * 点击组件触发回调
-       */
-      onClick() {
-        this.$emit("click", {
-          detail: this.isShow
-        });
-      },
-      /**
-       * ref 触发 动画分组
-       * @param {Object} obj
-       */
-      step(obj, config = {}) {
-        if (!this.animation)
-          return;
-        for (let i in obj) {
-          try {
-            if (typeof obj[i] === "object") {
-              this.animation[i](...obj[i]);
-            } else {
-              this.animation[i](obj[i]);
-            }
-          } catch (e) {
-            formatAppLog("error", "at uni_modules/uni-transition/components/uni-transition/uni-transition.vue:148", `方法 ${i} 不存在`);
-          }
-        }
-        this.animation.step(config);
-        return this;
-      },
-      /**
-       *  ref 触发 执行动画
-       */
-      run(fn) {
-        if (!this.animation)
-          return;
-        this.animation.run(fn);
-      },
-      // 开始过度动画
-      open() {
-        clearTimeout(this.timer);
-        this.transform = "";
-        this.isShow = true;
-        let { opacity, transform } = this.styleInit(false);
-        if (typeof opacity !== "undefined") {
-          this.opacity = opacity;
-        }
-        this.transform = transform;
-        this.$nextTick(() => {
-          this.timer = setTimeout(() => {
-            this.animation = createAnimation(this.config, this);
-            this.tranfromInit(false).step();
-            this.animation.run();
-            this.$emit("change", {
-              detail: this.isShow
-            });
-          }, 20);
-        });
-      },
-      // 关闭过度动画
-      close(type) {
-        if (!this.animation)
-          return;
-        this.tranfromInit(true).step().run(() => {
-          this.isShow = false;
-          this.animationData = null;
-          this.animation = null;
-          let { opacity, transform } = this.styleInit(false);
-          this.opacity = opacity || 1;
-          this.transform = transform;
-          this.$emit("change", {
-            detail: this.isShow
-          });
-        });
-      },
-      // 处理动画开始前的默认样式
-      styleInit(type) {
-        let styles = {
-          transform: ""
-        };
-        let buildStyle = (type2, mode) => {
-          if (mode === "fade") {
-            styles.opacity = this.animationType(type2)[mode];
-          } else {
-            styles.transform += this.animationType(type2)[mode] + " ";
-          }
-        };
-        if (typeof this.modeClass === "string") {
-          buildStyle(type, this.modeClass);
-        } else {
-          this.modeClass.forEach((mode) => {
-            buildStyle(type, mode);
-          });
-        }
-        return styles;
-      },
-      // 处理内置组合动画
-      tranfromInit(type) {
-        let buildTranfrom = (type2, mode) => {
-          let aniNum = null;
-          if (mode === "fade") {
-            aniNum = type2 ? 0 : 1;
-          } else {
-            aniNum = type2 ? "-100%" : "0";
-            if (mode === "zoom-in") {
-              aniNum = type2 ? 0.8 : 1;
-            }
-            if (mode === "zoom-out") {
-              aniNum = type2 ? 1.2 : 1;
-            }
-            if (mode === "slide-right") {
-              aniNum = type2 ? "100%" : "0";
-            }
-            if (mode === "slide-bottom") {
-              aniNum = type2 ? "100%" : "0";
-            }
-          }
-          this.animation[this.animationMode()[mode]](aniNum);
-        };
-        if (typeof this.modeClass === "string") {
-          buildTranfrom(type, this.modeClass);
-        } else {
-          this.modeClass.forEach((mode) => {
-            buildTranfrom(type, mode);
-          });
-        }
-        return this.animation;
-      },
-      animationType(type) {
-        return {
-          fade: type ? 0 : 1,
-          "slide-top": `translateY(${type ? "0" : "-100%"})`,
-          "slide-right": `translateX(${type ? "0" : "100%"})`,
-          "slide-bottom": `translateY(${type ? "0" : "100%"})`,
-          "slide-left": `translateX(${type ? "0" : "-100%"})`,
-          "zoom-in": `scaleX(${type ? 1 : 0.8}) scaleY(${type ? 1 : 0.8})`,
-          "zoom-out": `scaleX(${type ? 1 : 1.2}) scaleY(${type ? 1 : 1.2})`
-        };
-      },
-      // 内置动画类型与实际动画对应字典
-      animationMode() {
-        return {
-          fade: "opacity",
-          "slide-top": "translateY",
-          "slide-right": "translateX",
-          "slide-bottom": "translateY",
-          "slide-left": "translateX",
-          "zoom-in": "scale",
-          "zoom-out": "scale"
-        };
-      },
-      // 驼峰转中横线
-      toLine(name) {
-        return name.replace(/([A-Z])/g, "-$1").toLowerCase();
-      }
-    }
-  };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
-      ref: "ani",
-      animation: $data.animationData,
-      class: vue.normalizeClass($props.customClass),
-      style: vue.normalizeStyle($options.transformStyles),
-      onClick: _cache[0] || (_cache[0] = (...args) => $options.onClick && $options.onClick(...args))
-    }, [
-      vue.renderSlot(_ctx.$slots, "default")
-    ], 14, ["animation"])), [
-      [vue.vShow, $data.isShow]
-    ]);
-  }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
-  const _sfc_main$2 = {
-    name: "uniPopup",
-    components: {},
-    emits: ["change", "maskClick"],
-    props: {
-      // 开启动画
-      animation: {
-        type: Boolean,
-        default: true
-      },
-      // 弹出层类型，可选值，top: 顶部弹出层；bottom：底部弹出层；center：全屏弹出层
-      // message: 消息提示 ; dialog : 对话框
-      type: {
-        type: String,
-        default: "center"
-      },
-      // maskClick
-      isMaskClick: {
-        type: Boolean,
-        default: null
-      },
-      // TODO 2 个版本后废弃属性 ，使用 isMaskClick
-      maskClick: {
-        type: Boolean,
-        default: null
-      },
-      backgroundColor: {
-        type: String,
-        default: "none"
-      },
-      safeArea: {
-        type: Boolean,
-        default: true
-      },
-      maskBackgroundColor: {
-        type: String,
-        default: "rgba(0, 0, 0, 0.4)"
-      },
-      borderRadius: {
-        type: String
-      }
-    },
-    watch: {
-      /**
-       * 监听type类型
-       */
-      type: {
-        handler: function(type) {
-          if (!this.config[type])
-            return;
-          this[this.config[type]](true);
-        },
-        immediate: true
-      },
-      isDesktop: {
-        handler: function(newVal) {
-          if (!this.config[newVal])
-            return;
-          this[this.config[this.type]](true);
-        },
-        immediate: true
-      },
-      /**
-       * 监听遮罩是否可点击
-       * @param {Object} val
-       */
-      maskClick: {
-        handler: function(val) {
-          this.mkclick = val;
-        },
-        immediate: true
-      },
-      isMaskClick: {
-        handler: function(val) {
-          this.mkclick = val;
-        },
-        immediate: true
-      },
-      // H5 下禁止底部滚动
-      showPopup(show) {
-      }
-    },
-    data() {
-      return {
-        duration: 300,
-        ani: [],
-        showPopup: false,
-        showTrans: false,
-        popupWidth: 0,
-        popupHeight: 0,
-        config: {
-          top: "top",
-          bottom: "bottom",
-          center: "center",
-          left: "left",
-          right: "right",
-          message: "top",
-          dialog: "center",
-          share: "bottom"
-        },
-        maskClass: {
-          position: "fixed",
-          bottom: 0,
-          top: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.4)"
-        },
-        transClass: {
-          backgroundColor: "transparent",
-          borderRadius: this.borderRadius || "0",
-          position: "fixed",
-          left: 0,
-          right: 0
-        },
-        maskShow: true,
-        mkclick: true,
-        popupstyle: "top"
-      };
-    },
-    computed: {
-      getStyles() {
-        let res = { backgroundColor: this.bg };
-        if (this.borderRadius || "0") {
-          res = Object.assign(res, { borderRadius: this.borderRadius });
-        }
-        return res;
-      },
-      isDesktop() {
-        return this.popupWidth >= 500 && this.popupHeight >= 500;
-      },
-      bg() {
-        if (this.backgroundColor === "" || this.backgroundColor === "none") {
-          return "transparent";
-        }
-        return this.backgroundColor;
-      }
-    },
-    mounted() {
-      const fixSize = () => {
-        const {
-          windowWidth,
-          windowHeight,
-          windowTop,
-          safeArea,
-          screenHeight,
-          safeAreaInsets
-        } = uni.getSystemInfoSync();
-        this.popupWidth = windowWidth;
-        this.popupHeight = windowHeight + (windowTop || 0);
-        if (safeArea && this.safeArea) {
-          this.safeAreaInsets = safeAreaInsets.bottom;
-        } else {
-          this.safeAreaInsets = 0;
-        }
-      };
-      fixSize();
-    },
-    // TODO vue3
-    unmounted() {
-      this.setH5Visible();
-    },
-    activated() {
-      this.setH5Visible(!this.showPopup);
-    },
-    deactivated() {
-      this.setH5Visible(true);
-    },
-    created() {
-      if (this.isMaskClick === null && this.maskClick === null) {
-        this.mkclick = true;
-      } else {
-        this.mkclick = this.isMaskClick !== null ? this.isMaskClick : this.maskClick;
-      }
-      if (this.animation) {
-        this.duration = 300;
-      } else {
-        this.duration = 0;
-      }
-      this.messageChild = null;
-      this.clearPropagation = false;
-      this.maskClass.backgroundColor = this.maskBackgroundColor;
-    },
-    methods: {
-      setH5Visible(visible = true) {
-      },
-      /**
-       * 公用方法，不显示遮罩层
-       */
-      closeMask() {
-        this.maskShow = false;
-      },
-      /**
-       * 公用方法，遮罩层禁止点击
-       */
-      disableMask() {
-        this.mkclick = false;
-      },
-      // TODO nvue 取消冒泡
-      clear(e) {
-        e.stopPropagation();
-        this.clearPropagation = true;
-      },
-      open(direction) {
-        if (this.showPopup) {
-          return;
-        }
-        let innerType = ["top", "center", "bottom", "left", "right", "message", "dialog", "share"];
-        if (!(direction && innerType.indexOf(direction) !== -1)) {
-          direction = this.type;
-        }
-        if (!this.config[direction]) {
-          formatAppLog("error", "at uni_modules/uni-popup/components/uni-popup/uni-popup.vue:298", "缺少类型：", direction);
-          return;
-        }
-        this[this.config[direction]]();
-        this.$emit("change", {
-          show: true,
-          type: direction
-        });
-      },
-      close(type) {
-        this.showTrans = false;
-        this.$emit("change", {
-          show: false,
-          type: this.type
-        });
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-          this.showPopup = false;
-        }, 300);
-      },
-      // TODO 处理冒泡事件，头条的冒泡事件有问题 ，先这样兼容
-      touchstart() {
-        this.clearPropagation = false;
-      },
-      onTap() {
-        if (this.clearPropagation) {
-          this.clearPropagation = false;
-          return;
-        }
-        this.$emit("maskClick");
-        if (!this.mkclick)
-          return;
-        this.close();
-      },
-      /**
-       * 顶部弹出样式处理
-       */
-      top(type) {
-        this.popupstyle = this.isDesktop ? "fixforpc-top" : "top";
-        this.ani = ["slide-top"];
-        this.transClass = {
-          position: "fixed",
-          left: 0,
-          right: 0,
-          backgroundColor: this.bg,
-          borderRadius: this.borderRadius || "0"
-        };
-        if (type)
-          return;
-        this.showPopup = true;
-        this.showTrans = true;
-        this.$nextTick(() => {
-          if (this.messageChild && this.type === "message") {
-            this.messageChild.timerClose();
-          }
-        });
-      },
-      /**
-       * 底部弹出样式处理
-       */
-      bottom(type) {
-        this.popupstyle = "bottom";
-        this.ani = ["slide-bottom"];
-        this.transClass = {
-          position: "fixed",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          paddingBottom: this.safeAreaInsets + "px",
-          backgroundColor: this.bg,
-          borderRadius: this.borderRadius || "0"
-        };
-        if (type)
-          return;
-        this.showPopup = true;
-        this.showTrans = true;
-      },
-      /**
-       * 中间弹出样式处理
-       */
-      center(type) {
-        this.popupstyle = "center";
-        this.ani = ["zoom-out", "fade"];
-        this.transClass = {
-          position: "fixed",
-          display: "flex",
-          flexDirection: "column",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          top: 0,
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: this.borderRadius || "0"
-        };
-        if (type)
-          return;
-        this.showPopup = true;
-        this.showTrans = true;
-      },
-      left(type) {
-        this.popupstyle = "left";
-        this.ani = ["slide-left"];
-        this.transClass = {
-          position: "fixed",
-          left: 0,
-          bottom: 0,
-          top: 0,
-          backgroundColor: this.bg,
-          borderRadius: this.borderRadius || "0",
-          display: "flex",
-          flexDirection: "column"
-        };
-        if (type)
-          return;
-        this.showPopup = true;
-        this.showTrans = true;
-      },
-      right(type) {
-        this.popupstyle = "right";
-        this.ani = ["slide-right"];
-        this.transClass = {
-          position: "fixed",
-          bottom: 0,
-          right: 0,
-          top: 0,
-          backgroundColor: this.bg,
-          borderRadius: this.borderRadius || "0",
-          display: "flex",
-          flexDirection: "column"
-        };
-        if (type)
-          return;
-        this.showPopup = true;
-        this.showTrans = true;
-      }
-    }
-  };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_transition = resolveEasycom(vue.resolveDynamicComponent("uni-transition"), __easycom_0);
-    return $data.showPopup ? (vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        key: 0,
-        class: vue.normalizeClass(["uni-popup", [$data.popupstyle, $options.isDesktop ? "fixforpc-z-index" : ""]])
-      },
-      [
-        vue.createElementVNode(
-          "view",
-          {
-            onTouchstart: _cache[1] || (_cache[1] = (...args) => $options.touchstart && $options.touchstart(...args))
-          },
-          [
-            $data.maskShow ? (vue.openBlock(), vue.createBlock(_component_uni_transition, {
-              key: "1",
-              name: "mask",
-              "mode-class": "fade",
-              styles: $data.maskClass,
-              duration: $data.duration,
-              show: $data.showTrans,
-              onClick: $options.onTap
-            }, null, 8, ["styles", "duration", "show", "onClick"])) : vue.createCommentVNode("v-if", true),
-            vue.createVNode(_component_uni_transition, {
-              key: "2",
-              "mode-class": $data.ani,
-              name: "content",
-              styles: $data.transClass,
-              duration: $data.duration,
-              show: $data.showTrans,
-              onClick: $options.onTap
-            }, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode(
-                  "view",
-                  {
-                    class: vue.normalizeClass(["uni-popup__wrapper", [$data.popupstyle]]),
-                    style: vue.normalizeStyle($options.getStyles),
-                    onClick: _cache[0] || (_cache[0] = (...args) => $options.clear && $options.clear(...args))
-                  },
-                  [
-                    vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
-                  ],
-                  6
-                  /* CLASS, STYLE */
-                )
-              ]),
-              _: 3
-              /* FORWARDED */
-            }, 8, ["mode-class", "styles", "duration", "show", "onClick"])
-          ],
-          32
-          /* NEED_HYDRATION */
-        )
-      ],
-      2
-      /* CLASS */
-    )) : vue.createCommentVNode("v-if", true);
-  }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-4dd3c44b"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
   const taobao = "/static/images/taobao.png";
   const jingdong = "/static/images/jd.png";
   const pinduoduo = "/static/images/pinduoduo.png";
+  const douyin = "/static/images/douyin.png";
   const other = "/static/images/other.png";
-  const _sfc_main$1 = {
+  const _imports_0 = "/static/images/package-illustration.png";
+  const _sfc_main$2 = {
     data() {
       return {
         version: "1.0.0",
         taobao,
         jingdong,
         pinduoduo,
+        douyin,
         other,
-        tableData: [
-          {
-            date: "2025-01-12",
-            list: [
-              {
-                platform: "淘宝",
-                platformIcon: taobao,
-                name: "商品名称",
-                price: "100.00",
-                time: "10:00"
-              },
-              {
-                platform: "淘宝",
-                platformIcon: taobao,
-                name: "商品名称2",
-                price: "100.00",
-                time: "10:00"
-              },
-              {
-                platform: "其他",
-                platformIcon: other,
-                name: "商品名称",
-                price: "100.00",
-                time: "10:00"
-              }
-            ]
-          },
-          {
-            date: "2025-01-18",
-            list: [
-              {
-                platform: "京东",
-                platformIcon: jingdong,
-                name: "商品名称",
-                price: "100.00",
-                time: "10:00"
-              },
-              {
-                platform: "拼多多",
-                platformIcon: pinduoduo,
-                name: "商品名称",
-                price: "100.00",
-                time: "10:00"
-              }
-            ]
-          }
-        ],
-        platforms: ["淘宝", "京东", "拼多多", "其他"],
-        isEdit: false,
-        currentPackage: {
-          platform: "淘宝",
-          name: "",
-          price: "",
-          time: "",
-          checked: false
-        },
-        editingIndex: -1,
-        editingDate: "",
+        tableData: [],
+        platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
         menuStyle: {
           top: "0px",
           right: "25px"
@@ -2679,142 +1831,19 @@ if (uni.restoreGlobal) {
         }
       },
       showAddPackage() {
-        this.isEdit = false;
-        this.currentPackage = {
-          platform: "淘宝",
-          name: "",
-          price: "",
-          time: this.getCurrentTime(),
-          checked: false
-        };
-        this.autoFocus = true;
-        this.$refs.popup.open();
+        uni.navigateTo({
+          url: "/pages/packages/edit"
+        });
       },
       showEditPackage(item, date) {
-        this.isEdit = true;
-        this.currentPackage = { ...item };
-        this.editingDate = date;
-        const dateGroup = this.tableData.find((group) => group.date === date);
-        if (dateGroup) {
-          this.editingIndex = dateGroup.list.findIndex((i) => i === item);
-        }
-        this.$set(item, "showActions", false);
-        this.autoFocus = true;
-        this.$refs.popup.open();
-      },
-      hidePopup() {
-        this.$refs.popup.close();
-      },
-      selectPlatform(platform) {
-        this.currentPackage.platform = platform;
-        this.vibrateShort();
-      },
-      submitPackage() {
-        if (!this.currentPackage.name) {
-          return;
-        }
-        const packageData = {
-          ...this.currentPackage,
-          price: this.currentPackage.price || "0.00",
-          platformIcon: this.getPlatformIcon(this.currentPackage.platform),
-          showActions: false
-        };
-        if (this.isEdit) {
-          const dateGroup = this.tableData.find((group) => group.date === this.editingDate);
-          if (dateGroup && this.editingIndex !== -1) {
-            this.$set(dateGroup.list, this.editingIndex, packageData);
-          }
-        } else {
-          const now = /* @__PURE__ */ new Date();
-          const today = now.toISOString().split("T")[0];
-          let dateGroup = this.tableData.find((group) => group.date === today);
-          if (!dateGroup) {
-            dateGroup = {
-              date: today,
-              list: []
-            };
-            this.tableData.unshift(dateGroup);
-          }
-          dateGroup.list.unshift(packageData);
-          this.$nextTick(() => {
-            const query = uni.createSelectorQuery();
-            query.select(".timeline").boundingClientRect((data) => {
-              if (data) {
-                uni.pageScrollTo({
-                  scrollTop: data.top,
-                  duration: 300
-                });
-              }
-            }).exec();
-          });
-        }
-        this.hidePopup();
-        this.saveData();
-      },
-      deletePackage(item, date) {
-        this.$set(item, "showActions", false);
-        const dateGroup = this.tableData.find((group) => group.date === date);
-        if (dateGroup) {
-          const index = dateGroup.list.findIndex((i) => i === item);
-          if (index !== -1) {
-            dateGroup.list.splice(index, 1);
-            if (dateGroup.list.length === 0) {
-              const dateIndex = this.tableData.findIndex(
-                (group) => group.date === date
-              );
-              this.tableData.splice(dateIndex, 1);
-            }
-            this.saveData();
-          }
-        }
-      },
-      getCurrentTime() {
-        const now = /* @__PURE__ */ new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        return `${hours}:${minutes}`;
-      },
-      saveData() {
-        try {
-          uni.setStorageSync("packageData", JSON.stringify(this.tableData));
-        } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:424", "保存数据失败:", e);
-        }
-      },
-      loadData() {
-        try {
-          const data = uni.getStorageSync("packageData");
-          if (data) {
-            this.tableData = JSON.parse(data);
-          }
-        } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:434", "读取数据失败:", e);
-        }
-      },
-      // 按平台分组
-      groupByPlatform(list) {
-        return list.reduce((groups, item) => {
-          const platform = item.platform;
-          if (!groups[platform]) {
-            groups[platform] = [];
-          }
-          groups[platform].push(item);
-          return groups;
-        }, {});
-      },
-      // 获取平台图标
-      getPlatformIcon(platform) {
-        const icons = {
-          淘宝: this.taobao,
-          京东: this.jingdong,
-          拼多多: this.pinduoduo,
-          其他: this.other
-        };
-        return icons[platform] || this.other;
-      },
-      // 切换选中状态
-      toggleCheck(item) {
-        this.$set(item, "checked", !item.checked);
+        uni.setStorageSync("editData", JSON.stringify({
+          item,
+          date,
+          index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
+        }));
+        uni.navigateTo({
+          url: "/pages/packages/edit?type=edit"
+        });
       },
       handlePageClick() {
         this.tableData.forEach((group) => {
@@ -2830,7 +1859,7 @@ if (uni.restoreGlobal) {
         try {
           uni.removeStorageSync("packageData");
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:480", "清除缓存失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:236", "清除缓存失败:", e);
         }
       },
       confirmDeleteDateGroup(date) {
@@ -2856,337 +1885,487 @@ if (uni.restoreGlobal) {
       },
       getCheckedCount(list) {
         return list.filter((item) => item.checked).length;
+      },
+      handlePackageSubmit({ data, isEdit, editDate, editIndex }) {
+        const platformIcon = this.getPlatformIcon(data.platform);
+        const packageData = {
+          ...data,
+          price: data.price || "0.00",
+          platformIcon,
+          // 使用获取到的图标
+          showActions: false
+        };
+        if (isEdit) {
+          const dateGroup = this.tableData.find((group) => group.date === editDate);
+          if (dateGroup && editIndex !== -1) {
+            this.$set(dateGroup.list, editIndex, packageData);
+          }
+        } else {
+          const now = /* @__PURE__ */ new Date();
+          const today = now.toISOString().split("T")[0];
+          let dateGroup = this.tableData.find((group) => group.date === today);
+          if (!dateGroup) {
+            dateGroup = {
+              date: today,
+              list: []
+            };
+            this.tableData.unshift(dateGroup);
+          }
+          dateGroup.list.unshift(packageData);
+          this.$nextTick(() => {
+            const query = uni.createSelectorQuery();
+            query.select(".timeline").boundingClientRect((data2) => {
+              if (data2) {
+                uni.pageScrollTo({
+                  scrollTop: data2.top,
+                  duration: 300
+                });
+              }
+            }).exec();
+          });
+        }
+        this.saveData();
+      },
+      getPlatformIcon(platform) {
+        const icons = {
+          淘宝: this.taobao,
+          京东: this.jingdong,
+          拼多多: this.pinduoduo,
+          抖音: this.douyin,
+          其他: this.other
+        };
+        return icons[platform] || this.other;
+      },
+      groupByPlatform(list) {
+        const groups = {};
+        list.forEach((item) => {
+          if (!groups[item.platform]) {
+            groups[item.platform] = [];
+          }
+          groups[item.platform].push(item);
+        });
+        return groups;
+      },
+      saveData() {
+        try {
+          uni.setStorageSync("packageData", JSON.stringify(this.tableData));
+        } catch (e) {
+          formatAppLog("error", "at pages/packages/index.vue:337", "保存数据失败:", e);
+        }
+      },
+      loadData() {
+        try {
+          const data = uni.getStorageSync("packageData");
+          if (data) {
+            this.tableData = JSON.parse(data);
+          }
+        } catch (e) {
+          formatAppLog("error", "at pages/packages/index.vue:347", "读取数据失败:", e);
+        }
+      },
+      toggleCheck(item) {
+        this.$set(item, "checked", !item.checked);
+        this.saveData();
       }
     },
     created() {
       this.loadData();
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
-    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_1);
-    return vue.openBlock(), vue.createElementBlock(
-      vue.Fragment,
-      null,
-      [
-        vue.createElementVNode("view", {
-          class: "page-wrapper",
-          onClick: _cache[2] || (_cache[2] = (...args) => $options.handlePageClick && $options.handlePageClick(...args))
-        }, [
-          vue.createElementVNode("view", { class: "page-bg" }),
-          vue.createElementVNode("view", { class: "container" }, [
-            vue.createElementVNode("view", { class: "title-wrapper" }, [
-              vue.createElementVNode("text", { class: "title" }, "包裹记录"),
-              vue.createElementVNode("view", { class: "header-right" }, [
-                vue.createElementVNode("text", {
-                  class: "clear-btn",
-                  onClick: _cache[0] || (_cache[0] = vue.withModifiers((...args) => $options.clearData && $options.clearData(...args), ["stop"]))
-                }, "清空"),
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "page-wrapper",
+      onClick: _cache[1] || (_cache[1] = (...args) => $options.handlePageClick && $options.handlePageClick(...args))
+    }, [
+      vue.createElementVNode("view", { class: "page-bg" }),
+      vue.createCommentVNode(" 添加插画装饰 "),
+      vue.createElementVNode("view", { class: "header-illustration" }, [
+        vue.createElementVNode("image", {
+          class: "illustration",
+          src: _imports_0,
+          mode: "aspectFit"
+        })
+      ]),
+      vue.createElementVNode("view", { class: "container" }, [
+        vue.createElementVNode("view", { class: "title-wrapper" }, [
+          vue.createElementVNode("text", { class: "title" }, "包裹记录"),
+          vue.createCommentVNode(' <view class="header-right">\r\n          <text class="clear-btn" @click.stop="clearData">清空</text>\r\n        </view> ')
+        ]),
+        vue.createCommentVNode(" 日期时间轴 "),
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.tableData, (item) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              class: "timeline",
+              key: item.date
+            }, [
+              vue.createElementVNode("view", { class: "timeline-date" }, [
                 vue.createElementVNode(
                   "text",
-                  { class: "version-text" },
-                  "V" + vue.toDisplayString($data.version),
+                  null,
+                  vue.toDisplayString($options.formatDate(item.date)),
                   1
                   /* TEXT */
                 )
-              ])
-            ]),
-            vue.createCommentVNode(" 日期时间轴 "),
-            (vue.openBlock(true), vue.createElementBlock(
-              vue.Fragment,
-              null,
-              vue.renderList($data.tableData, (item) => {
-                return vue.openBlock(), vue.createElementBlock("view", {
-                  class: "timeline",
-                  key: item.date
-                }, [
-                  vue.createElementVNode("view", { class: "timeline-date" }, [
-                    vue.createElementVNode(
-                      "text",
-                      null,
-                      vue.toDisplayString($options.formatDate(item.date)),
-                      1
-                      /* TEXT */
-                    )
-                  ]),
-                  vue.createCommentVNode(" 添加统计信息 "),
-                  vue.createElementVNode("view", { class: "date-stats" }, [
-                    vue.createElementVNode(
-                      "text",
-                      null,
-                      "记录了" + vue.toDisplayString(item.list.length) + "个包裹，" + vue.toDisplayString($options.getCheckedCount(item.list)) + "个已签收",
-                      1
-                      /* TEXT */
-                    )
-                  ]),
-                  vue.createCommentVNode(" 平台卡片组 "),
-                  vue.createElementVNode("view", { class: "platform-cards" }, [
-                    (vue.openBlock(true), vue.createElementBlock(
-                      vue.Fragment,
-                      null,
-                      vue.renderList($options.groupByPlatform(item.list), (platformItems, platform) => {
-                        return vue.openBlock(), vue.createElementBlock("view", {
-                          class: "platform-card",
-                          key: platform
-                        }, [
-                          vue.createElementVNode("view", { class: "platform-header" }, [
-                            vue.createElementVNode("image", {
-                              class: "platform-icon",
-                              src: $options.getPlatformIcon(platform),
-                              mode: "aspectFit"
-                            }, null, 8, ["src"]),
-                            vue.createElementVNode(
-                              "text",
-                              { class: "platform-name" },
-                              vue.toDisplayString(platform),
-                              1
-                              /* TEXT */
-                            ),
-                            vue.createElementVNode(
-                              "text",
-                              { class: "platform-amount" },
-                              "¥" + vue.toDisplayString($options.getPlatformAmount(platformItems)),
-                              1
-                              /* TEXT */
-                            )
-                          ]),
-                          vue.createElementVNode("view", { class: "goods-list" }, [
-                            (vue.openBlock(true), vue.createElementBlock(
-                              vue.Fragment,
-                              null,
-                              vue.renderList(platformItems, (list, index) => {
-                                return vue.openBlock(), vue.createElementBlock("view", {
-                                  class: "goods-item",
-                                  key: index
+              ]),
+              vue.createCommentVNode(" 添加统计信息 "),
+              vue.createElementVNode("view", { class: "date-stats" }, [
+                vue.createElementVNode(
+                  "text",
+                  null,
+                  "记录了" + vue.toDisplayString(item.list.length) + "个包裹，" + vue.toDisplayString($options.getCheckedCount(item.list)) + "个已签收",
+                  1
+                  /* TEXT */
+                )
+              ]),
+              vue.createCommentVNode(" 平台卡片组 "),
+              vue.createElementVNode("view", { class: "platform-cards" }, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($options.groupByPlatform(item.list), (platformItems, platform) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "platform-card",
+                      key: platform
+                    }, [
+                      vue.createElementVNode("view", { class: "platform-header" }, [
+                        vue.createElementVNode("image", {
+                          class: "platform-icon",
+                          src: $options.getPlatformIcon(platform),
+                          mode: "aspectFit"
+                        }, null, 8, ["src"]),
+                        vue.createElementVNode(
+                          "text",
+                          { class: "platform-name" },
+                          vue.toDisplayString(platform),
+                          1
+                          /* TEXT */
+                        ),
+                        vue.createElementVNode(
+                          "text",
+                          { class: "platform-amount" },
+                          "¥" + vue.toDisplayString($options.getPlatformAmount(platformItems)),
+                          1
+                          /* TEXT */
+                        )
+                      ]),
+                      vue.createElementVNode("view", { class: "goods-list" }, [
+                        (vue.openBlock(true), vue.createElementBlock(
+                          vue.Fragment,
+                          null,
+                          vue.renderList(platformItems, (list, index) => {
+                            return vue.openBlock(), vue.createElementBlock("view", {
+                              class: "goods-item",
+                              key: index
+                            }, [
+                              vue.createElementVNode("view", { class: "goods-content" }, [
+                                vue.createElementVNode("checkbox", {
+                                  value: list.id,
+                                  checked: list.checked,
+                                  onClick: ($event) => $options.toggleCheck(list),
+                                  color: "#1673ff"
+                                }, null, 8, ["value", "checked", "onClick"]),
+                                vue.createElementVNode("view", { class: "goods-info" }, [
+                                  vue.createElementVNode(
+                                    "text",
+                                    { class: "goods-name text-ellipsis" },
+                                    vue.toDisplayString(list.name),
+                                    1
+                                    /* TEXT */
+                                  )
+                                ]),
+                                vue.createElementVNode(
+                                  "text",
+                                  { class: "goods-price" },
+                                  vue.toDisplayString(list.price),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              vue.createElementVNode("view", { class: "goods-actions" }, [
+                                vue.createElementVNode("view", {
+                                  class: "more-btn",
+                                  onClick: vue.withModifiers(($event) => $options.toggleMoreActions(list, item.date), ["stop"])
                                 }, [
-                                  vue.createElementVNode("view", { class: "goods-content" }, [
-                                    vue.createElementVNode("checkbox", {
-                                      value: list.id,
-                                      checked: list.checked,
-                                      onClick: ($event) => $options.toggleCheck(list),
-                                      color: "#1673ff"
-                                    }, null, 8, ["value", "checked", "onClick"]),
-                                    vue.createElementVNode("view", { class: "goods-info" }, [
-                                      vue.createElementVNode(
-                                        "text",
-                                        { class: "goods-name text-ellipsis" },
-                                        vue.toDisplayString(list.name),
-                                        1
-                                        /* TEXT */
-                                      )
-                                    ]),
-                                    vue.createElementVNode(
-                                      "text",
-                                      { class: "goods-price" },
-                                      vue.toDisplayString(list.price),
-                                      1
-                                      /* TEXT */
-                                    )
-                                  ]),
-                                  vue.createElementVNode("view", { class: "goods-actions" }, [
-                                    vue.createElementVNode("view", {
-                                      class: "more-btn",
-                                      onClick: vue.withModifiers(($event) => $options.toggleMoreActions(list, item.date), ["stop"])
-                                    }, [
-                                      vue.createElementVNode("view", { class: "dots" }, [
-                                        vue.createElementVNode("view", { class: "dot" }),
-                                        vue.createElementVNode("view", { class: "dot" }),
-                                        vue.createElementVNode("view", { class: "dot" })
-                                      ])
-                                    ], 8, ["onClick"]),
-                                    vue.createCommentVNode(" 操作菜单 "),
-                                    list.showActions ? (vue.openBlock(), vue.createElementBlock(
-                                      "view",
-                                      {
-                                        key: 0,
-                                        class: "action-menu",
-                                        style: vue.normalizeStyle($data.menuStyle)
-                                      },
-                                      [
-                                        vue.createElementVNode("view", {
-                                          class: "action-item",
-                                          onClick: vue.withModifiers(($event) => $options.showEditPackage(list, item.date), ["stop"])
-                                        }, [
-                                          vue.createVNode(_component_uni_icons, {
-                                            type: "compose",
-                                            size: "16",
-                                            color: "#666"
-                                          }),
-                                          vue.createElementVNode("text", null, "修改")
-                                        ], 8, ["onClick"]),
-                                        vue.createElementVNode("view", {
-                                          class: "action-item",
-                                          onClick: vue.withModifiers(($event) => $options.deletePackage(list, item.date), ["stop"])
-                                        }, [
-                                          vue.createVNode(_component_uni_icons, {
-                                            type: "trash",
-                                            size: "16",
-                                            color: "#ff0000"
-                                          }),
-                                          vue.createElementVNode("text", { style: { "color": "#ff0000" } }, "删除")
-                                        ], 8, ["onClick"])
-                                      ],
-                                      4
-                                      /* STYLE */
-                                    )) : vue.createCommentVNode("v-if", true)
+                                  vue.createElementVNode("view", { class: "dots" }, [
+                                    vue.createElementVNode("view", { class: "dot" }),
+                                    vue.createElementVNode("view", { class: "dot" }),
+                                    vue.createElementVNode("view", { class: "dot" })
                                   ])
-                                ]);
-                              }),
-                              128
-                              /* KEYED_FRAGMENT */
-                            ))
-                          ])
-                        ]);
-                      }),
-                      128
-                      /* KEYED_FRAGMENT */
-                    ))
-                  ]),
-                  vue.createCommentVNode(" 删除按钮移到这里 "),
-                  vue.createElementVNode("view", {
-                    class: "date-delete-wrapper",
-                    onClick: ($event) => $options.confirmDeleteDateGroup(item.date)
+                                ], 8, ["onClick"]),
+                                vue.createCommentVNode(" 操作菜单 "),
+                                list.showActions ? (vue.openBlock(), vue.createElementBlock(
+                                  "view",
+                                  {
+                                    key: 0,
+                                    class: "action-menu",
+                                    style: vue.normalizeStyle($data.menuStyle)
+                                  },
+                                  [
+                                    vue.createElementVNode("view", {
+                                      class: "action-item",
+                                      onClick: vue.withModifiers(($event) => $options.showEditPackage(list, item.date), ["stop"])
+                                    }, [
+                                      vue.createVNode(_component_uni_icons, {
+                                        type: "compose",
+                                        size: "16",
+                                        color: "#666"
+                                      }),
+                                      vue.createElementVNode("text", null, "修改")
+                                    ], 8, ["onClick"]),
+                                    vue.createElementVNode("view", {
+                                      class: "action-item",
+                                      onClick: vue.withModifiers(($event) => _ctx.deletePackage(list, item.date), ["stop"])
+                                    }, [
+                                      vue.createVNode(_component_uni_icons, {
+                                        type: "trash",
+                                        size: "16",
+                                        color: "#ff0000"
+                                      }),
+                                      vue.createElementVNode("text", { style: { "color": "#ff0000" } }, "删除")
+                                    ], 8, ["onClick"])
+                                  ],
+                                  4
+                                  /* STYLE */
+                                )) : vue.createCommentVNode("v-if", true)
+                              ])
+                            ]);
+                          }),
+                          128
+                          /* KEYED_FRAGMENT */
+                        ))
+                      ])
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              vue.createCommentVNode(" 删除按钮移到这里 "),
+              vue.createElementVNode("view", {
+                class: "date-delete-wrapper",
+                onClick: ($event) => $options.confirmDeleteDateGroup(item.date)
+              }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "trash",
+                  size: "16"
+                }),
+                vue.createElementVNode("view", null, "删除")
+              ], 8, ["onClick"])
+            ]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ]),
+      vue.createCommentVNode(" 添加按钮 "),
+      vue.createElementVNode("view", {
+        class: "add-package-btn",
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.showAddPackage && $options.showAddPackage(...args))
+      }, [
+        vue.createVNode(_component_uni_icons, {
+          type: "plusempty",
+          size: "24",
+          color: "#fff"
+        })
+      ])
+    ]);
+  }
+  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
+  const _sfc_main$1 = {
+    data() {
+      return {
+        isEdit: false,
+        editDate: "",
+        editIndex: -1,
+        formData: {
+          platform: "淘宝",
+          name: "",
+          price: "",
+          time: "",
+          checked: false
+        },
+        platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
+        taobao,
+        jingdong,
+        pinduoduo,
+        douyin,
+        other
+      };
+    },
+    onLoad(options) {
+      if (options.type === "edit") {
+        this.isEdit = true;
+        const editData = uni.getStorageSync("editData");
+        if (editData) {
+          const data = JSON.parse(editData);
+          this.formData = { ...data.item };
+          this.editDate = data.date;
+          this.editIndex = data.index;
+          uni.removeStorageSync("editData");
+        }
+      } else {
+        this.formData.time = this.getCurrentTime();
+      }
+    },
+    methods: {
+      vibrateShort() {
+        uni.vibrateShort({
+          success: function() {
+            formatAppLog("log", "at pages/packages/edit.vue:108", "振动成功");
+          }
+        });
+      },
+      selectPlatform(platform) {
+        this.formData.platform = platform;
+        this.vibrateShort();
+      },
+      getCurrentTime() {
+        const now = /* @__PURE__ */ new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        return `${hours}:${minutes}`;
+      },
+      getPlatformIcon(platform) {
+        const icons = {
+          淘宝: this.taobao,
+          京东: this.jingdong,
+          拼多多: this.pinduoduo,
+          抖音: this.douyin,
+          其他: this.other
+        };
+        return icons[platform] || this.other;
+      },
+      submitForm() {
+        if (!this.formData.name) {
+          uni.showToast({
+            title: "请输入商品名称",
+            icon: "none"
+          });
+          return;
+        }
+        const pages = getCurrentPages();
+        const prevPage = pages[pages.length - 2];
+        if (prevPage) {
+          prevPage.$vm.handlePackageSubmit({
+            data: {
+              platform: this.formData.platform,
+              name: this.formData.name,
+              price: this.formData.price,
+              time: this.formData.time,
+              checked: this.formData.checked
+            },
+            isEdit: this.isEdit,
+            editDate: this.editDate,
+            editIndex: this.editIndex
+          });
+        }
+        setTimeout(() => {
+          uni.navigateBack({
+            delta: 1,
+            success: () => {
+              formatAppLog("log", "at pages/packages/edit.vue:165", "返回成功");
+            },
+            fail: (err) => {
+              formatAppLog("error", "at pages/packages/edit.vue:168", "返回失败:", err);
+              uni.redirectTo({
+                url: "/pages/packages/index"
+              });
+            }
+          });
+        }, 50);
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "page-wrapper" }, [
+      vue.createElementVNode("view", { class: "page-bg" }),
+      vue.createElementVNode("view", { class: "container" }, [
+        vue.createElementVNode("view", { class: "form-content" }, [
+          vue.createCommentVNode(" 平台选择 "),
+          vue.createElementVNode("view", { class: "platform-select" }, [
+            vue.createElementVNode("text", { class: "label" }, "选择平台"),
+            vue.createElementVNode("view", { class: "platform-cards" }, [
+              (vue.openBlock(true), vue.createElementBlock(
+                vue.Fragment,
+                null,
+                vue.renderList($data.platforms, (platform) => {
+                  return vue.openBlock(), vue.createElementBlock("view", {
+                    key: platform,
+                    class: vue.normalizeClass(["platform-card", { active: $data.formData.platform === platform }]),
+                    onClick: ($event) => $options.selectPlatform(platform)
                   }, [
-                    vue.createVNode(_component_uni_icons, {
-                      type: "trash",
-                      size: "16"
-                    }),
-                    vue.createElementVNode("view", null, "删除")
-                  ], 8, ["onClick"])
-                ]);
-              }),
-              128
-              /* KEYED_FRAGMENT */
-            ))
+                    vue.createElementVNode("image", {
+                      class: "platform-icon",
+                      src: $options.getPlatformIcon(platform),
+                      mode: "aspectFit"
+                    }, null, 8, ["src"]),
+                    vue.createElementVNode(
+                      "text",
+                      { class: "platform-name" },
+                      vue.toDisplayString(platform),
+                      1
+                      /* TEXT */
+                    )
+                  ], 10, ["onClick"]);
+                }),
+                128
+                /* KEYED_FRAGMENT */
+              ))
+            ])
           ]),
-          vue.createCommentVNode(" 添加按钮 "),
-          vue.createElementVNode("view", {
-            class: "add-package-btn",
-            onClick: _cache[1] || (_cache[1] = (...args) => $options.showAddPackage && $options.showAddPackage(...args))
-          }, [
-            vue.createVNode(_component_uni_icons, {
-              type: "plusempty",
-              size: "24",
-              color: "#fff"
-            })
+          vue.createCommentVNode(" 表单输入 "),
+          vue.createElementVNode("view", { class: "form-item" }, [
+            vue.createElementVNode("text", { class: "label" }, "商品名称"),
+            vue.withDirectives(vue.createElementVNode(
+              "input",
+              {
+                class: "input",
+                "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.name = $event),
+                placeholder: "请输入商品名称",
+                focus: true
+              },
+              null,
+              512
+              /* NEED_PATCH */
+            ), [
+              [vue.vModelText, $data.formData.name]
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "form-item" }, [
+            vue.createElementVNode("text", { class: "label" }, "价格（选填）"),
+            vue.withDirectives(vue.createElementVNode(
+              "input",
+              {
+                class: "input",
+                "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.formData.price = $event),
+                type: "digit",
+                placeholder: "请输入价格"
+              },
+              null,
+              512
+              /* NEED_PATCH */
+            ), [
+              [vue.vModelText, $data.formData.price]
+            ])
           ])
         ]),
-        vue.createCommentVNode(" 添加弹出层组件 "),
-        vue.createVNode(
-          _component_uni_popup,
-          {
-            ref: "popup",
-            type: "bottom",
-            "safe-area": false
-          },
-          {
-            default: vue.withCtx(() => [
-              vue.createElementVNode("view", { class: "popup-content" }, [
-                vue.createElementVNode("view", { class: "popup-header" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "popup-title" },
-                    vue.toDisplayString($data.isEdit ? "修改包裹" : "添加包裹"),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode("view", {
-                    class: "close-btn",
-                    onClick: _cache[3] || (_cache[3] = (...args) => $options.hidePopup && $options.hidePopup(...args))
-                  }, [
-                    vue.createVNode(_component_uni_icons, {
-                      type: "close",
-                      size: "20",
-                      color: "#999"
-                    })
-                  ])
-                ]),
-                vue.createElementVNode("view", { class: "popup-body" }, [
-                  vue.createCommentVNode(" 平台选择 "),
-                  vue.createElementVNode("view", { class: "platform-select" }, [
-                    vue.createElementVNode("text", { class: "label" }, "选择平台"),
-                    vue.createElementVNode("view", { class: "platform-cards" }, [
-                      (vue.openBlock(true), vue.createElementBlock(
-                        vue.Fragment,
-                        null,
-                        vue.renderList($data.platforms, (platform, index) => {
-                          return vue.openBlock(), vue.createElementBlock("view", {
-                            key: platform,
-                            class: vue.normalizeClass(["platform-card", { active: $data.currentPackage.platform === platform }]),
-                            onClick: ($event) => $options.selectPlatform(platform)
-                          }, [
-                            vue.createElementVNode("image", {
-                              class: "platform-icon",
-                              src: $options.getPlatformIcon(platform),
-                              mode: "aspectFit"
-                            }, null, 8, ["src"]),
-                            vue.createElementVNode(
-                              "text",
-                              { class: "platform-name" },
-                              vue.toDisplayString(platform),
-                              1
-                              /* TEXT */
-                            )
-                          ], 10, ["onClick"]);
-                        }),
-                        128
-                        /* KEYED_FRAGMENT */
-                      ))
-                    ])
-                  ]),
-                  vue.createCommentVNode(" 表单输入 "),
-                  vue.createElementVNode("view", { class: "form-item" }, [
-                    vue.createElementVNode("text", { class: "label" }, "商品名称"),
-                    vue.withDirectives(vue.createElementVNode("input", {
-                      class: "input",
-                      "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.currentPackage.name = $event),
-                      placeholder: "请输入商品名称",
-                      focus: $data.autoFocus,
-                      onBlur: _cache[5] || (_cache[5] = ($event) => $data.autoFocus = false)
-                    }, null, 40, ["focus"]), [
-                      [vue.vModelText, $data.currentPackage.name]
-                    ])
-                  ]),
-                  vue.createElementVNode("view", { class: "form-item" }, [
-                    vue.createElementVNode("text", { class: "label" }, "价格（选填）"),
-                    vue.withDirectives(vue.createElementVNode(
-                      "input",
-                      {
-                        class: "input",
-                        "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.currentPackage.price = $event),
-                        type: "digit",
-                        placeholder: "请输入价格"
-                      },
-                      null,
-                      512
-                      /* NEED_PATCH */
-                    ), [
-                      [vue.vModelText, $data.currentPackage.price]
-                    ])
-                  ])
-                ]),
-                vue.createElementVNode("view", { class: "popup-footer" }, [
-                  vue.createElementVNode("button", {
-                    class: "submit-btn",
-                    onClick: _cache[7] || (_cache[7] = (...args) => $options.submitPackage && $options.submitPackage(...args))
-                  }, "确定")
-                ])
-              ])
-            ]),
-            _: 1
-            /* STABLE */
-          },
-          512
-          /* NEED_PATCH */
-        )
-      ],
-      64
-      /* STABLE_FRAGMENT */
-    );
+        vue.createCommentVNode(" 底部按钮 "),
+        vue.createElementVNode("view", { class: "footer" }, [
+          vue.createElementVNode("button", {
+            class: "submit-btn",
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.submitForm && $options.submitForm(...args))
+          }, "确定")
+        ])
+      ])
+    ]);
   }
-  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
+  const PagesPackagesEdit = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/edit.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/packages/index", PagesPackagesIndex);
+  __definePage("pages/packages/edit", PagesPackagesEdit);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("warn", "at App.vue:4", "当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！");

@@ -579,6 +579,7 @@
   position: relative;
   margin-bottom: 0.625rem;
   margin-top: 1.25rem;
+  text-align: center;
 }
 .title {
   font-size: 1.5625rem;

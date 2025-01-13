@@ -1,14 +1,22 @@
 <template>
   <view class="page-wrapper" @click="handlePageClick">
     <view class="page-bg"></view>
+    
+    <!-- 添加插画装饰 -->
+    <view class="header-illustration">
+      <image 
+        class="illustration" 
+        src="/static/images/package-illustration.png" 
+        mode="aspectFit"
+      />
+    </view>
 
     <view class="container">
       <view class="title-wrapper">
         <text class="title">包裹记录</text>
-        <view class="header-right">
+        <!-- <view class="header-right">
           <text class="clear-btn" @click.stop="clearData">清空</text>
-          <text class="version-text">V{{ version }}</text>
-        </view>
+        </view> -->
       </view>
 
       <!-- 日期时间轴 -->
@@ -112,73 +120,13 @@
       <uni-icons type="plusempty" size="24" color="#fff" />
     </view>
   </view>
-
-  <!-- 添加弹出层组件 -->
-  <uni-popup ref="popup" type="bottom" :safe-area="false">
-    <view class="popup-content">
-      <view class="popup-header">
-        <text class="popup-title">{{ isEdit ? "修改包裹" : "添加包裹" }}</text>
-        <view class="close-btn" @click="hidePopup">
-          <uni-icons type="close" size="20" color="#999" />
-        </view>
-      </view>
-
-      <view class="popup-body">
-        <!-- 平台选择 -->
-        <view class="platform-select">
-          <text class="label">选择平台</text>
-          <view class="platform-cards">
-            <view
-              v-for="(platform, index) in platforms"
-              :key="platform"
-              class="platform-card"
-              :class="{ active: currentPackage.platform === platform }"
-              @click="selectPlatform(platform)"
-            >
-              <image
-                class="platform-icon"
-                :src="getPlatformIcon(platform)"
-                mode="aspectFit"
-              />
-              <text class="platform-name">{{ platform }}</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 表单输入 -->
-        <view class="form-item">
-          <text class="label">商品名称</text>
-          <input
-            class="input"
-            v-model="currentPackage.name"
-            placeholder="请输入商品名称"
-            :focus="autoFocus"
-            @blur="autoFocus = false"
-          />
-        </view>
-
-        <view class="form-item">
-          <text class="label">价格（选填）</text>
-          <input
-            class="input"
-            v-model="currentPackage.price"
-            type="digit"
-            placeholder="请输入价格"
-          />
-        </view>
-      </view>
-
-      <view class="popup-footer">
-        <button class="submit-btn" @click="submitPackage">确定</button>
-      </view>
-    </view>
-  </uni-popup>
 </template>
 
 <script>
 import taobao from "@/static/images/taobao.png";
 import jingdong from "@/static/images/jd.png";
 import pinduoduo from "@/static/images/pinduoduo.png";
+import douyin from "@/static/images/douyin.png";
 import other from "@/static/images/other.png";
 
 export default {
@@ -188,65 +136,10 @@ export default {
       taobao,
       jingdong,
       pinduoduo,
+      douyin,
       other,
-      tableData: [
-        {
-          date: "2025-01-12",
-          list: [
-            {
-              platform: "淘宝",
-              platformIcon: taobao,
-              name: "商品名称",
-              price: "100.00",
-              time: "10:00",
-            },
-            {
-              platform: "淘宝",
-              platformIcon: taobao,
-              name: "商品名称2",
-              price: "100.00",
-              time: "10:00",
-            },
-            {
-              platform: "其他",
-              platformIcon: other,
-              name: "商品名称",
-              price: "100.00",
-              time: "10:00",
-            },
-          ],
-        },
-        {
-          date: "2025-01-18",
-          list: [
-            {
-              platform: "京东",
-              platformIcon: jingdong,
-              name: "商品名称",
-              price: "100.00",
-              time: "10:00",
-            },
-            {
-              platform: "拼多多",
-              platformIcon: pinduoduo,
-              name: "商品名称",
-              price: "100.00",
-              time: "10:00",
-            },
-          ],
-        },
-      ],
-      platforms: ["淘宝", "京东", "拼多多", "其他"],
-      isEdit: false,
-      currentPackage: {
-        platform: "淘宝",
-        name: "",
-        price: "",
-        time: "",
-        checked: false,
-      },
-      editingIndex: -1,
-      editingDate: "",
+      tableData: [],
+      platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
       menuStyle: {
         top: "0px",
         right: "25px",
@@ -307,159 +200,22 @@ export default {
       }
     },
     showAddPackage() {
-      this.isEdit = false;
-      this.currentPackage = {
-        platform: "淘宝",
-        name: "",
-        price: "",
-        time: this.getCurrentTime(),
-        checked: false,
-      };
-      this.autoFocus = true;
-      this.$refs.popup.open();
+      uni.navigateTo({
+        url: '/pages/packages/edit'
+      });
     },
     showEditPackage(item, date) {
-      this.isEdit = true;
-      this.currentPackage = { ...item };
-      this.editingDate = date;
-      const dateGroup = this.tableData.find(group => group.date === date);
-      if (dateGroup) {
-        this.editingIndex = dateGroup.list.findIndex(i => i === item);
-      }
-      this.$set(item, 'showActions', false);
-      this.autoFocus = true;
-      this.$refs.popup.open();
-    },
-    hidePopup() {
-      this.$refs.popup.close();
-    },
-    selectPlatform(platform) {
-      this.currentPackage.platform = platform;
-      this.vibrateShort();
-    },
-    submitPackage() {
-      if (!this.currentPackage.name) {
-        return;
-      }
-
-      const packageData = {
-        ...this.currentPackage,
-        price: this.currentPackage.price || '0.00',
-        platformIcon: this.getPlatformIcon(this.currentPackage.platform),
-        showActions: false
-      };
-
-      if (this.isEdit) {
-        // 编辑模式
-        const dateGroup = this.tableData.find(group => group.date === this.editingDate);
-        if (dateGroup && this.editingIndex !== -1) {
-          this.$set(dateGroup.list, this.editingIndex, packageData);
-        }
-      } else {
-        // 添加模式
-        const now = new Date();
-        const today = now.toISOString().split('T')[0];
-        
-        let dateGroup = this.tableData.find(group => group.date === today);
-        
-        if (!dateGroup) {
-          dateGroup = {
-            date: today,
-            list: []
-          };
-          this.tableData.unshift(dateGroup);
-        }
-
-        // 在列表开头添加新商品
-        dateGroup.list.unshift(packageData);
-
-        // 等待DOM更新后滚动到新添加的内容
-        this.$nextTick(() => {
-          const query = uni.createSelectorQuery();
-          query.select('.timeline').boundingClientRect(data => {
-            if (data) {
-              uni.pageScrollTo({
-                scrollTop: data.top,
-                duration: 300
-              });
-            }
-          }).exec();
-        });
-      }
-
-      this.hidePopup();
-      this.saveData();
-    },
-    deletePackage(item, date) {
-      // 关闭操作菜单
-      this.$set(item, "showActions", false);
-
-      // 直接执行删除操作
-      const dateGroup = this.tableData.find((group) => group.date === date);
-      if (dateGroup) {
-        const index = dateGroup.list.findIndex((i) => i === item);
-        if (index !== -1) {
-          dateGroup.list.splice(index, 1);
-          // 如果该日期下没有包裹了，删除该日期组
-          if (dateGroup.list.length === 0) {
-            const dateIndex = this.tableData.findIndex(
-              (group) => group.date === date
-            );
-            this.tableData.splice(dateIndex, 1);
-          }
-          this.saveData();
-        }
-      }
-    },
-    getCurrentTime() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      return `${hours}:${minutes}`;
-    },
-    saveData() {
-      try {
-        uni.setStorageSync("packageData", JSON.stringify(this.tableData));
-      } catch (e) {
-        console.error("保存数据失败:", e);
-      }
-    },
-    loadData() {
-      try {
-        const data = uni.getStorageSync("packageData");
-        if (data) {
-          this.tableData = JSON.parse(data);
-        }
-      } catch (e) {
-        console.error("读取数据失败:", e);
-      }
-    },
-    // 按平台分组
-    groupByPlatform(list) {
-      return list.reduce((groups, item) => {
-        const platform = item.platform;
-        if (!groups[platform]) {
-          groups[platform] = [];
-        }
-        groups[platform].push(item);
-        return groups;
-      }, {});
-    },
-
-    // 获取平台图标
-    getPlatformIcon(platform) {
-      const icons = {
-        淘宝: this.taobao,
-        京东: this.jingdong,
-        拼多多: this.pinduoduo,
-        其他: this.other,
-      };
-      return icons[platform] || this.other;
-    },
-
-    // 切换选中状态
-    toggleCheck(item) {
-      this.$set(item, "checked", !item.checked);
+      // 将编辑数据临时存储
+      uni.setStorageSync('editData', JSON.stringify({
+        item,
+        date,
+        index: this.tableData.find(group => group.date === date)
+          .list.findIndex(i => i === item)
+      }));
+      
+      uni.navigateTo({
+        url: '/pages/packages/edit?type=edit'
+      });
     },
     handlePageClick() {
       this.tableData.forEach((group) => {
@@ -504,6 +260,99 @@ export default {
     getCheckedCount(list) {
       return list.filter((item) => item.checked).length;
     },
+    handlePackageSubmit({ data, isEdit, editDate, editIndex }) {
+      // 先获取平台图标
+      const platformIcon = this.getPlatformIcon(data.platform);
+      
+      const packageData = {
+        ...data,
+        price: data.price || '0.00',
+        platformIcon, // 使用获取到的图标
+        showActions: false
+      };
+
+      if (isEdit) {
+        // 编辑模式
+        const dateGroup = this.tableData.find(group => group.date === editDate);
+        if (dateGroup && editIndex !== -1) {
+          this.$set(dateGroup.list, editIndex, packageData);
+        }
+      } else {
+        // 添加模式
+        const now = new Date();
+        const today = now.toISOString().split('T')[0];
+        
+        let dateGroup = this.tableData.find(group => group.date === today);
+        
+        if (!dateGroup) {
+          dateGroup = {
+            date: today,
+            list: []
+          };
+          this.tableData.unshift(dateGroup);
+        }
+
+        dateGroup.list.unshift(packageData);
+
+        // 等待DOM更新后滚动到新添加的内容
+        this.$nextTick(() => {
+          const query = uni.createSelectorQuery();
+          query.select('.timeline').boundingClientRect(data => {
+            if (data) {
+              uni.pageScrollTo({
+                scrollTop: data.top,
+                duration: 300
+              });
+            }
+          }).exec();
+        });
+      }
+
+      this.saveData();
+    },
+    getPlatformIcon(platform) {
+      const icons = {
+        淘宝: this.taobao,
+        京东: this.jingdong,
+        拼多多: this.pinduoduo,
+        抖音: this.douyin,
+        其他: this.other,
+      };
+      return icons[platform] || this.other;
+    },
+    groupByPlatform(list) {
+      const groups = {};
+      list.forEach(item => {
+        if (!groups[item.platform]) {
+          groups[item.platform] = [];
+        }
+        groups[item.platform].push(item);
+      });
+      return groups;
+    },
+    saveData() {
+      try {
+        uni.setStorageSync('packageData', JSON.stringify(this.tableData));
+      } catch (e) {
+        console.error('保存数据失败:', e);
+      }
+    },
+    loadData() {
+      try {
+        const data = uni.getStorageSync('packageData');
+        if (data) {
+          this.tableData = JSON.parse(data);
+        }
+      } catch (e) {
+        console.error('读取数据失败:', e);
+      }
+    },
+    toggleCheck(item) {
+      // 切换勾选状态
+      this.$set(item, 'checked', !item.checked);
+      // 保存数据
+      this.saveData();
+    },
   },
   created() {
     this.loadData();
@@ -523,7 +372,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   margin-bottom: 20rpx;
   margin-top: 40rpx;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-end;
 }
 
@@ -983,136 +832,6 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   }
 }
 
-// 弹出层样式
-.popup-content {
-  background: #fff;
-  border-radius: 24rpx 24rpx 0 0;
-  padding: 30rpx 30rpx calc(env(safe-area-inset-bottom) + 30rpx);
-  max-height: 85vh;
-  overflow-y: auto;
-  position: relative;
-  
-  transform: translateZ(0);
-  will-change: transform;
-
-  .popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30rpx;
-  }
-
-  .popup-title {
-    font-size: 32rpx;
-    font-weight: 500;
-    color: #333;
-  }
-
-  .close-btn {
-    padding: 10rpx;
-  }
-}
-
-// 弹出层平台选择
-.platform-select {
-  margin-bottom: 30rpx;
-
-  .platform-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16rpx;
-    margin-top: 16rpx;
-    padding-left: 0;
-  }
-
-  .platform-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8rpx;
-    padding: 16rpx;
-    border: 1rpx solid #eee;
-    box-shadow: none;
-
-    &.active {
-      background: $theme-light;
-      border-color: $theme-color;
-
-      .platform-name {
-        color: $theme-color;
-      }
-    }
-  }
-}
-
-// 表单样式
-.form-item {
-  margin-bottom: 24rpx;
-
-  .label {
-    font-size: 28rpx;
-    color: #333;
-    margin-bottom: 12rpx;
-    display: block;
-    font-weight: 500;
-  }
-
-  .input {
-    height: 80rpx;
-    border: 1rpx solid #eee;
-    border-radius: 12rpx;
-    padding: 0 20rpx;
-    font-size: 28rpx;
-    background: #f8f9fc;
-    color: #333;
-
-    &::placeholder {
-      color: #999;
-    }
-  }
-}
-
-.submit-btn {
-  height: 88rpx;
-  background: $theme-color;
-  color: #fff;
-  border-radius: 12rpx;
-  font-size: 30rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30rpx;
-
-  &:active {
-    background: #0049c6;
-  }
-}
-
-// 复选框样式
-::v-deep .uni-checkbox-input {
-  transform: scale(0.75);
-  margin: 0;
-  border-color: #ddd !important;
-
-  &.uni-checkbox-input-checked {
-    background-color: $theme-color !important;
-    border-color: $theme-color !important;
-  }
-}
-
-// 添加统计信息样式
-.date-stats {
-  padding-left: 48rpx;
-  margin: -16rpx 0 20rpx;
-  display: flex;
-  gap: 20rpx;
-  font-size: 24rpx;
-
-  text {
-    position: relative;
-  }
-}
-
 // 修改删除按钮样式
 .date-delete-wrapper {
   padding-left: 48rpx;
@@ -1139,6 +858,32 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   
   .uni-popup__wrapper {
     padding-bottom: 0 !important;
+  }
+}
+
+// 添加日期统计信息样式
+.date-stats {
+  padding-left: 48rpx;
+  margin: -16rpx 0 20rpx;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+}
+
+// 添加插画样式
+.header-illustration {
+  position: absolute;
+  top: 60rpx;
+  right: -15rpx;
+  width: 290rpx;
+  height: 230rpx;
+  z-index: 1;
+  pointer-events: none;
+  
+  .illustration {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

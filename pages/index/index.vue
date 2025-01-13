@@ -5,7 +5,6 @@
     <view class="container">
       <view class="title-wrapper">
         <text class="title">取件码工具</text>
-        <text class="version-text">V{{ version }}</text>
       </view>
       
       <!-- 输入区域 -->
@@ -652,6 +651,7 @@ export default {
   position: relative;
   margin-bottom: 20rpx;
   margin-top: 40rpx;
+  text-align: center;
 }
 
 .title {
