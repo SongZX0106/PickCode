@@ -1,12 +1,12 @@
 <template>
   <view class="page-wrapper" @click="handlePageClick">
     <view class="page-bg"></view>
-    
+
     <!-- 添加插画装饰 -->
     <view class="header-illustration">
-      <image 
-        class="illustration" 
-        src="/static/images/package-illustration.png" 
+      <image
+        class="illustration"
+        src="/static/images/package-illustration.png"
         mode="aspectFit"
       />
     </view>
@@ -26,7 +26,11 @@
         </view>
         <!-- 添加统计信息 -->
         <view class="date-stats">
-          <text>记录了{{ item.list.length }}个包裹，{{ getCheckedCount(item.list) }}个已签收</text>
+          <text
+            >记录了{{ item.list.length }}个包裹，{{
+              getCheckedCount(item.list)
+            }}个已签收</text
+          >
         </view>
 
         <!-- 平台卡片组 -->
@@ -108,7 +112,10 @@
         </view>
 
         <!-- 删除按钮移到这里 -->
-        <view class="date-delete-wrapper" @click="confirmDeleteDateGroup(item.date)">
+        <view
+          class="date-delete-wrapper"
+          @click="confirmDeleteDateGroup(item.date)"
+        >
           <uni-icons type="trash" size="16" />
           <view>删除</view>
         </view>
@@ -161,6 +168,7 @@ export default {
         .toFixed(2);
     },
     toggleMoreActions(item, date) {
+      this.vibrateShort();
       // 先关闭所有其他打开的菜单
       this.tableData.forEach((group) => {
         group.list.forEach((goods) => {
@@ -200,21 +208,26 @@ export default {
       }
     },
     showAddPackage() {
+      this.vibrateShort();
       uni.navigateTo({
-        url: '/pages/packages/edit'
+        url: "/pages/packages/edit",
       });
     },
     showEditPackage(item, date) {
-      // 将编辑数据临时存储
-      uni.setStorageSync('editData', JSON.stringify({
-        item,
-        date,
-        index: this.tableData.find(group => group.date === date)
-          .list.findIndex(i => i === item)
-      }));
-      
+      this.vibrateShort();
+      uni.setStorageSync(
+        "editData",
+        JSON.stringify({
+          item,
+          date,
+          index: this.tableData
+            .find((group) => group.date === date)
+            .list.findIndex((i) => i === item),
+        })
+      );
+
       uni.navigateTo({
-        url: '/pages/packages/edit?type=edit'
+        url: "/pages/packages/edit?type=edit",
       });
     },
     handlePageClick() {
@@ -237,6 +250,7 @@ export default {
       }
     },
     confirmDeleteDateGroup(date) {
+      this.vibrateShort();
       uni.showModal({
         title: "确认删除",
         content: "是否删除该日期下的所有包裹？",
@@ -249,6 +263,7 @@ export default {
       });
     },
     deleteDateGroup(date) {
+      this.vibrateShort();
       const dateIndex = this.tableData.findIndex(
         (group) => group.date === date
       );
@@ -263,31 +278,37 @@ export default {
     handlePackageSubmit({ data, isEdit, editDate, editIndex }) {
       // 先获取平台图标
       const platformIcon = this.getPlatformIcon(data.platform);
-      
+
       const packageData = {
         ...data,
-        price: data.price || '0.00',
+        price: data.price || "0.00",
         platformIcon,
-        showActions: false
+        showActions: false,
       };
 
       if (isEdit) {
         // 编辑模式
         if (editDate === data.date) {
           // 如果日期没变，直接修改原位置的数据
-          const dateGroup = this.tableData.find(group => group.date === editDate);
+          const dateGroup = this.tableData.find(
+            (group) => group.date === editDate
+          );
           if (dateGroup && editIndex !== -1) {
             this.$set(dateGroup.list, editIndex, packageData);
           }
         } else {
           // 如果日期变了，需要删除原数据并在新日期添加
           // 1. 删除原数据
-          const oldDateGroup = this.tableData.find(group => group.date === editDate);
+          const oldDateGroup = this.tableData.find(
+            (group) => group.date === editDate
+          );
           if (oldDateGroup && editIndex !== -1) {
             oldDateGroup.list.splice(editIndex, 1);
             // 如果该日期没有数据了，删除整个日期组
             if (oldDateGroup.list.length === 0) {
-              const index = this.tableData.findIndex(group => group.date === editDate);
+              const index = this.tableData.findIndex(
+                (group) => group.date === editDate
+              );
               if (index !== -1) {
                 this.tableData.splice(index, 1);
               }
@@ -295,14 +316,18 @@ export default {
           }
 
           // 2. 在新日期添加数据
-          let newDateGroup = this.tableData.find(group => group.date === data.date);
+          let newDateGroup = this.tableData.find(
+            (group) => group.date === data.date
+          );
           if (!newDateGroup) {
             newDateGroup = {
               date: data.date,
-              list: []
+              list: [],
             };
             // 按日期顺序插入
-            const index = this.tableData.findIndex(group => group.date < data.date);
+            const index = this.tableData.findIndex(
+              (group) => group.date < data.date
+            );
             if (index === -1) {
               this.tableData.push(newDateGroup);
             } else {
@@ -313,15 +338,19 @@ export default {
         }
       } else {
         // 添加模式
-        let dateGroup = this.tableData.find(group => group.date === data.date);
-        
+        let dateGroup = this.tableData.find(
+          (group) => group.date === data.date
+        );
+
         if (!dateGroup) {
           dateGroup = {
             date: data.date,
-            list: []
+            list: [],
           };
           // 按日期顺序插入
-          const index = this.tableData.findIndex(group => group.date < data.date);
+          const index = this.tableData.findIndex(
+            (group) => group.date < data.date
+          );
           if (index === -1) {
             this.tableData.push(dateGroup);
           } else {
@@ -346,7 +375,7 @@ export default {
     },
     groupByPlatform(list) {
       const groups = {};
-      list.forEach(item => {
+      list.forEach((item) => {
         if (!groups[item.platform]) {
           groups[item.platform] = [];
         }
@@ -356,26 +385,59 @@ export default {
     },
     saveData() {
       try {
-        uni.setStorageSync('packageData', JSON.stringify(this.tableData));
+        uni.setStorageSync("packageData", JSON.stringify(this.tableData));
       } catch (e) {
-        console.error('保存数据失败:', e);
+        console.error("保存数据失败:", e);
       }
     },
     loadData() {
       try {
-        const data = uni.getStorageSync('packageData');
+        const data = uni.getStorageSync("packageData");
         if (data) {
           this.tableData = JSON.parse(data);
         }
       } catch (e) {
-        console.error('读取数据失败:', e);
+        console.error("读取数据失败:", e);
       }
     },
     toggleCheck(item) {
-      // 切换勾选状态
-      this.$set(item, 'checked', !item.checked);
-      // 保存数据
+      this.vibrateShort();
+      this.$set(item, "checked", !item.checked);
       this.saveData();
+    },
+    deletePackage(item, date) {
+      this.vibrateShort();
+      // 关闭操作菜单
+      this.$set(item, "showActions", false);
+      // 找到对应日期组
+      const dateGroup = this.tableData.find((group) => group.date === date);
+      if (dateGroup) {
+        // 找到并删除包裹
+        const index = dateGroup.list.findIndex((i) => i === item);
+        if (index !== -1) {
+          dateGroup.list.splice(index, 1);
+
+          // 如果该日期没有包裹了，删除整个日期组
+          if (dateGroup.list.length === 0) {
+            const groupIndex = this.tableData.findIndex(
+              (group) => group.date === date
+            );
+            if (groupIndex !== -1) {
+              this.tableData.splice(groupIndex, 1);
+            }
+          }
+
+          // 保存数据
+          this.saveData();
+        }
+      }
+    },
+    vibrateShort() {
+      uni.vibrateShort({
+        success: function () {
+          console.log("振动成功");
+        },
+      });
     },
   },
   created() {
@@ -445,7 +507,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 }
 
 .container {
-  padding: 40rpx 20rpx 20rpx;
+  padding: 40rpx 30rpx 20rpx;
   position: relative;
   z-index: 1;
   min-height: 100vh;
@@ -879,7 +941,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 // 修改uni-popup默认样式
 ::v-deep .uni-popup-bottom {
   bottom: 0 !important;
-  
+
   .uni-popup__wrapper {
     padding-bottom: 0 !important;
   }
@@ -904,7 +966,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
   height: 230rpx;
   z-index: 1;
   pointer-events: none;
-  
+
   .illustration {
     width: 100%;
     height: 100%;

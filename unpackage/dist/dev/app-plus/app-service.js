@@ -1805,6 +1805,7 @@ if (uni.restoreGlobal) {
         }, 0).toFixed(2);
       },
       toggleMoreActions(item, date) {
+        this.vibrateShort();
         this.tableData.forEach((group) => {
           group.list.forEach((goods) => {
             if (goods !== item) {
@@ -1831,16 +1832,21 @@ if (uni.restoreGlobal) {
         }
       },
       showAddPackage() {
+        this.vibrateShort();
         uni.navigateTo({
           url: "/pages/packages/edit"
         });
       },
       showEditPackage(item, date) {
-        uni.setStorageSync("editData", JSON.stringify({
-          item,
-          date,
-          index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
-        }));
+        this.vibrateShort();
+        uni.setStorageSync(
+          "editData",
+          JSON.stringify({
+            item,
+            date,
+            index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
+          })
+        );
         uni.navigateTo({
           url: "/pages/packages/edit?type=edit"
         });
@@ -1859,10 +1865,11 @@ if (uni.restoreGlobal) {
         try {
           uni.removeStorageSync("packageData");
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:236", "清除缓存失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:249", "清除缓存失败:", e);
         }
       },
       confirmDeleteDateGroup(date) {
+        this.vibrateShort();
         uni.showModal({
           title: "确认删除",
           content: "是否删除该日期下的所有包裹？",
@@ -1875,6 +1882,7 @@ if (uni.restoreGlobal) {
         });
       },
       deleteDateGroup(date) {
+        this.vibrateShort();
         const dateIndex = this.tableData.findIndex(
           (group) => group.date === date
         );
@@ -1896,28 +1904,38 @@ if (uni.restoreGlobal) {
         };
         if (isEdit) {
           if (editDate === data.date) {
-            const dateGroup = this.tableData.find((group) => group.date === editDate);
+            const dateGroup = this.tableData.find(
+              (group) => group.date === editDate
+            );
             if (dateGroup && editIndex !== -1) {
               this.$set(dateGroup.list, editIndex, packageData);
             }
           } else {
-            const oldDateGroup = this.tableData.find((group) => group.date === editDate);
+            const oldDateGroup = this.tableData.find(
+              (group) => group.date === editDate
+            );
             if (oldDateGroup && editIndex !== -1) {
               oldDateGroup.list.splice(editIndex, 1);
               if (oldDateGroup.list.length === 0) {
-                const index = this.tableData.findIndex((group) => group.date === editDate);
+                const index = this.tableData.findIndex(
+                  (group) => group.date === editDate
+                );
                 if (index !== -1) {
                   this.tableData.splice(index, 1);
                 }
               }
             }
-            let newDateGroup = this.tableData.find((group) => group.date === data.date);
+            let newDateGroup = this.tableData.find(
+              (group) => group.date === data.date
+            );
             if (!newDateGroup) {
               newDateGroup = {
                 date: data.date,
                 list: []
               };
-              const index = this.tableData.findIndex((group) => group.date < data.date);
+              const index = this.tableData.findIndex(
+                (group) => group.date < data.date
+              );
               if (index === -1) {
                 this.tableData.push(newDateGroup);
               } else {
@@ -1927,13 +1945,17 @@ if (uni.restoreGlobal) {
             newDateGroup.list.unshift(packageData);
           }
         } else {
-          let dateGroup = this.tableData.find((group) => group.date === data.date);
+          let dateGroup = this.tableData.find(
+            (group) => group.date === data.date
+          );
           if (!dateGroup) {
             dateGroup = {
               date: data.date,
               list: []
             };
-            const index = this.tableData.findIndex((group) => group.date < data.date);
+            const index = this.tableData.findIndex(
+              (group) => group.date < data.date
+            );
             if (index === -1) {
               this.tableData.push(dateGroup);
             } else {
@@ -1968,7 +1990,7 @@ if (uni.restoreGlobal) {
         try {
           uni.setStorageSync("packageData", JSON.stringify(this.tableData));
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:361", "保存数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:390", "保存数据失败:", e);
         }
       },
       loadData() {
@@ -1978,12 +2000,40 @@ if (uni.restoreGlobal) {
             this.tableData = JSON.parse(data);
           }
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:371", "读取数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:400", "读取数据失败:", e);
         }
       },
       toggleCheck(item) {
+        this.vibrateShort();
         this.$set(item, "checked", !item.checked);
         this.saveData();
+      },
+      deletePackage(item, date) {
+        this.vibrateShort();
+        this.$set(item, "showActions", false);
+        const dateGroup = this.tableData.find((group) => group.date === date);
+        if (dateGroup) {
+          const index = dateGroup.list.findIndex((i) => i === item);
+          if (index !== -1) {
+            dateGroup.list.splice(index, 1);
+            if (dateGroup.list.length === 0) {
+              const groupIndex = this.tableData.findIndex(
+                (group) => group.date === date
+              );
+              if (groupIndex !== -1) {
+                this.tableData.splice(groupIndex, 1);
+              }
+            }
+            this.saveData();
+          }
+        }
+      },
+      vibrateShort() {
+        uni.vibrateShort({
+          success: function() {
+            formatAppLog("log", "at pages/packages/index.vue:438", "振动成功");
+          }
+        });
       }
     },
     created() {
@@ -2135,7 +2185,7 @@ if (uni.restoreGlobal) {
                                     ], 8, ["onClick"]),
                                     vue.createElementVNode("view", {
                                       class: "action-item",
-                                      onClick: vue.withModifiers(($event) => _ctx.deletePackage(list, item.date), ["stop"])
+                                      onClick: vue.withModifiers(($event) => $options.deletePackage(list, item.date), ["stop"])
                                     }, [
                                       vue.createVNode(_component_uni_icons, {
                                         type: "trash",
