@@ -1773,6 +1773,9 @@ if (uni.restoreGlobal) {
   const jingdong = "/static/images/jd.png";
   const pinduoduo = "/static/images/pinduoduo.png";
   const douyin = "/static/images/douyin.png";
+  const weipinhui = "/static/images/weipinhui.png";
+  const xiaohongshu = "/static/images/xiaohongshu.png";
+  const alibaba = "/static/images/1688.png";
   const other = "/static/images/other.png";
   const _imports_0 = "/static/images/package-illustration.png";
   const _sfc_main$6 = {
@@ -1783,9 +1786,12 @@ if (uni.restoreGlobal) {
         jingdong,
         pinduoduo,
         douyin,
+        weipinhui,
+        xiaohongshu,
+        alibaba,
         other,
         tableData: [],
-        platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
+        platforms: ["淘宝", "京东", "拼多多", "抖音", "唯品会", "小红书", "1688", "其他"],
         menuStyle: {
           top: "0px",
           right: "25px"
@@ -1818,26 +1824,19 @@ if (uni.restoreGlobal) {
       showAddPackage() {
         this.vibrateShort();
         uni.navigateTo({
-          url: "/pages/packages/edit"
+          url: "/pages/packages/edit",
+          animationType: "slide-in-right",
+          animationDuration: 300
         });
       },
       showEditPackage(item, date) {
         this.vibrateShort();
-        uni.setStorageSync(
-          "editData",
-          JSON.stringify({
-            item,
-            date,
-            index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
-          })
-        );
-        this.tableData.forEach((group) => {
-          group.list.forEach((item2) => {
-            if (item2.showActions) {
-              this.$set(item2, "showActions", false);
-            }
-          });
-        });
+        uni.setStorageSync("editData", JSON.stringify({
+          item,
+          date,
+          index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
+        }));
+        this.$set(item, "showActions", false);
         uni.navigateTo({
           url: "/pages/packages/edit?type=edit"
         });
@@ -1963,6 +1962,9 @@ if (uni.restoreGlobal) {
           京东: this.jingdong,
           拼多多: this.pinduoduo,
           抖音: this.douyin,
+          唯品会: this.weipinhui,
+          小红书: this.xiaohongshu,
+          "1688": this.alibaba,
           其他: this.other
         };
         return icons[platform] || this.other;
@@ -1981,7 +1983,7 @@ if (uni.restoreGlobal) {
         try {
           uni.setStorageSync("packageData", JSON.stringify(this.tableData));
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:372", "保存数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:375", "保存数据失败:", e);
         }
       },
       loadData() {
@@ -1991,7 +1993,7 @@ if (uni.restoreGlobal) {
             this.tableData = JSON.parse(data);
           }
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:382", "读取数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:385", "读取数据失败:", e);
         }
       },
       toggleCheck(item) {
@@ -2022,7 +2024,7 @@ if (uni.restoreGlobal) {
       vibrateShort() {
         uni.vibrateShort({
           success: function() {
-            formatAppLog("log", "at pages/packages/index.vue:420", "振动成功");
+            formatAppLog("log", "at pages/packages/index.vue:423", "振动成功");
           }
         });
       },
@@ -2239,7 +2241,9 @@ if (uni.restoreGlobal) {
           size: "24",
           color: "#fff"
         })
-      ])
+      ]),
+      vue.createCommentVNode(" 添加底部占位区域 "),
+      vue.createElementVNode("view", { class: "bottom-safe-area" })
     ]);
   }
   const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
@@ -5724,11 +5728,14 @@ if (uni.restoreGlobal) {
           checked: false,
           date: (/* @__PURE__ */ new Date()).toISOString().split("T")[0]
         },
-        platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
+        platforms: ["淘宝", "京东", "拼多多", "抖音", "唯品会", "小红书", "1688", "其他"],
         taobao,
         jingdong,
         pinduoduo,
         douyin,
+        weipinhui,
+        xiaohongshu,
+        alibaba,
         other
       };
     },
@@ -5751,7 +5758,7 @@ if (uni.restoreGlobal) {
       vibrateShort() {
         uni.vibrateShort({
           success: function() {
-            formatAppLog("log", "at pages/packages/edit.vue:125", "振动成功");
+            formatAppLog("log", "at pages/packages/edit.vue:130", "振动成功");
           }
         });
       },
@@ -5771,6 +5778,9 @@ if (uni.restoreGlobal) {
           京东: this.jingdong,
           拼多多: this.pinduoduo,
           抖音: this.douyin,
+          唯品会: this.weipinhui,
+          小红书: this.xiaohongshu,
+          "1688": this.alibaba,
           其他: this.other
         };
         return icons[platform] || this.other;
@@ -5811,13 +5821,17 @@ if (uni.restoreGlobal) {
         setTimeout(() => {
           uni.navigateBack({
             delta: 1,
+            animationType: "slide-out-right",
+            animationDuration: 300,
             success: () => {
-              formatAppLog("log", "at pages/packages/edit.vue:191", "返回成功");
+              formatAppLog("log", "at pages/packages/edit.vue:201", "返回成功");
             },
             fail: (err) => {
-              formatAppLog("error", "at pages/packages/edit.vue:194", "返回失败:", err);
+              formatAppLog("error", "at pages/packages/edit.vue:204", "返回失败:", err);
               uni.redirectTo({
-                url: "/pages/packages/index"
+                url: "/pages/packages/index",
+                animationType: "slide-out-right",
+                animationDuration: 300
               });
             }
           });
@@ -5872,8 +5886,7 @@ if (uni.restoreGlobal) {
               {
                 class: "input",
                 "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.name = $event),
-                placeholder: "请输入商品名称",
-                focus: true
+                placeholder: "请输入商品名称"
               },
               null,
               512

@@ -31,5 +31,13 @@
 			"iconPath": "static/images/package.png",
 			"selectedIconPath": "static/images/package-active.png"
 		}]
+	},
+	"globalStyle": {
+		"pageAnimation": true,
+		"app-plus": {
+			"animationType": "slide-in-right",
+			"animationDuration": 300,
+			"bounce": "none"
+		}
 	}
 }

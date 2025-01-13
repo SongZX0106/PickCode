@@ -126,6 +126,9 @@
     <view class="add-package-btn" @click="showAddPackage">
       <uni-icons type="plusempty" size="24" color="#fff" />
     </view>
+
+    <!-- 添加底部占位区域 -->
+    <view class="bottom-safe-area"></view>
   </view>
 </template>
 
@@ -134,6 +137,9 @@ import taobao from "@/static/images/taobao.png";
 import jingdong from "@/static/images/jd.png";
 import pinduoduo from "@/static/images/pinduoduo.png";
 import douyin from "@/static/images/douyin.png";
+import weipinhui from "@/static/images/weipinhui.png";
+import xiaohongshu from "@/static/images/xiaohongshu.png";
+import alibaba from "@/static/images/1688.png";
 import other from "@/static/images/other.png";
 
 export default {
@@ -144,9 +150,12 @@ export default {
       jingdong,
       pinduoduo,
       douyin,
+      weipinhui,
+      xiaohongshu,
+      alibaba,
       other,
       tableData: [],
-      platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
+      platforms: ["淘宝", "京东", "拼多多", "抖音", "唯品会", "小红书", "1688", "其他"],
       menuStyle: {
         top: "0px",
         right: "25px",
@@ -184,32 +193,23 @@ export default {
     showAddPackage() {
       this.vibrateShort();
       uni.navigateTo({
-        url: "/pages/packages/edit",
+        url: '/pages/packages/edit',
+        animationType: 'slide-in-right',
+        animationDuration: 300
       });
     },
     showEditPackage(item, date) {
       this.vibrateShort();
-      uni.setStorageSync(
-        "editData",
-        JSON.stringify({
-          item,
-          date,
-          index: this.tableData
-            .find((group) => group.date === date)
-            .list.findIndex((i) => i === item),
-        })
-      );
-      // 关闭菜单栏
-      this.tableData.forEach((group) => {
-        group.list.forEach((item) => {
-          if (item.showActions) {
-            this.$set(item, "showActions", false);
-          }
-        });
-      });
-
+      uni.setStorageSync('editData', JSON.stringify({
+        item,
+        date,
+        index: this.tableData.find(group => group.date === date)
+          .list.findIndex(i => i === item)
+      }));
+      // 关闭操作菜单
+      this.$set(item, 'showActions', false);
       uni.navigateTo({
-        url: "/pages/packages/edit?type=edit",
+        url: '/pages/packages/edit?type=edit',
       });
     },
     handlePageClick() {
@@ -351,6 +351,9 @@ export default {
         京东: this.jingdong,
         拼多多: this.pinduoduo,
         抖音: this.douyin,
+        唯品会: this.weipinhui,
+        小红书: this.xiaohongshu,
+        "1688": this.alibaba,
         其他: this.other,
       };
       return icons[platform] || this.other;
@@ -505,7 +508,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 }
 
 .container {
-  padding: 40rpx 20rpx 20rpx;
+  padding: 40rpx 20rpx calc(120rpx + env(safe-area-inset-bottom));
   position: relative;
   z-index: 1;
   width: 100%;
@@ -516,24 +519,20 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 .add-package-btn {
   position: fixed;
   right: 40rpx;
-  bottom: 120rpx;
+  bottom: calc(40rpx + env(safe-area-inset-bottom));
   width: 100rpx;
   height: 100rpx;
-  background: $theme-gradient;
+  background: linear-gradient(135deg, #1673ff, #0052d9);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 16rpx rgba(0, 82, 217, 0.3);
+  box-shadow: 0 4rpx 16rpx rgba(22, 115, 255, 0.3);
   z-index: 99;
 
   &:active {
     transform: scale(0.95);
-    background: linear-gradient(135deg, #0049c6, #003594);
-  }
-
-  .uni-icons {
-    font-size: 48rpx;
+    background: linear-gradient(135deg, #1668ff, #0049d9);
   }
 }
 
@@ -900,7 +899,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 .add-package-btn {
   position: fixed;
   right: 40rpx;
-  bottom: 120rpx;
+  bottom: calc(40rpx + env(safe-area-inset-bottom));
   width: 100rpx;
   height: 100rpx;
   background: linear-gradient(135deg, #1673ff, #0052d9);
@@ -971,5 +970,11 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
     width: 100%;
     height: 100%;
   }
+}
+
+// 添加底部安全区域样式
+.bottom-safe-area {
+  height: calc(120rpx + env(safe-area-inset-bottom));
+  width: 100%;
 }
 </style>

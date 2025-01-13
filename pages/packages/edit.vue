@@ -32,7 +32,6 @@
             class="input"
             v-model="formData.name"
             placeholder="请输入商品名称"
-            :focus="true"
           />
         </view>
 
@@ -76,6 +75,9 @@ import taobao from "@/static/images/taobao.png";
 import jingdong from "@/static/images/jd.png";
 import pinduoduo from "@/static/images/pinduoduo.png";
 import douyin from "@/static/images/douyin.png";
+import weipinhui from "@/static/images/weipinhui.png";
+import xiaohongshu from "@/static/images/xiaohongshu.png";
+import alibaba from "@/static/images/1688.png";
 import other from "@/static/images/other.png";
 
 export default {
@@ -92,11 +94,14 @@ export default {
         checked: false,
         date: new Date().toISOString().split('T')[0],
       },
-      platforms: ["淘宝", "京东", "拼多多", "抖音", "其他"],
+      platforms: ["淘宝", "京东", "拼多多", "抖音", "唯品会", "小红书", "1688", "其他"],
       taobao,
       jingdong,
       pinduoduo,
       douyin,
+      weipinhui,
+      xiaohongshu,
+      alibaba,
       other,
     };
   },
@@ -142,6 +147,9 @@ export default {
         京东: this.jingdong,
         拼多多: this.pinduoduo,
         抖音: this.douyin,
+        唯品会: this.weipinhui,
+        小红书: this.xiaohongshu,
+        "1688": this.alibaba,
         其他: this.other,
       };
       return icons[platform] || this.other;
@@ -187,14 +195,17 @@ export default {
       setTimeout(() => {
         uni.navigateBack({
           delta: 1,
+          animationType: 'slide-out-right',
+          animationDuration: 300,
           success: () => {
             console.log('返回成功');
           },
           fail: (err) => {
             console.error('返回失败:', err);
-            // 如果返回失败，尝试重定向到包裹页
             uni.redirectTo({
-              url: '/pages/packages/index'
+              url: '/pages/packages/index',
+              animationType: 'slide-out-right',
+              animationDuration: 300
             });
           }
         });
