@@ -884,6 +884,7 @@
 .action-item {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.3125rem;
   padding: 0.625rem;
   font-size: 0.875rem;

@@ -15,7 +15,7 @@
             <input
               class="code-input"
               v-model="newCode"
-              type="number"
+              type="text"
               placeholder="请输入取件码"
             />
             <view 
@@ -149,7 +149,7 @@
                         class="action-item delete"
                         @click.stop="deleteCode(item)"
                       >
-                        <uni-icons type="trash" size="16" />
+                        <uni-icons type="trash" size="16" color="#ff0000" />
                         <text>删除</text>
                       </view>
                     </view>
@@ -1008,6 +1008,7 @@ export default {
 .action-item {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10rpx;
   padding: 20rpx;
   font-size: 28rpx;

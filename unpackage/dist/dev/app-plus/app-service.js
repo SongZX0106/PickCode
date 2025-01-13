@@ -826,7 +826,7 @@ if (uni.restoreGlobal) {
             "input",
             {
               class: "dialog-input",
-              type: "number",
+              type: "text",
               "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.inputValue = $event),
               placeholder: "请输入新的取件码"
             },
@@ -1493,7 +1493,7 @@ if (uni.restoreGlobal) {
                 {
                   class: "code-input",
                   "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.newCode = $event),
-                  type: "number",
+                  type: "text",
                   placeholder: "请输入取件码"
                 },
                 null,
@@ -1738,7 +1738,8 @@ if (uni.restoreGlobal) {
                                     }, [
                                       vue.createVNode(_component_uni_icons, {
                                         type: "trash",
-                                        size: "16"
+                                        size: "16",
+                                        color: "#ff0000"
                                       }),
                                       vue.createElementVNode("text", null, "删除")
                                     ], 8, ["onClick"])
@@ -2563,510 +2564,625 @@ if (uni.restoreGlobal) {
     )) : vue.createCommentVNode("v-if", true);
   }
   const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-4dd3c44b"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const taobao = "/static/images/taobao.png";
+  const jingdong = "/static/images/jd.png";
+  const pinduoduo = "/static/images/pinduoduo.png";
+  const other = "/static/images/other.png";
   const _sfc_main$1 = {
     data() {
       return {
-        packages: [],
+        version: "1.0.0",
+        taobao,
+        jingdong,
+        pinduoduo,
+        other,
+        tableData: [
+          {
+            date: "2025-01-12",
+            list: [
+              {
+                platform: "淘宝",
+                platformIcon: taobao,
+                name: "商品名称",
+                price: "100.00",
+                time: "10:00"
+              },
+              {
+                platform: "淘宝",
+                platformIcon: taobao,
+                name: "商品名称2",
+                price: "100.00",
+                time: "10:00"
+              },
+              {
+                platform: "其他",
+                platformIcon: other,
+                name: "商品名称",
+                price: "100.00",
+                time: "10:00"
+              }
+            ]
+          },
+          {
+            date: "2025-01-18",
+            list: [
+              {
+                platform: "京东",
+                platformIcon: jingdong,
+                name: "商品名称",
+                price: "100.00",
+                time: "10:00"
+              },
+              {
+                platform: "拼多多",
+                platformIcon: pinduoduo,
+                name: "商品名称",
+                price: "100.00",
+                time: "10:00"
+              }
+            ]
+          }
+        ],
         platforms: ["淘宝", "京东", "拼多多", "其他"],
-        platformIndex: 0,
-        newPackage: {
-          platform: "",
+        isEdit: false,
+        currentPackage: {
+          platform: "淘宝",
           name: "",
-          price: ""
+          price: "",
+          time: "",
+          checked: false
         },
-        version: "1.0.0"
+        editingIndex: -1,
+        editingDate: "",
+        menuStyle: {
+          top: "0px",
+          right: "25px"
+        },
+        autoFocus: false
       };
     },
-    computed: {
-      groupedPackages() {
-        const groups = {};
-        this.packages.forEach((item) => {
-          const date = new Date(item.date);
-          const formattedDate = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
-          if (!groups[formattedDate]) {
-            groups[formattedDate] = {};
-          }
-          const platform = item.platform;
-          if (!groups[formattedDate][platform]) {
-            groups[formattedDate][platform] = [];
-          }
-          groups[formattedDate][platform].push(item);
-        });
-        return this.sortGroupsByDate(groups);
-      }
-    },
     methods: {
-      showAddPackage() {
-        this.vibrateShort();
-        this.resetForm();
-        this.$refs.popup.open();
+      formatDate(date) {
+        const [year, month, day] = date.split("-");
+        return `${year}年${parseInt(month)}月${parseInt(day)}日`;
       },
-      hideAddPackage() {
-        this.$refs.popup.close();
-        this.resetForm();
+      getPlatformAmount(items) {
+        return items.reduce((sum, item) => {
+          const price = parseFloat(item.price || "0");
+          return sum + (isNaN(price) ? 0 : price);
+        }, 0).toFixed(2);
       },
-      resetForm() {
-        this.platformIndex = 0;
-        this.newPackage = {
-          platform: this.platforms[0],
-          name: "",
-          price: ""
-        };
-      },
-      onPlatformChange(e) {
-        this.platformIndex = e.detail.value;
-        this.newPackage.platform = this.platforms[this.platformIndex];
-      },
-      addPackage() {
-        if (!this.newPackage.platform || !this.newPackage.name || !this.newPackage.price) {
-          uni.showToast({
-            title: "请填写完整信息",
-            icon: "none"
-          });
-          return;
-        }
-        const packageItem = {
-          ...this.newPackage,
-          date: (/* @__PURE__ */ new Date()).toLocaleString(),
-          showActions: false
-        };
-        this.packages.unshift(packageItem);
-        this.saveToStorage();
-        this.hideAddPackage();
-        this.vibrateShort();
-      },
-      getPlatformIcon(platform) {
-        const icons = {
-          淘宝: "/static/images/taobao.png",
-          京东: "/static/images/jd.png",
-          拼多多: "/static/images/pinduoduo.png",
-          其他: "/static/images/other.png"
-        };
-        return icons[platform] || icons["其他"];
-      },
-      getTotalAmount(dateGroup) {
-        let total = 0;
-        Object.values(dateGroup).forEach((items) => {
-          items.forEach((item) => {
-            total += parseFloat(item.price) || 0;
-          });
-        });
-        return total.toFixed(2);
-      },
-      handlePageClick() {
-        this.packages.forEach((item) => {
-          if (item.showActions) {
-            this.$set(item, "showActions", false);
-          }
-        });
-      },
-      sortGroupsByDate(groups) {
-        const sortedGroups = Object.entries(groups).sort((a, b) => {
-          return new Date(b[0].replace(/(\d+)年(\d+)月(\d+)日/, "$1-$2-$3")) - new Date(a[0].replace(/(\d+)年(\d+)月(\d+)日/, "$1-$2-$3"));
-        });
-        const sortedGroupsObj = {};
-        sortedGroups.forEach(([date, platformGroups]) => {
-          sortedGroupsObj[date] = platformGroups;
-        });
-        return sortedGroupsObj;
-      },
-      vibrateShort() {
-        if (uni.getSystemInfoSync().platform !== "web") {
-          uni.vibrateShort({
-            success: function() {
-              formatAppLog("log", "at pages/packages/index.vue:307", "震动成功");
-            },
-            fail: function() {
-              formatAppLog("log", "at pages/packages/index.vue:310", "震动失败");
+      toggleMoreActions(item, date) {
+        this.tableData.forEach((group) => {
+          group.list.forEach((goods) => {
+            if (goods !== item) {
+              this.$set(goods, "showActions", false);
             }
           });
-        }
-      },
-      saveToStorage() {
-        try {
-          uni.setStorageSync("packages", JSON.stringify(this.packages));
-        } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:319", "保存缓存失败:", e);
-        }
-      },
-      getAppVersion() {
-        try {
-          this.version = plus.runtime.version;
-        } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:327", "获取版本号失败:", e);
-        }
-      },
-      isLastItem(item) {
-        for (const [date, platformGroups] of Object.entries(
-          this.groupedPackages
-        )) {
-          for (const [platform, items] of Object.entries(platformGroups)) {
-            if (items.includes(item) && items.indexOf(item) === items.length - 1) {
-              return true;
-            }
-          }
-        }
-        return false;
-      },
-      toggleMoreActions(item) {
-        this.vibrateShort();
-        if (!item.hasOwnProperty("showActions")) {
-          this.$set(item, "showActions", false);
-        }
-        this.packages.forEach((pkg) => {
-          if (pkg !== item && pkg.showActions) {
-            this.$set(pkg, "showActions", false);
-          }
         });
         this.$set(item, "showActions", !item.showActions);
+        if (item.showActions) {
+          this.$nextTick(() => {
+            const query = uni.createSelectorQuery();
+            query.select(".more-btn").boundingClientRect((btnData) => {
+              if (btnData) {
+                query.select(".action-menu").boundingClientRect((menuData) => {
+                  if (menuData) {
+                    this.menuStyle = {
+                      right: "25px"
+                    };
+                  }
+                }).exec();
+              }
+            }).exec();
+          });
+        }
       },
-      editPackage(item) {
+      showAddPackage() {
+        this.isEdit = false;
+        this.currentPackage = {
+          platform: "淘宝",
+          name: "",
+          price: "",
+          time: this.getCurrentTime(),
+          checked: false
+        };
+        this.autoFocus = true;
+        this.$refs.popup.open();
+      },
+      showEditPackage(item, date) {
+        this.isEdit = true;
+        this.currentPackage = { ...item };
+        this.editingDate = date;
+        const dateGroup = this.tableData.find((group) => group.date === date);
+        if (dateGroup) {
+          this.editingIndex = dateGroup.list.findIndex((i) => i === item);
+        }
+        this.$set(item, "showActions", false);
+        this.autoFocus = true;
+        this.$refs.popup.open();
+      },
+      hidePopup() {
+        this.$refs.popup.close();
+      },
+      selectPlatform(platform) {
+        this.currentPackage.platform = platform;
         this.vibrateShort();
-        uni.showToast({
-          title: "编辑功能开发中",
-          icon: "none"
+      },
+      submitPackage() {
+        if (!this.currentPackage.name) {
+          return;
+        }
+        const packageData = {
+          ...this.currentPackage,
+          price: this.currentPackage.price || "0.00",
+          platformIcon: this.getPlatformIcon(this.currentPackage.platform),
+          showActions: false
+        };
+        if (this.isEdit) {
+          const dateGroup = this.tableData.find((group) => group.date === this.editingDate);
+          if (dateGroup && this.editingIndex !== -1) {
+            this.$set(dateGroup.list, this.editingIndex, packageData);
+          }
+        } else {
+          const now = /* @__PURE__ */ new Date();
+          const today = now.toISOString().split("T")[0];
+          let dateGroup = this.tableData.find((group) => group.date === today);
+          if (!dateGroup) {
+            dateGroup = {
+              date: today,
+              list: []
+            };
+            this.tableData.unshift(dateGroup);
+          }
+          dateGroup.list.unshift(packageData);
+          this.$nextTick(() => {
+            const query = uni.createSelectorQuery();
+            query.select(".timeline").boundingClientRect((data) => {
+              if (data) {
+                uni.pageScrollTo({
+                  scrollTop: data.top,
+                  duration: 300
+                });
+              }
+            }).exec();
+          });
+        }
+        this.hidePopup();
+        this.saveData();
+      },
+      deletePackage(item, date) {
+        this.$set(item, "showActions", false);
+        const dateGroup = this.tableData.find((group) => group.date === date);
+        if (dateGroup) {
+          const index = dateGroup.list.findIndex((i) => i === item);
+          if (index !== -1) {
+            dateGroup.list.splice(index, 1);
+            if (dateGroup.list.length === 0) {
+              const dateIndex = this.tableData.findIndex(
+                (group) => group.date === date
+              );
+              this.tableData.splice(dateIndex, 1);
+            }
+            this.saveData();
+          }
+        }
+      },
+      getCurrentTime() {
+        const now = /* @__PURE__ */ new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        return `${hours}:${minutes}`;
+      },
+      saveData() {
+        try {
+          uni.setStorageSync("packageData", JSON.stringify(this.tableData));
+        } catch (e) {
+          formatAppLog("error", "at pages/packages/index.vue:424", "保存数据失败:", e);
+        }
+      },
+      loadData() {
+        try {
+          const data = uni.getStorageSync("packageData");
+          if (data) {
+            this.tableData = JSON.parse(data);
+          }
+        } catch (e) {
+          formatAppLog("error", "at pages/packages/index.vue:434", "读取数据失败:", e);
+        }
+      },
+      // 按平台分组
+      groupByPlatform(list) {
+        return list.reduce((groups, item) => {
+          const platform = item.platform;
+          if (!groups[platform]) {
+            groups[platform] = [];
+          }
+          groups[platform].push(item);
+          return groups;
+        }, {});
+      },
+      // 获取平台图标
+      getPlatformIcon(platform) {
+        const icons = {
+          淘宝: this.taobao,
+          京东: this.jingdong,
+          拼多多: this.pinduoduo,
+          其他: this.other
+        };
+        return icons[platform] || this.other;
+      },
+      // 切换选中状态
+      toggleCheck(item) {
+        this.$set(item, "checked", !item.checked);
+      },
+      handlePageClick() {
+        this.tableData.forEach((group) => {
+          group.list.forEach((item) => {
+            if (item.showActions) {
+              this.$set(item, "showActions", false);
+            }
+          });
         });
       },
-      deletePackage(item) {
-        this.vibrateShort();
+      clearData() {
+        this.tableData = [];
+        try {
+          uni.removeStorageSync("packageData");
+        } catch (e) {
+          formatAppLog("error", "at pages/packages/index.vue:480", "清除缓存失败:", e);
+        }
+      },
+      confirmDeleteDateGroup(date) {
         uni.showModal({
           title: "确认删除",
-          content: "是否删除该包裹记录？",
+          content: "是否删除该日期下的所有包裹？",
+          confirmColor: "#ff5a5f",
           success: (res) => {
             if (res.confirm) {
-              this.packages = this.packages.filter((pkg) => pkg !== item);
-              this.saveToStorage();
+              this.deleteDateGroup(date);
             }
           }
         });
       },
-      formatPrice(price) {
-        return parseFloat(price).toFixed(2);
+      deleteDateGroup(date) {
+        const dateIndex = this.tableData.findIndex(
+          (group) => group.date === date
+        );
+        if (dateIndex !== -1) {
+          this.tableData.splice(dateIndex, 1);
+          this.saveData();
+        }
       },
-      formatTime(date) {
-        const d = new Date(date);
-        const hours = d.getHours().toString().padStart(2, "0");
-        const minutes = d.getMinutes().toString().padStart(2, "0");
-        return `${hours}:${minutes}`;
-      },
-      selectPlatform(index) {
-        this.platformIndex = index;
-        this.newPackage.platform = this.platforms[index];
-        this.vibrateShort();
-      },
-      focusPriceInput() {
-        this.$nextTick(() => {
-          const priceInput = this.$refs.priceInput;
-          if (priceInput) {
-            priceInput.focus();
-          }
-        });
+      getCheckedCount(list) {
+        return list.filter((item) => item.checked).length;
       }
     },
     created() {
-      try {
-        const savedPackages = uni.getStorageSync("packages");
-        if (savedPackages) {
-          this.packages = JSON.parse(savedPackages);
-        }
-      } catch (e) {
-        formatAppLog("error", "at pages/packages/index.vue:416", "读取缓存失败:", e);
-      }
-      this.getAppVersion();
+      this.loadData();
     }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_1);
-    return vue.openBlock(), vue.createElementBlock("view", {
-      class: "page-wrapper",
-      onClick: _cache[6] || (_cache[6] = (...args) => $options.handlePageClick && $options.handlePageClick(...args))
-    }, [
-      vue.createElementVNode("view", { class: "page-bg" }),
-      vue.createElementVNode("view", { class: "container" }, [
-        vue.createElementVNode("view", { class: "title-wrapper" }, [
-          vue.createElementVNode("text", { class: "title" }, "包裹记录"),
-          vue.createElementVNode(
-            "text",
-            { class: "version-text" },
-            "V" + vue.toDisplayString($data.version),
-            1
-            /* TEXT */
-          )
-        ]),
-        vue.createCommentVNode(" 包裹列表 "),
-        (vue.openBlock(true), vue.createElementBlock(
-          vue.Fragment,
-          null,
-          vue.renderList($options.groupedPackages, (dateGroup, date) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              key: date,
-              class: "card code-card"
-            }, [
-              vue.createElementVNode("view", { class: "card-header" }, [
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        vue.createElementVNode("view", {
+          class: "page-wrapper",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.handlePageClick && $options.handlePageClick(...args))
+        }, [
+          vue.createElementVNode("view", { class: "page-bg" }),
+          vue.createElementVNode("view", { class: "container" }, [
+            vue.createElementVNode("view", { class: "title-wrapper" }, [
+              vue.createElementVNode("text", { class: "title" }, "包裹记录"),
+              vue.createElementVNode("view", { class: "header-right" }, [
+                vue.createElementVNode("text", {
+                  class: "clear-btn",
+                  onClick: _cache[0] || (_cache[0] = vue.withModifiers((...args) => $options.clearData && $options.clearData(...args), ["stop"]))
+                }, "清空"),
                 vue.createElementVNode(
                   "text",
-                  { class: "card-title" },
-                  vue.toDisplayString(date),
+                  { class: "version-text" },
+                  "V" + vue.toDisplayString($data.version),
                   1
                   /* TEXT */
-                ),
-                vue.createElementVNode("view", { class: "header-right" }, [
-                  vue.createElementVNode("text", { class: "card-extra" }, [
+                )
+              ])
+            ]),
+            vue.createCommentVNode(" 日期时间轴 "),
+            (vue.openBlock(true), vue.createElementBlock(
+              vue.Fragment,
+              null,
+              vue.renderList($data.tableData, (item) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "timeline",
+                  key: item.date
+                }, [
+                  vue.createElementVNode("view", { class: "timeline-date" }, [
                     vue.createElementVNode(
                       "text",
-                      { class: "pending-count" },
-                      vue.toDisplayString($options.getTotalAmount(dateGroup)),
+                      null,
+                      vue.toDisplayString($options.formatDate(item.date)),
                       1
                       /* TEXT */
-                    ),
-                    vue.createElementVNode("text", null, "元")
-                  ])
-                ])
-              ]),
-              vue.createElementVNode("view", { class: "code-list" }, [
-                vue.createCommentVNode(" 按平台分组显示 "),
-                (vue.openBlock(true), vue.createElementBlock(
-                  vue.Fragment,
-                  null,
-                  vue.renderList(dateGroup, (items, platform) => {
-                    return vue.openBlock(), vue.createElementBlock("view", {
-                      key: platform,
-                      class: "platform-group"
-                    }, [
-                      vue.createElementVNode("view", { class: "platform-header" }, [
-                        vue.createElementVNode("image", {
-                          class: "platform-icon",
-                          src: $options.getPlatformIcon(platform),
-                          mode: "aspectFit"
-                        }, null, 8, ["src"]),
-                        vue.createElementVNode(
-                          "text",
-                          { class: "platform-name" },
-                          vue.toDisplayString(platform),
-                          1
-                          /* TEXT */
-                        )
-                      ]),
-                      (vue.openBlock(true), vue.createElementBlock(
-                        vue.Fragment,
-                        null,
-                        vue.renderList(items, (item, index) => {
-                          return vue.openBlock(), vue.createElementBlock("view", {
-                            class: "package-item",
-                            key: index
-                          }, [
-                            vue.createElementVNode("view", { class: "package-content" }, [
-                              vue.createElementVNode(
-                                "view",
-                                { class: "package-name text-ellipsis" },
-                                vue.toDisplayString(item.name),
-                                1
-                                /* TEXT */
-                              ),
-                              vue.createElementVNode("view", { class: "package-meta" }, [
-                                vue.createElementVNode(
-                                  "text",
-                                  { class: "package-time" },
-                                  vue.toDisplayString($options.formatTime(item.date)),
-                                  1
-                                  /* TEXT */
-                                )
-                              ])
-                            ]),
-                            vue.createElementVNode("view", { class: "package-actions" }, [
-                              vue.createElementVNode(
-                                "view",
-                                { class: "package-price" },
-                                vue.toDisplayString($options.formatPrice(item.price)),
-                                1
-                                /* TEXT */
-                              ),
-                              vue.createCommentVNode(" 更多操作按钮 "),
-                              vue.createElementVNode("view", { class: "more-actions" }, [
-                                vue.createElementVNode("view", {
-                                  class: "more-btn",
-                                  onClick: vue.withModifiers(($event) => $options.toggleMoreActions(item), ["stop"])
-                                }, [
-                                  vue.createElementVNode("view", { class: "dots" }, [
-                                    vue.createElementVNode("view", { class: "dot" }),
-                                    vue.createElementVNode("view", { class: "dot" }),
-                                    vue.createElementVNode("view", { class: "dot" })
-                                  ])
-                                ], 8, ["onClick"]),
-                                vue.createCommentVNode(" 操作菜单 "),
-                                item.showActions ? (vue.openBlock(), vue.createElementBlock(
-                                  "view",
-                                  {
-                                    key: 0,
-                                    class: vue.normalizeClass(["action-menu", { "menu-up": $options.isLastItem(item) }])
-                                  },
-                                  [
-                                    vue.createElementVNode("view", {
-                                      class: "action-item",
-                                      onClick: vue.withModifiers(($event) => $options.editPackage(item), ["stop"])
-                                    }, [
-                                      vue.createVNode(_component_uni_icons, {
-                                        type: "compose",
-                                        size: "16"
-                                      }),
-                                      vue.createElementVNode("text", null, "修改")
-                                    ], 8, ["onClick"]),
-                                    vue.createElementVNode("view", {
-                                      class: "action-item delete",
-                                      onClick: vue.withModifiers(($event) => $options.deletePackage(item), ["stop"])
-                                    }, [
-                                      vue.createVNode(_component_uni_icons, {
-                                        type: "trash",
-                                        size: "16"
-                                      }),
-                                      vue.createElementVNode("text", null, "删除")
-                                    ], 8, ["onClick"])
-                                  ],
-                                  2
-                                  /* CLASS */
-                                )) : vue.createCommentVNode("v-if", true)
-                              ])
-                            ])
-                          ]);
-                        }),
-                        128
-                        /* KEYED_FRAGMENT */
-                      ))
-                    ]);
-                  }),
-                  128
-                  /* KEYED_FRAGMENT */
-                ))
-              ])
-            ]);
-          }),
-          128
-          /* KEYED_FRAGMENT */
-        ))
-      ]),
-      vue.createCommentVNode(" 添加按钮 "),
-      vue.createElementVNode("view", {
-        class: "add-package-btn",
-        onClick: _cache[0] || (_cache[0] = (...args) => $options.showAddPackage && $options.showAddPackage(...args))
-      }, [
-        vue.createVNode(_component_uni_icons, {
-          type: "plusempty",
-          size: "24",
-          color: "#fff"
-        })
-      ]),
-      vue.createCommentVNode(" 添加包裹弹出层 "),
-      vue.createVNode(
-        _component_uni_popup,
-        {
-          ref: "popup",
-          type: "bottom"
-        },
-        {
-          default: vue.withCtx(() => [
-            vue.createElementVNode("view", { class: "popup-content" }, [
-              vue.createElementVNode("view", { class: "popup-header" }, [
-                vue.createElementVNode("text", { class: "popup-title" }, "添加包裹"),
-                vue.createElementVNode("view", {
-                  class: "close-btn",
-                  onClick: _cache[1] || (_cache[1] = (...args) => $options.hideAddPackage && $options.hideAddPackage(...args))
-                }, [
-                  vue.createVNode(_component_uni_icons, {
-                    type: "close",
-                    size: "20",
-                    color: "#999"
-                  })
-                ])
-              ]),
-              vue.createElementVNode("view", { class: "popup-body" }, [
-                vue.createCommentVNode(" 平台选择卡片 "),
-                vue.createElementVNode("view", { class: "platform-select" }, [
-                  vue.createElementVNode("text", { class: "label" }, "选择平台"),
+                    )
+                  ]),
+                  vue.createCommentVNode(" 添加统计信息 "),
+                  vue.createElementVNode("view", { class: "date-stats" }, [
+                    vue.createElementVNode(
+                      "text",
+                      null,
+                      "记录了" + vue.toDisplayString(item.list.length) + "个包裹，" + vue.toDisplayString($options.getCheckedCount(item.list)) + "个已签收",
+                      1
+                      /* TEXT */
+                    )
+                  ]),
+                  vue.createCommentVNode(" 平台卡片组 "),
                   vue.createElementVNode("view", { class: "platform-cards" }, [
                     (vue.openBlock(true), vue.createElementBlock(
                       vue.Fragment,
                       null,
-                      vue.renderList($data.platforms, (platform, index) => {
+                      vue.renderList($options.groupByPlatform(item.list), (platformItems, platform) => {
                         return vue.openBlock(), vue.createElementBlock("view", {
-                          key: platform,
-                          class: vue.normalizeClass(["platform-card", { active: $data.platformIndex === index }]),
-                          onClick: ($event) => $options.selectPlatform(index)
+                          class: "platform-card",
+                          key: platform
                         }, [
-                          vue.createElementVNode("image", {
-                            class: "platform-icon",
-                            src: $options.getPlatformIcon(platform),
-                            mode: "aspectFit"
-                          }, null, 8, ["src"]),
-                          vue.createElementVNode(
-                            "text",
-                            { class: "platform-name" },
-                            vue.toDisplayString(platform),
-                            1
-                            /* TEXT */
-                          )
-                        ], 10, ["onClick"]);
+                          vue.createElementVNode("view", { class: "platform-header" }, [
+                            vue.createElementVNode("image", {
+                              class: "platform-icon",
+                              src: $options.getPlatformIcon(platform),
+                              mode: "aspectFit"
+                            }, null, 8, ["src"]),
+                            vue.createElementVNode(
+                              "text",
+                              { class: "platform-name" },
+                              vue.toDisplayString(platform),
+                              1
+                              /* TEXT */
+                            ),
+                            vue.createElementVNode(
+                              "text",
+                              { class: "platform-amount" },
+                              "¥" + vue.toDisplayString($options.getPlatformAmount(platformItems)),
+                              1
+                              /* TEXT */
+                            )
+                          ]),
+                          vue.createElementVNode("view", { class: "goods-list" }, [
+                            (vue.openBlock(true), vue.createElementBlock(
+                              vue.Fragment,
+                              null,
+                              vue.renderList(platformItems, (list, index) => {
+                                return vue.openBlock(), vue.createElementBlock("view", {
+                                  class: "goods-item",
+                                  key: index
+                                }, [
+                                  vue.createElementVNode("view", { class: "goods-content" }, [
+                                    vue.createElementVNode("checkbox", {
+                                      value: list.id,
+                                      checked: list.checked,
+                                      onClick: ($event) => $options.toggleCheck(list),
+                                      color: "#1673ff"
+                                    }, null, 8, ["value", "checked", "onClick"]),
+                                    vue.createElementVNode("view", { class: "goods-info" }, [
+                                      vue.createElementVNode(
+                                        "text",
+                                        { class: "goods-name text-ellipsis" },
+                                        vue.toDisplayString(list.name),
+                                        1
+                                        /* TEXT */
+                                      )
+                                    ]),
+                                    vue.createElementVNode(
+                                      "text",
+                                      { class: "goods-price" },
+                                      vue.toDisplayString(list.price),
+                                      1
+                                      /* TEXT */
+                                    )
+                                  ]),
+                                  vue.createElementVNode("view", { class: "goods-actions" }, [
+                                    vue.createElementVNode("view", {
+                                      class: "more-btn",
+                                      onClick: vue.withModifiers(($event) => $options.toggleMoreActions(list, item.date), ["stop"])
+                                    }, [
+                                      vue.createElementVNode("view", { class: "dots" }, [
+                                        vue.createElementVNode("view", { class: "dot" }),
+                                        vue.createElementVNode("view", { class: "dot" }),
+                                        vue.createElementVNode("view", { class: "dot" })
+                                      ])
+                                    ], 8, ["onClick"]),
+                                    vue.createCommentVNode(" 操作菜单 "),
+                                    list.showActions ? (vue.openBlock(), vue.createElementBlock(
+                                      "view",
+                                      {
+                                        key: 0,
+                                        class: "action-menu",
+                                        style: vue.normalizeStyle($data.menuStyle)
+                                      },
+                                      [
+                                        vue.createElementVNode("view", {
+                                          class: "action-item",
+                                          onClick: vue.withModifiers(($event) => $options.showEditPackage(list, item.date), ["stop"])
+                                        }, [
+                                          vue.createVNode(_component_uni_icons, {
+                                            type: "compose",
+                                            size: "16",
+                                            color: "#666"
+                                          }),
+                                          vue.createElementVNode("text", null, "修改")
+                                        ], 8, ["onClick"]),
+                                        vue.createElementVNode("view", {
+                                          class: "action-item",
+                                          onClick: vue.withModifiers(($event) => $options.deletePackage(list, item.date), ["stop"])
+                                        }, [
+                                          vue.createVNode(_component_uni_icons, {
+                                            type: "trash",
+                                            size: "16",
+                                            color: "#ff0000"
+                                          }),
+                                          vue.createElementVNode("text", { style: { "color": "#ff0000" } }, "删除")
+                                        ], 8, ["onClick"])
+                                      ],
+                                      4
+                                      /* STYLE */
+                                    )) : vue.createCommentVNode("v-if", true)
+                                  ])
+                                ]);
+                              }),
+                              128
+                              /* KEYED_FRAGMENT */
+                            ))
+                          ])
+                        ]);
                       }),
                       128
                       /* KEYED_FRAGMENT */
                     ))
+                  ]),
+                  vue.createCommentVNode(" 删除按钮移到这里 "),
+                  vue.createElementVNode("view", {
+                    class: "date-delete-wrapper",
+                    onClick: ($event) => $options.confirmDeleteDateGroup(item.date)
+                  }, [
+                    vue.createVNode(_component_uni_icons, {
+                      type: "trash",
+                      size: "16"
+                    }),
+                    vue.createElementVNode("view", null, "删除")
+                  ], 8, ["onClick"])
+                ]);
+              }),
+              128
+              /* KEYED_FRAGMENT */
+            ))
+          ]),
+          vue.createCommentVNode(" 添加按钮 "),
+          vue.createElementVNode("view", {
+            class: "add-package-btn",
+            onClick: _cache[1] || (_cache[1] = (...args) => $options.showAddPackage && $options.showAddPackage(...args))
+          }, [
+            vue.createVNode(_component_uni_icons, {
+              type: "plusempty",
+              size: "24",
+              color: "#fff"
+            })
+          ])
+        ]),
+        vue.createCommentVNode(" 添加弹出层组件 "),
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "popup",
+            type: "bottom",
+            "safe-area": false
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("view", { class: "popup-content" }, [
+                vue.createElementVNode("view", { class: "popup-header" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "popup-title" },
+                    vue.toDisplayString($data.isEdit ? "修改包裹" : "添加包裹"),
+                    1
+                    /* TEXT */
+                  ),
+                  vue.createElementVNode("view", {
+                    class: "close-btn",
+                    onClick: _cache[3] || (_cache[3] = (...args) => $options.hidePopup && $options.hidePopup(...args))
+                  }, [
+                    vue.createVNode(_component_uni_icons, {
+                      type: "close",
+                      size: "20",
+                      color: "#999"
+                    })
                   ])
                 ]),
-                vue.createCommentVNode(" 表单输入区域 "),
-                vue.createElementVNode("view", { class: "form-inputs" }, [
+                vue.createElementVNode("view", { class: "popup-body" }, [
+                  vue.createCommentVNode(" 平台选择 "),
+                  vue.createElementVNode("view", { class: "platform-select" }, [
+                    vue.createElementVNode("text", { class: "label" }, "选择平台"),
+                    vue.createElementVNode("view", { class: "platform-cards" }, [
+                      (vue.openBlock(true), vue.createElementBlock(
+                        vue.Fragment,
+                        null,
+                        vue.renderList($data.platforms, (platform, index) => {
+                          return vue.openBlock(), vue.createElementBlock("view", {
+                            key: platform,
+                            class: vue.normalizeClass(["platform-card", { active: $data.currentPackage.platform === platform }]),
+                            onClick: ($event) => $options.selectPlatform(platform)
+                          }, [
+                            vue.createElementVNode("image", {
+                              class: "platform-icon",
+                              src: $options.getPlatformIcon(platform),
+                              mode: "aspectFit"
+                            }, null, 8, ["src"]),
+                            vue.createElementVNode(
+                              "text",
+                              { class: "platform-name" },
+                              vue.toDisplayString(platform),
+                              1
+                              /* TEXT */
+                            )
+                          ], 10, ["onClick"]);
+                        }),
+                        128
+                        /* KEYED_FRAGMENT */
+                      ))
+                    ])
+                  ]),
+                  vue.createCommentVNode(" 表单输入 "),
                   vue.createElementVNode("view", { class: "form-item" }, [
                     vue.createElementVNode("text", { class: "label" }, "商品名称"),
-                    vue.withDirectives(vue.createElementVNode(
-                      "input",
-                      {
-                        class: "input",
-                        "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.newPackage.name = $event),
-                        placeholder: "请输入商品名称",
-                        "confirm-type": "next",
-                        onConfirm: _cache[3] || (_cache[3] = (...args) => $options.focusPriceInput && $options.focusPriceInput(...args))
-                      },
-                      null,
-                      544
-                      /* NEED_HYDRATION, NEED_PATCH */
-                    ), [
-                      [vue.vModelText, $data.newPackage.name]
+                    vue.withDirectives(vue.createElementVNode("input", {
+                      class: "input",
+                      "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.currentPackage.name = $event),
+                      placeholder: "请输入商品名称",
+                      focus: $data.autoFocus,
+                      onBlur: _cache[5] || (_cache[5] = ($event) => $data.autoFocus = false)
+                    }, null, 40, ["focus"]), [
+                      [vue.vModelText, $data.currentPackage.name]
                     ])
                   ]),
                   vue.createElementVNode("view", { class: "form-item" }, [
-                    vue.createElementVNode("text", { class: "label" }, "价格"),
+                    vue.createElementVNode("text", { class: "label" }, "价格（选填）"),
                     vue.withDirectives(vue.createElementVNode(
                       "input",
                       {
                         class: "input",
-                        "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.newPackage.price = $event),
+                        "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.currentPackage.price = $event),
                         type: "digit",
-                        placeholder: "请输入价格",
-                        ref: "priceInput"
+                        placeholder: "请输入价格"
                       },
                       null,
                       512
                       /* NEED_PATCH */
                     ), [
-                      [vue.vModelText, $data.newPackage.price]
+                      [vue.vModelText, $data.currentPackage.price]
                     ])
                   ])
+                ]),
+                vue.createElementVNode("view", { class: "popup-footer" }, [
+                  vue.createElementVNode("button", {
+                    class: "submit-btn",
+                    onClick: _cache[7] || (_cache[7] = (...args) => $options.submitPackage && $options.submitPackage(...args))
+                  }, "确定")
                 ])
-              ]),
-              vue.createElementVNode("view", { class: "popup-footer" }, [
-                vue.createElementVNode("button", {
-                  class: "submit-btn",
-                  onClick: _cache[5] || (_cache[5] = (...args) => $options.addPackage && $options.addPackage(...args))
-                }, "确定")
               ])
-            ])
-          ]),
-          _: 1
-          /* STABLE */
-        },
-        512
-        /* NEED_PATCH */
-      )
-    ]);
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
   }
   const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);

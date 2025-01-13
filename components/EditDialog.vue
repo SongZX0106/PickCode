@@ -7,7 +7,7 @@
       <view class="dialog-body">
         <input 
           class="dialog-input"
-          type="number"
+          type="text"
           v-model="inputValue"
           placeholder="请输入新的取件码"
         />
