@@ -698,7 +698,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$c = {
+  const _sfc_main$d = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -752,7 +752,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -767,8 +767,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$b = {
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$c = {
     name: "EditDialog",
     props: {
       show: {
@@ -807,7 +807,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return $props.show ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       class: "dialog-mask",
@@ -850,7 +850,7 @@ if (uni.restoreGlobal) {
       ])
     ])) : vue.createCommentVNode("v-if", true);
   }
-  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
+  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
   var isIos;
   isIos = plus.os.name == "iOS";
   function judgeIosPermissionPush() {
@@ -1085,7 +1085,7 @@ if (uni.restoreGlobal) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
   const yizhanIcon = "/static/yizhan.png";
-  const _sfc_main$a = {
+  const _sfc_main$b = {
     components: {
       EditDialog
     },
@@ -1278,25 +1278,50 @@ if (uni.restoreGlobal) {
           address: ""
         };
         const rulesList = JSON.parse(uni.getStorageSync("matchRulesList") || "[]");
-        const enabledRule = rulesList.find((rule) => rule.enabled);
-        if (!enabledRule) {
-          return info;
-        }
-        Object.keys(enabledRule.rules).forEach((key) => {
-          const rule = enabledRule.rules[key];
-          if (rule.start && rule.end) {
-            const startIndex = content.indexOf(rule.start);
-            const endIndex = content.indexOf(rule.end, startIndex + rule.start.length);
-            if (startIndex !== -1 && endIndex !== -1) {
-              info[key] = content.substring(startIndex + rule.start.length, endIndex).trim();
+        const enabledRules = rulesList.filter((rule) => rule.enabled);
+        for (const rule of enabledRules) {
+          Object.keys(rule.rules).forEach((key) => {
+            if (info[key])
+              return;
+            const ruleConfig = rule.rules[key];
+            if (ruleConfig.start && ruleConfig.end) {
+              const startIndex = content.indexOf(ruleConfig.start);
+              const endIndex = content.indexOf(
+                ruleConfig.end,
+                startIndex + ruleConfig.start.length
+              );
+              if (startIndex !== -1 && endIndex !== -1) {
+                info[key] = content.substring(
+                  startIndex + ruleConfig.start.length,
+                  endIndex
+                ).trim();
+              }
             }
-          }
-        });
+          });
+        }
         return info;
       },
       // 读取短信
       async readSms() {
         this.vibrateShort();
+        const rulesList = JSON.parse(uni.getStorageSync("matchRulesList") || "[]");
+        const enabledRules = rulesList.filter((rule) => rule.enabled);
+        if (enabledRules.length === 0) {
+          uni.showModal({
+            title: "提示",
+            content: rulesList.length === 0 ? "您还没有设置任何匹配规则，是否现在去设置？" : "没有已启用的匹配规则，是否去设置？",
+            confirmText: "去设置",
+            cancelText: "取消",
+            success: (res) => {
+              if (res.confirm) {
+                uni.navigateTo({
+                  url: "/pages/my/match-rules"
+                });
+              }
+            }
+          });
+          return;
+        }
         if (plus.os.name === "Android") {
           var result = await permision.requestAndroidPermission("android.permission.READ_SMS");
           if (result == 1) {
@@ -1343,7 +1368,7 @@ if (uni.restoreGlobal) {
               cur.close();
               uni.hideLoading();
             } catch (e) {
-              formatAppLog("error", "at pages/index/index.vue:496", "获取短信失败", e);
+              formatAppLog("error", "at pages/index/index.vue:528", "获取短信失败", e);
               uni.hideLoading();
               uni.showToast({
                 title: "读取短信失败",
@@ -1448,7 +1473,7 @@ if (uni.restoreGlobal) {
         try {
           this.version = plus.runtime.version;
         } catch (e) {
-          formatAppLog("error", "at pages/index/index.vue:624", "获取版本号失败:", e);
+          formatAppLog("error", "at pages/index/index.vue:656", "获取版本号失败:", e);
         }
       },
       handlePageClick() {
@@ -1465,7 +1490,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_edit_dialog = vue.resolveComponent("edit-dialog");
     return vue.openBlock(), vue.createElementBlock("view", {
@@ -1768,7 +1793,7 @@ if (uni.restoreGlobal) {
       }, null, 8, ["show", "value", "onConfirm"])
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
   const taobao = "/static/images/taobao.png";
   const jingdong = "/static/images/jd.png";
   const pinduoduo = "/static/images/pinduoduo.png";
@@ -1778,7 +1803,7 @@ if (uni.restoreGlobal) {
   const alibaba = "/static/images/1688.png";
   const other = "/static/images/other.png";
   const _imports_0$2 = "/static/images/package-illustration.png";
-  const _sfc_main$9 = {
+  const _sfc_main$a = {
     data() {
       return {
         version: "1.0.0",
@@ -2044,7 +2069,7 @@ if (uni.restoreGlobal) {
       this.loadData();
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "page-wrapper",
@@ -2246,7 +2271,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "bottom-safe-area" })
     ]);
   }
-  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
+  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
   let Calendar$1 = class Calendar {
     constructor({
       selected,
@@ -2602,7 +2627,7 @@ if (uni.restoreGlobal) {
     }
     return value;
   }
-  const _sfc_main$8 = {
+  const _sfc_main$9 = {
     props: {
       weeks: {
         type: Object,
@@ -2636,7 +2661,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -2692,7 +2717,7 @@ if (uni.restoreGlobal) {
       /* CLASS, NEED_HYDRATION */
     );
   }
-  const calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-3c762a01"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
+  const calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-3c762a01"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -3053,7 +3078,7 @@ if (uni.restoreGlobal) {
   const {
     t: t$1
   } = initVueI18n(i18nMessages);
-  const _sfc_main$7 = {
+  const _sfc_main$8 = {
     name: "UniDatetimePicker",
     data() {
       return {
@@ -3657,7 +3682,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-datetime-picker" }, [
       vue.createElementVNode("view", {
         onClick: _cache[0] || (_cache[0] = (...args) => $options.initTimePicker && $options.initTimePicker(...args))
@@ -3934,11 +3959,11 @@ if (uni.restoreGlobal) {
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1d532b70"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
+  const TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-1d532b70"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
   const {
     t
   } = initVueI18n(i18nMessages);
-  const _sfc_main$6 = {
+  const _sfc_main$7 = {
     components: {
       calendarItem,
       timePicker: TimePicker
@@ -4419,7 +4444,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_calendar_item = vue.resolveComponent("calendar-item");
     const _component_time_picker = vue.resolveComponent("time-picker");
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
@@ -4712,8 +4737,8 @@ if (uni.restoreGlobal) {
       /* NEED_HYDRATION */
     );
   }
-  const Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-1d379219"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
-  const _sfc_main$5 = {
+  const Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1d379219"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
+  const _sfc_main$6 = {
     name: "UniDatetimePicker",
     options: {
       virtualHost: true
@@ -5369,7 +5394,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_time_picker = vue.resolveComponent("time-picker");
     const _component_Calendar = vue.resolveComponent("Calendar");
@@ -5713,8 +5738,8 @@ if (uni.restoreGlobal) {
       }, null, 8, ["date", "defTime", "start-date", "end-date", "selectableTimes", "startPlaceholder", "endPlaceholder", "default-value", "pleStatus", "range", "hasTime", "hideSecond", "onConfirm", "onMaskClose", "onChange"])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-9802168a"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
-  const _sfc_main$4 = {
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-9802168a"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
+  const _sfc_main$5 = {
     data() {
       return {
         isEdit: false,
@@ -5839,7 +5864,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "page-wrapper" }, [
@@ -5953,16 +5978,23 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPackagesEdit = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/edit.vue"]]);
+  const PagesPackagesEdit = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/edit.vue"]]);
   const _imports_0$1 = "/static/images/avatar.png";
-  const _sfc_main$3 = {
+  const _sfc_main$4 = {
     data() {
       return {
-        version: "1.0.0"
+        version: "1.0.0",
+        stats: {
+          total: 0,
+          picked: 0
+        }
       };
     },
     onLoad(options) {
       this.getAppVersion();
+    },
+    onShow() {
+      this.loadStats();
     },
     methods: {
       navigateTo(url) {
@@ -5970,23 +6002,28 @@ if (uni.restoreGlobal) {
           url
         });
       },
-      handleScan() {
-        uni.scanCode({
-          success: (res) => {
-            formatAppLog("log", "at pages/my/index.vue:77", "扫码结果：", res);
-          }
-        });
+      handleShare() {
+        plus.runtime.openURL("https://gitee.com/szxio/pick-up-code-app");
       },
       getAppVersion() {
         try {
           this.version = plus.runtime.version;
         } catch (e) {
-          formatAppLog("error", "at pages/my/index.vue:88", "获取版本号失败:", e);
+          formatAppLog("error", "at pages/my/index.vue:100", "获取版本号失败:", e);
+        }
+      },
+      loadStats() {
+        try {
+          const packageCodes = JSON.parse(uni.getStorageSync("packageCodes") || "[]");
+          this.stats.total = packageCodes.length;
+          this.stats.picked = packageCodes.filter((item) => item.isPicked).length;
+        } catch (e) {
+          formatAppLog("error", "at pages/my/index.vue:118", "加载统计数据失败:", e);
         }
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock("view", { class: "my-container" }, [
       vue.createCommentVNode(" 顶部区域 "),
@@ -5997,17 +6034,32 @@ if (uni.restoreGlobal) {
             src: _imports_0$1,
             mode: "aspectFill"
           }),
-          vue.createElementVNode("text", { class: "nickname" }, "取件码")
+          vue.createElementVNode("text", { class: "nickname" }, "快递取件助手"),
+          vue.createElementVNode("text", { class: "slogan" }, "让取件更简单")
+        ])
+      ]),
+      vue.createCommentVNode(" 统计卡片 "),
+      vue.createElementVNode("view", { class: "stats-card" }, [
+        vue.createElementVNode("view", { class: "stat-item" }, [
+          vue.createElementVNode(
+            "text",
+            { class: "stat-value" },
+            vue.toDisplayString($data.stats.total),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("text", { class: "stat-label" }, "累计收到")
         ]),
-        vue.createElementVNode("view", {
-          class: "scan-btn",
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.handleScan && $options.handleScan(...args))
-        }, [
-          vue.createVNode(_component_uni_icons, {
-            type: "scan",
-            size: "24",
-            color: "#fff"
-          })
+        vue.createElementVNode("view", { class: "stat-divider" }),
+        vue.createElementVNode("view", { class: "stat-item" }, [
+          vue.createElementVNode(
+            "text",
+            { class: "stat-value" },
+            vue.toDisplayString($data.stats.picked),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("text", { class: "stat-label" }, "累计取走")
         ])
       ]),
       vue.createCommentVNode(" 菜单列表 "),
@@ -6015,7 +6067,7 @@ if (uni.restoreGlobal) {
         vue.createElementVNode("view", { class: "menu-list" }, [
           vue.createElementVNode("view", {
             class: "menu-item",
-            onClick: _cache[1] || (_cache[1] = ($event) => $options.navigateTo("/pages/my/match-rules"))
+            onClick: _cache[0] || (_cache[0] = ($event) => $options.navigateTo("/pages/my/match-rules"))
           }, [
             vue.createElementVNode("view", { class: "menu-left" }, [
               vue.createVNode(_component_uni_icons, {
@@ -6033,25 +6085,7 @@ if (uni.restoreGlobal) {
           ]),
           vue.createElementVNode("view", {
             class: "menu-item",
-            onClick: _cache[2] || (_cache[2] = ($event) => $options.navigateTo("/pages/my/data-export"))
-          }, [
-            vue.createElementVNode("view", { class: "menu-left" }, [
-              vue.createVNode(_component_uni_icons, {
-                type: "download",
-                size: "20",
-                color: "#1673ff"
-              }),
-              vue.createElementVNode("text", { class: "menu-text" }, "数据导出")
-            ]),
-            vue.createVNode(_component_uni_icons, {
-              type: "right",
-              size: "16",
-              color: "#999"
-            })
-          ]),
-          vue.createElementVNode("view", {
-            class: "menu-item",
-            onClick: _cache[3] || (_cache[3] = ($event) => $options.navigateTo("/pages/my/faq"))
+            onClick: _cache[1] || (_cache[1] = ($event) => $options.navigateTo("/pages/my/faq"))
           }, [
             vue.createElementVNode("view", { class: "menu-left" }, [
               vue.createVNode(_component_uni_icons, {
@@ -6069,15 +6103,15 @@ if (uni.restoreGlobal) {
           ]),
           vue.createElementVNode("view", {
             class: "menu-item",
-            onClick: _cache[4] || (_cache[4] = ($event) => $options.navigateTo("/pages/my/contact"))
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.handleShare && $options.handleShare(...args))
           }, [
             vue.createElementVNode("view", { class: "menu-left" }, [
               vue.createVNode(_component_uni_icons, {
-                type: "chat",
+                type: "redo",
                 size: "20",
                 color: "#1673ff"
               }),
-              vue.createElementVNode("text", { class: "menu-text" }, "联系作者")
+              vue.createElementVNode("text", { class: "menu-text" }, "分享")
             ]),
             vue.createVNode(_component_uni_icons, {
               type: "right",
@@ -6098,8 +6132,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesMyIndex = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/index.vue"]]);
-  const _sfc_main$2 = {
+  const PagesMyIndex = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/index.vue"]]);
+  const _sfc_main$3 = {
     data() {
       return {
         mode: "add",
@@ -6136,7 +6170,6 @@ if (uni.restoreGlobal) {
         this.ruleId = options.id;
         this.loadRule(options.id);
       }
-      this.loadRules();
     },
     methods: {
       // 加载单个规则
@@ -6195,6 +6228,19 @@ if (uni.restoreGlobal) {
           });
           return;
         }
+        const rulesList = JSON.parse(
+          uni.getStorageSync("matchRulesList") || "[]"
+        );
+        const isDuplicate = rulesList.some(
+          (rule) => rule.name === this.ruleName.trim() && rule.id !== this.ruleId
+        );
+        if (isDuplicate) {
+          uni.showToast({
+            title: "规则名称已存在",
+            icon: "none"
+          });
+          return;
+        }
         const enabledRules = Object.entries(this.rules).filter(
           ([_, rule]) => rule.start && rule.end
         );
@@ -6213,9 +6259,6 @@ if (uni.restoreGlobal) {
           });
           return;
         }
-        const rulesList = JSON.parse(
-          uni.getStorageSync("matchRulesList") || "[]"
-        );
         const ruleData = {
           id: this.mode === "edit" ? this.ruleId : Date.now().toString(),
           name: this.ruleName,
@@ -6245,7 +6288,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "match-settings" }, [
       vue.createCommentVNode(" 规则名称输入区 "),
       vue.createElementVNode("view", { class: "input-section" }, [
@@ -6492,9 +6535,9 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesMyMatchSettings = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-settings.vue"]]);
+  const PagesMyMatchSettings = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-settings.vue"]]);
   const _imports_0 = "/static/images/empty.png";
-  const _sfc_main$1 = {
+  const _sfc_main$2 = {
     data() {
       return {
         rulesList: []
@@ -6506,7 +6549,12 @@ if (uni.restoreGlobal) {
     methods: {
       // 格式化日期
       formatDate(date) {
+        if (!date)
+          return "";
         const d = new Date(date);
+        if (isNaN(d.getTime())) {
+          return date;
+        }
         const year = d.getFullYear();
         const month = String(d.getMonth() + 1).padStart(2, "0");
         const day = String(d.getDate()).padStart(2, "0");
@@ -6559,7 +6607,10 @@ if (uni.restoreGlobal) {
           success: (res) => {
             if (res.confirm) {
               this.rulesList.splice(index, 1);
-              uni.setStorageSync("matchRulesList", JSON.stringify(this.rulesList));
+              uni.setStorageSync(
+                "matchRulesList",
+                JSON.stringify(this.rulesList)
+              );
               uni.showToast({
                 title: "删除成功",
                 icon: "success"
@@ -6570,7 +6621,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock("view", { class: "match-rules" }, [
       vue.createCommentVNode(" 规则列表 "),
@@ -6655,25 +6706,74 @@ if (uni.restoreGlobal) {
         /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
       )),
       vue.createCommentVNode(" 添加按钮 "),
-      vue.createElementVNode("view", {
+      vue.createElementVNode("button", {
         class: "add-btn",
         onClick: _cache[0] || (_cache[0] = (...args) => $options.handleAdd && $options.handleAdd(...args))
       }, [
         vue.createVNode(_component_uni_icons, {
           type: "plusempty",
-          size: "24",
+          size: "18",
           color: "#fff"
-        })
+        }),
+        vue.createElementVNode("text", null, "添加规则")
       ])
     ]);
   }
-  const PagesMyMatchRules = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-rules.vue"]]);
+  const PagesMyMatchRules = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-rules.vue"]]);
+  const _sfc_main$1 = {};
+  function _sfc_render(_ctx, _cache) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "faq-container" }, [
+      vue.createElementVNode("view", { class: "faq-list" }, [
+        vue.createCommentVNode(" 问题1 "),
+        vue.createElementVNode("view", { class: "faq-item" }, [
+          vue.createElementVNode("view", { class: "question" }, [
+            vue.createElementVNode("text", null, "为什么要获取短信授权？")
+          ]),
+          vue.createElementVNode("view", { class: "answer" }, [
+            vue.createElementVNode("text", null, "为了实现自动提取取件码的功能，应用需要读取您的短信内容。请放心："),
+            vue.createElementVNode("text", null, '1. 应用仅在您主动点击"自动匹配"时才会读取短信'),
+            vue.createElementVNode("text", null, "2. 短信内容仅在本地用于提取取件码，不会上传到任何服务器"),
+            vue.createElementVNode("text", null, "3. 应用不会修改或删除您的任何短信"),
+            vue.createElementVNode("text", null, "4. 您可以随时在系统设置中关闭短信权限")
+          ])
+        ]),
+        vue.createCommentVNode(" 问题2 "),
+        vue.createElementVNode("view", { class: "faq-item" }, [
+          vue.createElementVNode("view", { class: "question" }, [
+            vue.createElementVNode("text", null, "为什么点击自动匹配没有效果？")
+          ]),
+          vue.createElementVNode("view", { class: "answer" }, [
+            vue.createElementVNode("text", null, "可能有以下几个原因："),
+            vue.createElementVNode("text", null, '1. 没有添加匹配规则：请先在"匹配设置"中添加并启用至少一条规则'),
+            vue.createElementVNode("text", null, "2. 权限问题：请确保在系统设置中允许应用访问短信"),
+            vue.createElementVNode("text", null, "3. 设备限制：iOS设备因系统限制，无法读取短信内容"),
+            vue.createElementVNode("text", null, '4. 短信权限：某些手机（如小米）需要额外开启"通知类短信"权限')
+          ])
+        ]),
+        vue.createCommentVNode(" 问题3 "),
+        vue.createElementVNode("view", { class: "faq-item" }, [
+          vue.createElementVNode("view", { class: "question" }, [
+            vue.createElementVNode("text", null, "为什么自动匹配出来的内容不全？")
+          ]),
+          vue.createElementVNode("view", { class: "answer" }, [
+            vue.createElementVNode("text", null, "这个问题通常可以通过以下方式解决："),
+            vue.createElementVNode("text", null, '1. 检查匹配规则是否正确：在"匹配设置"中确认起始和结束文字是否与短信内容完全一致'),
+            vue.createElementVNode("text", null, "2. 测试规则：在添加或编辑规则时，可以粘贴完整短信内容进行测试"),
+            vue.createElementVNode("text", null, '3. 权限问题：如果使用小米手机，请确保在系统设置中开启了"通知类短信"权限'),
+            vue.createElementVNode("text", null, "4. 多条规则：如果一条规则无法完全匹配，可以添加多条规则来适应不同格式的短信")
+          ])
+        ])
+      ])
+    ]);
+  }
+  const PagesMyFaq = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/faq.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/packages/index", PagesPackagesIndex);
   __definePage("pages/packages/edit", PagesPackagesEdit);
   __definePage("pages/my/index", PagesMyIndex);
   __definePage("pages/my/match-settings", PagesMyMatchSettings);
   __definePage("pages/my/match-rules", PagesMyMatchRules);
+  __definePage("pages/my/faq", PagesMyFaq);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("warn", "at App.vue:4", "当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！");

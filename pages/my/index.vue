@@ -8,10 +8,21 @@
           src="/static/images/avatar.png"
           mode="aspectFill"
         ></image>
-        <text class="nickname">取件码</text>
+        <text class="nickname">快递取件助手</text>
+        <text class="slogan">让取件更简单</text>
       </view>
-      <view class="scan-btn" @click="handleScan">
-        <uni-icons type="scan" size="24" color="#fff"></uni-icons>
+    </view>
+
+    <!-- 统计卡片 -->
+    <view class="stats-card">
+      <view class="stat-item">
+        <text class="stat-value">{{stats.total}}</text>
+        <text class="stat-label">累计收到</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.picked}}</text>
+        <text class="stat-label">累计取走</text>
       </view>
     </view>
 
@@ -25,13 +36,6 @@
           </view>
           <uni-icons type="right" size="16" color="#999"></uni-icons>
         </view>
-        <view class="menu-item" @click="navigateTo('/pages/my/data-export')">
-          <view class="menu-left">
-            <uni-icons type="download" size="20" color="#1673ff"></uni-icons>
-            <text class="menu-text">数据导出</text>
-          </view>
-          <uni-icons type="right" size="16" color="#999"></uni-icons>
-        </view>
         <view class="menu-item" @click="navigateTo('/pages/my/faq')">
           <view class="menu-left">
             <uni-icons type="help" size="20" color="#1673ff"></uni-icons>
@@ -39,10 +43,10 @@
           </view>
           <uni-icons type="right" size="16" color="#999"></uni-icons>
         </view>
-        <view class="menu-item" @click="navigateTo('/pages/my/contact')">
+        <view class="menu-item" @click="handleShare">
           <view class="menu-left">
-            <uni-icons type="chat" size="20" color="#1673ff"></uni-icons>
-            <text class="menu-text">联系作者</text>
+            <uni-icons type="redo" size="20" color="#1673ff"></uni-icons>
+            <text class="menu-text">分享</text>
           </view>
           <uni-icons type="right" size="16" color="#999"></uni-icons>
         </view>
@@ -60,10 +64,17 @@ export default {
   data() {
     return {
       version: "1.0.0",
+      stats: {
+        total: 0,
+        picked: 0
+      }
     };
   },
   onLoad(options) {
     this.getAppVersion();
+  },
+  onShow() {
+    this.loadStats();
   },
   methods: {
     navigateTo(url) {
@@ -71,13 +82,14 @@ export default {
         url,
       });
     },
-    handleScan() {
-      uni.scanCode({
-        success: (res) => {
-          console.log("扫码结果：", res);
-          // 处理扫码结果
-        },
-      });
+    handleShare() {
+      // #ifdef H5
+      window.open('https://gitee.com/szxio/pick-up-code-app');
+      // #endif
+      
+      // #ifdef APP-PLUS
+      plus.runtime.openURL('https://gitee.com/szxio/pick-up-code-app');
+      // #endif
     },
     getAppVersion() {
       // #ifdef APP-PLUS
@@ -94,6 +106,18 @@ export default {
       this.version = "1.0.0";
       // #endif
     },
+    loadStats() {
+      try {
+        // 从本地存储获取所有取件码记录
+        const packageCodes = JSON.parse(uni.getStorageSync('packageCodes') || '[]');
+        
+        // 计算统计数据
+        this.stats.total = packageCodes.length;
+        this.stats.picked = packageCodes.filter(item => item.isPicked).length;
+      } catch (e) {
+        console.error('加载统计数据失败:', e);
+      }
+    },
   },
 };
 </script>
@@ -108,37 +132,86 @@ export default {
 
   .header {
     position: relative;
-    height: 320rpx;
+    height: 300rpx;
     z-index: 1;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
-    padding-top: 50px;
+    padding-top: 100px;
     color: #fff;
 
     .user-info {
       display: flex;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
 
       .avatar {
-        width: 120rpx;
-        height: 120rpx;
-        border-radius: 60rpx;
-        margin-right: 24rpx;
+        width: 150rpx;
+        height: 150rpx;
+        border-radius: 50%;
+        margin-bottom: 24rpx;
       }
 
       .nickname {
         font-size: 36rpx;
         font-weight: 500;
+        line-height: 1;
+        margin-bottom: 12rpx;
       }
+
+      .slogan {
+        font-size: 24rpx;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1;
+      }
+    }
+  }
+
+  .stats-card {
+    margin: 20rpx 40rpx 0;
+    margin-top: 52px;
+    background: #fff;
+    border-radius: 20rpx;
+    padding: 32rpx 40rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+
+      .stat-value {
+        font-size: 48rpx;
+        font-weight: 600;
+        color: #0052d9;
+        margin-bottom: 12rpx;
+      }
+
+      .stat-label {
+        font-size: 26rpx;
+        color: #666;
+      }
+    }
+
+    .stat-divider {
+      width: 2rpx;
+      height: 50rpx;
+      background: #eee;
+      margin: 0 20rpx;
     }
   }
 
   .content-wrapper {
     position: relative;
-    margin: -0 20px 0;
+    margin: 48rpx 20px 0;
     z-index: 1;
 
     .menu-list {

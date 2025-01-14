@@ -403,30 +403,62 @@ export default {
 
       // 获取启用的匹配规则
       const rulesList = JSON.parse(uni.getStorageSync('matchRulesList') || '[]');
-      const enabledRule = rulesList.find(rule => rule.enabled);
-      
-      if (!enabledRule) {
-        return info;
-      }
+      const enabledRules = rulesList.filter(rule => rule.enabled);
 
-      // 使用规则进行匹配
-      Object.keys(enabledRule.rules).forEach(key => {
-        const rule = enabledRule.rules[key];
-        if (rule.start && rule.end) {
-          const startIndex = content.indexOf(rule.start);
-          const endIndex = content.indexOf(rule.end, startIndex + rule.start.length);
+      // 遍历所有启用的规则进行匹配
+      for (const rule of enabledRules) {
+        Object.keys(rule.rules).forEach(key => {
+          // 如果已经匹配到结果，就不再继续匹配
+          if (info[key]) return;
           
-          if (startIndex !== -1 && endIndex !== -1) {
-            info[key] = content.substring(startIndex + rule.start.length, endIndex).trim();
+          const ruleConfig = rule.rules[key];
+          if (ruleConfig.start && ruleConfig.end) {
+            const startIndex = content.indexOf(ruleConfig.start);
+            const endIndex = content.indexOf(
+              ruleConfig.end,
+              startIndex + ruleConfig.start.length
+            );
+            
+            if (startIndex !== -1 && endIndex !== -1) {
+              info[key] = content.substring(
+                startIndex + ruleConfig.start.length,
+                endIndex
+              ).trim();
+            }
           }
-        }
-      });
+        });
+      }
 
       return info;
     },
     // 读取短信
     async readSms() {
       this.vibrateShort();
+      
+      // 检查是否有启用的规则
+      const rulesList = JSON.parse(uni.getStorageSync('matchRulesList') || '[]');
+      const enabledRules = rulesList.filter(rule => rule.enabled);
+      
+      if (enabledRules.length === 0) {
+        // 显示确认对话框
+        uni.showModal({
+          title: '提示',
+          content: rulesList.length === 0 ? 
+            '您还没有设置任何匹配规则，是否现在去设置？' : 
+            '没有已启用的匹配规则，是否去设置？',
+          confirmText: '去设置',
+          cancelText: '取消',
+          success: (res) => {
+            if (res.confirm) {
+              // 跳转到匹配规则页面
+              uni.navigateTo({
+                url: '/pages/my/match-rules'
+              });
+            }
+          }
+        });
+        return;
+      }
       
       // #ifdef APP-PLUS
       if (plus.os.name === 'Android') {

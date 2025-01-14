@@ -183,8 +183,6 @@ export default {
       this.ruleId = options.id;
       this.loadRule(options.id);
     }
-    // 加载保存的规则
-    this.loadRules();
   },
   methods: {
     // 加载单个规则
@@ -255,6 +253,24 @@ export default {
         return;
       }
 
+      // 获取现有规则列表
+      const rulesList = JSON.parse(
+        uni.getStorageSync("matchRulesList") || "[]"
+      );
+      
+      // 检查规则名称是否重复
+      const isDuplicate = rulesList.some(
+        rule => rule.name === this.ruleName.trim() && rule.id !== this.ruleId
+      );
+      
+      if (isDuplicate) {
+        uni.showToast({
+          title: "规则名称已存在",
+          icon: "none"
+        });
+        return;
+      }
+
       // 验证规则有效性
       const enabledRules = Object.entries(this.rules).filter(
         ([_, rule]) => rule.start && rule.end
@@ -278,11 +294,6 @@ export default {
         });
         return;
       }
-
-      // 获取现有规则列表
-      const rulesList = JSON.parse(
-        uni.getStorageSync("matchRulesList") || "[]"
-      );
 
       const ruleData = {
         id: this.mode === "edit" ? this.ruleId : Date.now().toString(),

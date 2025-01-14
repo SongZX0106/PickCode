@@ -734,7 +734,7 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
 // 平台卡片样式
 .platform-cards {
   padding-left: 48rpx;
-  padding-right: 30rpx;
+  padding-right: 20rpx;
   display: flex;
   flex-direction: column;
   gap: 24rpx;

@@ -35,6 +35,12 @@
       "style": {
         "navigationBarTitleText": "匹配规则"
       }
+    },
+    {
+      "path": "pages/my/faq",
+      "style": {
+        "navigationBarTitleText": "常见问题"
+      }
     }
   ],
   "tabBar": {
