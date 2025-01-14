@@ -39,5 +39,20 @@
 
 ## 更新记录
 
-- [1.0.0](https://gitee.com/szxio/pick-up-code-app/releases/download/1.0.0/__UNI__6D58568__20250108150232.apk)
+### 1.0.0
+
+内部测试功能，仅适配对管家和兔喜生活，不能自定义设置匹配规则
+
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/1.0.0/__UNI__6D58568__20250108150232.apk)
+
+### 2.1.0
+
+- 自定义匹配规则
+- 包裹记录功能
+- 使用帮助说明
+- UI界面美化
+- 启动页优化
+- 其他问题优化
+
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.0/__UNI__6D58568__20250114144215.apk)
 

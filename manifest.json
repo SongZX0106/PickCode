@@ -2,8 +2,8 @@
     "name" : "取件码",
     "appid" : "__UNI__6D58568",
     "description" : "一个简单的取件码记录工具",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "2.1.0",
+    "versionCode" : 200,
     "transformPx" : false,
     "app-plus" : {
         "usingComponents" : true,
@@ -51,17 +51,20 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "unpackage/res/mipmap-hdpi/ic_launcher.png",
-                    "xhdpi" : "unpackage/res/mipmap-xhdpi/ic_launcher.png",
-                    "xxhdpi" : "unpackage/res/mipmap-xhdpi/ic_launcher.png"
+                    "hdpi" : "C:/Users/yikonsh/Desktop/480.png",
+                    "xhdpi" : "C:/Users/yikonsh/Desktop/720.png",
+                    "xxhdpi" : "C:/Users/yikonsh/Desktop/1088.png"
                 }
             },
             "icons" : {
                 "android" : {
-                    "hdpi" : "unpackage/res/mipmap-hdpi/ic_launcher.png",
-                    "xhdpi" : "unpackage/res/mipmap-xhdpi/ic_launcher.png",
-                    "xxhdpi" : "unpackage/res/mipmap-xxhdpi/ic_launcher.png",
-                    "xxxhdpi" : "unpackage/res/mipmap-xxxhdpi/ic_launcher.png"
+                    "hdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-hdpi/ic_launcher.png",
+                    "xhdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-xhdpi/ic_launcher.png",
+                    "xxhdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-xxhdpi/ic_launcher.png",
+                    "xxxhdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-xxxhdpi/ic_launcher.png"
+                },
+                "ios" : {
+                    "appstore" : ""
                 }
             }
         }
