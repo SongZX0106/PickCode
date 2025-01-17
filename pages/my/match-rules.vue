@@ -1,5 +1,12 @@
 <template>
   <view class="match-rules">
+    <!-- 顶部操作区 -->
+    <view class="action-header">
+      <button class="preset-btn" @click="showPresetRules">
+        <uni-icons type="download" size="16" color="#0052d9"></uni-icons>
+        <text>使用预制规则</text>
+      </button>
+    </view>
 
     <!-- 规则列表 -->
     <view class="rules-list" v-if="rulesList.length > 0">
@@ -39,6 +46,33 @@
       <uni-icons type="plusempty" size="18" color="#fff"></uni-icons>
       <text>添加规则</text>
     </button>
+
+    <!-- 预制规则弹窗 -->
+    <uni-popup ref="presetPopup" type="bottom">
+      <view class="preset-popup">
+        <view class="popup-header">
+          <text class="popup-title">选择预制规则</text>
+          <text class="popup-desc">选择常用快递公司的匹配规则</text>
+        </view>
+        <scroll-view class="preset-list" scroll-y>
+          <view 
+            class="preset-item" 
+            v-for="(rule, index) in presetRules" 
+            :key="index"
+            @click="handleSelectPreset(rule)"
+          >
+            <view class="preset-info">
+              <text class="preset-name">{{rule.name}}</text>
+              <text class="preset-desc">{{rule.desc}}</text>
+            </view>
+            <uni-icons type="right" size="16" color="#999"></uni-icons>
+          </view>
+        </scroll-view>
+        <view class="popup-footer">
+          <button class="close-btn" @click="closePresetPopup">关闭</button>
+        </view>
+      </view>
+    </uni-popup>
   </view>
 </template>
 
@@ -47,6 +81,65 @@ export default {
   data() {
     return {
       rulesList: [],
+      presetRules: [
+        {
+          name: '兔喜生活',
+          desc: '适用于兔喜快递驿站的取件码匹配',
+          smsContent: '【兔喜生活】您的中通快递包裹已到xx村xx学校往东200米路北兔喜生活，凭Y17-123来取，有问题联系159xxxx6637',
+          rules: {
+            code: {
+              start: '凭',
+              end: '来'
+            },
+            express: {
+              start: '的',
+              end: '包裹'
+            },
+            address: {
+              start: '到',
+              end: '，'
+            }
+          }
+        },
+        {
+          name: '递管家模板1',
+          desc: '适用于由递管家提供的快递柜取件码匹配',
+          smsContent: '【递管家】您的邮政包裹已到xx小区18号楼超市旁，请凭取件码25363454到1号快递柜取件，咨询135xxxx347',
+          rules: {
+            code: {
+              start: '取件码',
+              end: '到'
+            },
+            express: {
+              start: '的',
+              end: '已到'
+            },
+            address: {
+              start: '已到',
+              end: '，'
+            }
+          }
+        },
+        {
+          name: '递管家模板2',
+          desc: '适用于由递管家提供的快递柜取件码匹配',
+          smsContent: '【递管家】您的圆通速递已到xx小区18号楼超市旁，凭取件码60116553取，有问题联系135xxxx9347',
+          rules: {
+            code: {
+              start: '取件码',
+              end: '取'
+            },
+            express: {
+              start: '的',
+              end: '已到'
+            },
+            address: {
+              start: '已到',
+              end: '，'
+            }
+          }
+        },
+      ]
     };
   },
 
@@ -138,6 +231,53 @@ export default {
         },
       });
     },
+
+    // 显示预制规则弹窗
+    showPresetRules() {
+      this.$refs.presetPopup.open();
+    },
+
+    // 关闭预制规则弹窗
+    closePresetPopup() {
+      this.$refs.presetPopup.close();
+    },
+
+    // 选择预制规则
+    handleSelectPreset(preset) {
+      // name 不能重复
+      if (this.rulesList.some(rule => rule.name === preset.name)) {
+        uni.showToast({
+          title: `${preset.name} 已存在`,
+          icon: "none",
+        });
+        return;
+      }
+
+      // 创建新规则
+      const newRule = {
+        id: Date.now().toString(),
+        name: preset.name,
+        rules: preset.rules,
+        enabled: true,
+        smsContent: preset.smsContent,
+        createTime: this.formatDate(new Date())
+      };
+
+      // 添加到规则列表
+      this.rulesList.push(newRule);
+      
+      // 保存到本地存储
+      uni.setStorageSync('matchRulesList', JSON.stringify(this.rulesList));
+      
+      // 关闭弹窗
+      this.closePresetPopup();
+      
+      // 提示添加成功
+      uni.showToast({
+        title: '添加成功',
+        icon: 'success'
+      });
+    }
   },
 };
 </script>
@@ -149,6 +289,31 @@ export default {
   padding: 20rpx;
   box-sizing: border-box;
   padding-bottom: 120rpx;
+
+  .action-header {
+    margin-bottom: 20rpx;
+    
+    .preset-btn {
+      width: 100%;
+      background: #fff;
+      border: none;
+      padding: 30rpx;
+      border-radius: 12rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8rpx;
+      
+      text {
+        color: #0052d9;
+        font-size: 28rpx;
+      }
+      
+      &:active {
+        opacity: 0.8;
+      }
+    }
+  }
 
   .rules-list {
     .rule-card {
@@ -249,6 +414,82 @@ export default {
 
     &::after {
       border: none;
+    }
+  }
+
+  .preset-popup {
+    background: #fff;
+    border-radius: 24rpx 24rpx 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    
+    .popup-header {
+      padding: 40rpx;
+      text-align: center;
+      
+      .popup-title {
+        font-size: 32rpx;
+        font-weight: 600;
+        color: #333;
+        display: block;
+        margin-bottom: 8rpx;
+      }
+      
+      .popup-desc {
+        font-size: 26rpx;
+        color: #999;
+      }
+    }
+    
+    .preset-list {
+      max-height: 60vh;
+      padding: 0 20rpx;
+      box-sizing: border-box;
+      
+      .preset-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 30rpx;
+        background: #f8f8f8;
+        border-radius: 12rpx;
+        margin-bottom: 20rpx;
+        
+        &:active {
+          opacity: 0.8;
+        }
+        
+        .preset-info {
+          flex: 1;
+          margin-right: 20rpx;
+          
+          .preset-name {
+            font-size: 30rpx;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8rpx;
+            display: block;
+          }
+          
+          .preset-desc {
+            font-size: 26rpx;
+            color: #666;
+          }
+        }
+      }
+    }
+    
+    .popup-footer {
+      padding: 20rpx 40rpx 40rpx;
+      box-sizing: border-box;
+      
+      .close-btn {
+        width: 100%;
+        height: 88rpx;
+        line-height: 88rpx;
+        background: #f5f5f5;
+        font-size: 30rpx;
+        color: #333;
+      }
     }
   }
 }

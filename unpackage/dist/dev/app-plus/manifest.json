@@ -7,8 +7,8 @@
   "id": "__UNI__6D58568",
   "name": "取件码",
   "version": {
-    "name": "1.0.0",
-    "code": "100"
+    "name": "2.1.0",
+    "code": 200
   },
   "description": "一个简单的取件码记录工具",
   "developer": {
@@ -44,17 +44,20 @@
       "splashscreen": {
         "androidStyle": "default",
         "android": {
-          "hdpi": "unpackage/res/mipmap-hdpi/ic_launcher.png",
-          "xhdpi": "unpackage/res/mipmap-xhdpi/ic_launcher.png",
-          "xxhdpi": "unpackage/res/mipmap-xhdpi/ic_launcher.png"
+          "hdpi": "static/config-icons/480.png",
+          "xhdpi": "static/config-icons/720.png",
+          "xxhdpi": "static/config-icons/1088.png"
         }
       },
       "icons": {
         "android": {
-          "hdpi": "unpackage/res/mipmap-hdpi/ic_launcher.png",
-          "xhdpi": "unpackage/res/mipmap-xhdpi/ic_launcher.png",
-          "xxhdpi": "unpackage/res/mipmap-xxhdpi/ic_launcher.png",
-          "xxxhdpi": "unpackage/res/mipmap-xxxhdpi/ic_launcher.png"
+          "hdpi": "static/config-icons/mipmap-hdpi/ic_launcher.png",
+          "xhdpi": "static/config-icons/mipmap-xhdpi/ic_launcher.png",
+          "xxhdpi": "static/config-icons/mipmap-xxhdpi/ic_launcher.png",
+          "xxxhdpi": "static/config-icons/mipmap-xxxhdpi/ic_launcher.png"
+        },
+        "ios": {
+          "appstore": ""
         }
       },
       "google": {

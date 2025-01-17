@@ -51,17 +51,17 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "C:/Users/yikonsh/Desktop/480.png",
-                    "xhdpi" : "C:/Users/yikonsh/Desktop/720.png",
-                    "xxhdpi" : "C:/Users/yikonsh/Desktop/1088.png"
+                    "hdpi" : "static/config-icons/480.png",
+                    "xhdpi" : "static/config-icons/720.png",
+                    "xxhdpi" : "static/config-icons/1088.png"
                 }
             },
             "icons" : {
                 "android" : {
-                    "hdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-hdpi/ic_launcher.png",
-                    "xhdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-xhdpi/ic_launcher.png",
-                    "xxhdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-xxhdpi/ic_launcher.png",
-                    "xxxhdpi" : "C:/Users/yikonsh/Desktop/android-icons/mipmap-xxxhdpi/ic_launcher.png"
+                    "hdpi" : "static/config-icons/mipmap-hdpi/ic_launcher.png",
+                    "xhdpi" : "static/config-icons/mipmap-xhdpi/ic_launcher.png",
+                    "xxhdpi" : "static/config-icons/mipmap-xxhdpi/ic_launcher.png",
+                    "xxxhdpi" : "static/config-icons/mipmap-xxxhdpi/ic_launcher.png"
                 },
                 "ios" : {
                     "appstore" : ""

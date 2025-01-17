@@ -41,6 +41,18 @@
       "style": {
         "navigationBarTitleText": "常见问题"
       }
+    },
+    {
+      "path": "pages/my/about",
+      "style": {
+        "navigationBarTitleText": "软件介绍"
+      }
+    },
+    {
+      "path": "pages/my/changelog",
+      "style": {
+        "navigationBarTitleText": "更新记录"
+      }
     }
   ],
   "tabBar": {

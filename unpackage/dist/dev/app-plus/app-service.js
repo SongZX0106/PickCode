@@ -698,7 +698,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$d = {
+  const _sfc_main$h = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -752,7 +752,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -767,8 +767,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$c = {
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$g = {
     name: "EditDialog",
     props: {
       show: {
@@ -807,7 +807,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     return $props.show ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       class: "dialog-mask",
@@ -850,7 +850,7 @@ if (uni.restoreGlobal) {
       ])
     ])) : vue.createCommentVNode("v-if", true);
   }
-  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
+  const EditDialog = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-90e7d67e"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/components/EditDialog.vue"]]);
   var isIos;
   isIos = plus.os.name == "iOS";
   function judgeIosPermissionPush() {
@@ -1085,7 +1085,7 @@ if (uni.restoreGlobal) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
   const yizhanIcon = "/static/yizhan.png";
-  const _sfc_main$b = {
+  const _sfc_main$f = {
     components: {
       EditDialog
     },
@@ -1490,8 +1490,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     const _component_edit_dialog = vue.resolveComponent("edit-dialog");
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "page-wrapper",
@@ -1793,7 +1793,7 @@ if (uni.restoreGlobal) {
       }, null, 8, ["show", "value", "onConfirm"])
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/index/index.vue"]]);
   const taobao = "/static/images/taobao.png";
   const jingdong = "/static/images/jd.png";
   const pinduoduo = "/static/images/pinduoduo.png";
@@ -1803,7 +1803,7 @@ if (uni.restoreGlobal) {
   const alibaba = "/static/images/1688.png";
   const other = "/static/images/other.png";
   const _imports_0$2 = "/static/images/package-illustration.png";
-  const _sfc_main$a = {
+  const _sfc_main$e = {
     data() {
       return {
         version: "1.0.0",
@@ -2069,8 +2069,8 @@ if (uni.restoreGlobal) {
       this.loadData();
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "page-wrapper",
       onClick: _cache[1] || (_cache[1] = (...args) => $options.handlePageClick && $options.handlePageClick(...args))
@@ -2271,7 +2271,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "bottom-safe-area" })
     ]);
   }
-  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
+  const PagesPackagesIndex = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/index.vue"]]);
   let Calendar$1 = class Calendar {
     constructor({
       selected,
@@ -2627,7 +2627,7 @@ if (uni.restoreGlobal) {
     }
     return value;
   }
-  const _sfc_main$9 = {
+  const _sfc_main$d = {
     props: {
       weeks: {
         type: Object,
@@ -2661,7 +2661,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -2717,7 +2717,7 @@ if (uni.restoreGlobal) {
       /* CLASS, NEED_HYDRATION */
     );
   }
-  const calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-3c762a01"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
+  const calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-3c762a01"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -3078,7 +3078,7 @@ if (uni.restoreGlobal) {
   const {
     t: t$1
   } = initVueI18n(i18nMessages);
-  const _sfc_main$8 = {
+  const _sfc_main$c = {
     name: "UniDatetimePicker",
     data() {
       return {
@@ -3682,7 +3682,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-datetime-picker" }, [
       vue.createElementVNode("view", {
         onClick: _cache[0] || (_cache[0] = (...args) => $options.initTimePicker && $options.initTimePicker(...args))
@@ -3959,11 +3959,11 @@ if (uni.restoreGlobal) {
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-1d532b70"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
+  const TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-1d532b70"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
   const {
     t
   } = initVueI18n(i18nMessages);
-  const _sfc_main$7 = {
+  const _sfc_main$b = {
     components: {
       calendarItem,
       timePicker: TimePicker
@@ -4444,10 +4444,10 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_calendar_item = vue.resolveComponent("calendar-item");
     const _component_time_picker = vue.resolveComponent("time-picker");
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -4737,8 +4737,8 @@ if (uni.restoreGlobal) {
       /* NEED_HYDRATION */
     );
   }
-  const Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1d379219"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
-  const _sfc_main$6 = {
+  const Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-1d379219"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
+  const _sfc_main$a = {
     name: "UniDatetimePicker",
     options: {
       virtualHost: true
@@ -5394,8 +5394,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     const _component_time_picker = vue.resolveComponent("time-picker");
     const _component_Calendar = vue.resolveComponent("Calendar");
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-date" }, [
@@ -5738,8 +5738,8 @@ if (uni.restoreGlobal) {
       }, null, 8, ["date", "defTime", "start-date", "end-date", "selectableTimes", "startPlaceholder", "endPlaceholder", "default-value", "pleStatus", "range", "hasTime", "hideSecond", "onConfirm", "onMaskClose", "onChange"])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-9802168a"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
-  const _sfc_main$5 = {
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-9802168a"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
+  const _sfc_main$9 = {
     data() {
       return {
         isEdit: false,
@@ -5864,9 +5864,9 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
-    const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_1);
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+    const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_1$1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "page-wrapper" }, [
       vue.createElementVNode("view", { class: "page-bg" }),
       vue.createElementVNode("view", { class: "container" }, [
@@ -5978,9 +5978,798 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPackagesEdit = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/edit.vue"]]);
-  const _imports_0$1 = "/static/images/avatar.png";
-  const _sfc_main$4 = {
+  const PagesPackagesEdit = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/packages/edit.vue"]]);
+  class MPAnimation {
+    constructor(options, _this) {
+      this.options = options;
+      this.animation = uni.createAnimation({
+        ...options
+      });
+      this.currentStepAnimates = {};
+      this.next = 0;
+      this.$ = _this;
+    }
+    _nvuePushAnimates(type, args) {
+      let aniObj = this.currentStepAnimates[this.next];
+      let styles = {};
+      if (!aniObj) {
+        styles = {
+          styles: {},
+          config: {}
+        };
+      } else {
+        styles = aniObj;
+      }
+      if (animateTypes1.includes(type)) {
+        if (!styles.styles.transform) {
+          styles.styles.transform = "";
+        }
+        let unit = "";
+        if (type === "rotate") {
+          unit = "deg";
+        }
+        styles.styles.transform += `${type}(${args + unit}) `;
+      } else {
+        styles.styles[type] = `${args}`;
+      }
+      this.currentStepAnimates[this.next] = styles;
+    }
+    _animateRun(styles = {}, config = {}) {
+      let ref = this.$.$refs["ani"].ref;
+      if (!ref)
+        return;
+      return new Promise((resolve, reject) => {
+        nvueAnimation.transition(ref, {
+          styles,
+          ...config
+        }, (res) => {
+          resolve();
+        });
+      });
+    }
+    _nvueNextAnimate(animates, step = 0, fn) {
+      let obj = animates[step];
+      if (obj) {
+        let {
+          styles,
+          config
+        } = obj;
+        this._animateRun(styles, config).then(() => {
+          step += 1;
+          this._nvueNextAnimate(animates, step, fn);
+        });
+      } else {
+        this.currentStepAnimates = {};
+        typeof fn === "function" && fn();
+        this.isEnd = true;
+      }
+    }
+    step(config = {}) {
+      this.animation.step(config);
+      return this;
+    }
+    run(fn) {
+      this.$.animationData = this.animation.export();
+      this.$.timer = setTimeout(() => {
+        typeof fn === "function" && fn();
+      }, this.$.durationTime);
+    }
+  }
+  const animateTypes1 = [
+    "matrix",
+    "matrix3d",
+    "rotate",
+    "rotate3d",
+    "rotateX",
+    "rotateY",
+    "rotateZ",
+    "scale",
+    "scale3d",
+    "scaleX",
+    "scaleY",
+    "scaleZ",
+    "skew",
+    "skewX",
+    "skewY",
+    "translate",
+    "translate3d",
+    "translateX",
+    "translateY",
+    "translateZ"
+  ];
+  const animateTypes2 = ["opacity", "backgroundColor"];
+  const animateTypes3 = ["width", "height", "left", "right", "top", "bottom"];
+  animateTypes1.concat(animateTypes2, animateTypes3).forEach((type) => {
+    MPAnimation.prototype[type] = function(...args) {
+      this.animation[type](...args);
+      return this;
+    };
+  });
+  function createAnimation(option, _this) {
+    if (!_this)
+      return;
+    clearTimeout(_this.timer);
+    return new MPAnimation(option, _this);
+  }
+  const _sfc_main$8 = {
+    name: "uniTransition",
+    emits: ["click", "change"],
+    props: {
+      show: {
+        type: Boolean,
+        default: false
+      },
+      modeClass: {
+        type: [Array, String],
+        default() {
+          return "fade";
+        }
+      },
+      duration: {
+        type: Number,
+        default: 300
+      },
+      styles: {
+        type: Object,
+        default() {
+          return {};
+        }
+      },
+      customClass: {
+        type: String,
+        default: ""
+      },
+      onceRender: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data() {
+      return {
+        isShow: false,
+        transform: "",
+        opacity: 1,
+        animationData: {},
+        durationTime: 300,
+        config: {}
+      };
+    },
+    watch: {
+      show: {
+        handler(newVal) {
+          if (newVal) {
+            this.open();
+          } else {
+            if (this.isShow) {
+              this.close();
+            }
+          }
+        },
+        immediate: true
+      }
+    },
+    computed: {
+      // 生成样式数据
+      stylesObject() {
+        let styles = {
+          ...this.styles,
+          "transition-duration": this.duration / 1e3 + "s"
+        };
+        let transform = "";
+        for (let i in styles) {
+          let line = this.toLine(i);
+          transform += line + ":" + styles[i] + ";";
+        }
+        return transform;
+      },
+      // 初始化动画条件
+      transformStyles() {
+        return "transform:" + this.transform + ";opacity:" + this.opacity + ";" + this.stylesObject;
+      }
+    },
+    created() {
+      this.config = {
+        duration: this.duration,
+        timingFunction: "ease",
+        transformOrigin: "50% 50%",
+        delay: 0
+      };
+      this.durationTime = this.duration;
+    },
+    methods: {
+      /**
+       *  ref 触发 初始化动画
+       */
+      init(obj = {}) {
+        if (obj.duration) {
+          this.durationTime = obj.duration;
+        }
+        this.animation = createAnimation(Object.assign(this.config, obj), this);
+      },
+      /**
+       * 点击组件触发回调
+       */
+      onClick() {
+        this.$emit("click", {
+          detail: this.isShow
+        });
+      },
+      /**
+       * ref 触发 动画分组
+       * @param {Object} obj
+       */
+      step(obj, config = {}) {
+        if (!this.animation)
+          return;
+        for (let i in obj) {
+          try {
+            if (typeof obj[i] === "object") {
+              this.animation[i](...obj[i]);
+            } else {
+              this.animation[i](obj[i]);
+            }
+          } catch (e) {
+            formatAppLog("error", "at uni_modules/uni-transition/components/uni-transition/uni-transition.vue:148", `方法 ${i} 不存在`);
+          }
+        }
+        this.animation.step(config);
+        return this;
+      },
+      /**
+       *  ref 触发 执行动画
+       */
+      run(fn) {
+        if (!this.animation)
+          return;
+        this.animation.run(fn);
+      },
+      // 开始过度动画
+      open() {
+        clearTimeout(this.timer);
+        this.transform = "";
+        this.isShow = true;
+        let { opacity, transform } = this.styleInit(false);
+        if (typeof opacity !== "undefined") {
+          this.opacity = opacity;
+        }
+        this.transform = transform;
+        this.$nextTick(() => {
+          this.timer = setTimeout(() => {
+            this.animation = createAnimation(this.config, this);
+            this.tranfromInit(false).step();
+            this.animation.run();
+            this.$emit("change", {
+              detail: this.isShow
+            });
+          }, 20);
+        });
+      },
+      // 关闭过度动画
+      close(type) {
+        if (!this.animation)
+          return;
+        this.tranfromInit(true).step().run(() => {
+          this.isShow = false;
+          this.animationData = null;
+          this.animation = null;
+          let { opacity, transform } = this.styleInit(false);
+          this.opacity = opacity || 1;
+          this.transform = transform;
+          this.$emit("change", {
+            detail: this.isShow
+          });
+        });
+      },
+      // 处理动画开始前的默认样式
+      styleInit(type) {
+        let styles = {
+          transform: ""
+        };
+        let buildStyle = (type2, mode) => {
+          if (mode === "fade") {
+            styles.opacity = this.animationType(type2)[mode];
+          } else {
+            styles.transform += this.animationType(type2)[mode] + " ";
+          }
+        };
+        if (typeof this.modeClass === "string") {
+          buildStyle(type, this.modeClass);
+        } else {
+          this.modeClass.forEach((mode) => {
+            buildStyle(type, mode);
+          });
+        }
+        return styles;
+      },
+      // 处理内置组合动画
+      tranfromInit(type) {
+        let buildTranfrom = (type2, mode) => {
+          let aniNum = null;
+          if (mode === "fade") {
+            aniNum = type2 ? 0 : 1;
+          } else {
+            aniNum = type2 ? "-100%" : "0";
+            if (mode === "zoom-in") {
+              aniNum = type2 ? 0.8 : 1;
+            }
+            if (mode === "zoom-out") {
+              aniNum = type2 ? 1.2 : 1;
+            }
+            if (mode === "slide-right") {
+              aniNum = type2 ? "100%" : "0";
+            }
+            if (mode === "slide-bottom") {
+              aniNum = type2 ? "100%" : "0";
+            }
+          }
+          this.animation[this.animationMode()[mode]](aniNum);
+        };
+        if (typeof this.modeClass === "string") {
+          buildTranfrom(type, this.modeClass);
+        } else {
+          this.modeClass.forEach((mode) => {
+            buildTranfrom(type, mode);
+          });
+        }
+        return this.animation;
+      },
+      animationType(type) {
+        return {
+          fade: type ? 0 : 1,
+          "slide-top": `translateY(${type ? "0" : "-100%"})`,
+          "slide-right": `translateX(${type ? "0" : "100%"})`,
+          "slide-bottom": `translateY(${type ? "0" : "100%"})`,
+          "slide-left": `translateX(${type ? "0" : "-100%"})`,
+          "zoom-in": `scaleX(${type ? 1 : 0.8}) scaleY(${type ? 1 : 0.8})`,
+          "zoom-out": `scaleX(${type ? 1 : 1.2}) scaleY(${type ? 1 : 1.2})`
+        };
+      },
+      // 内置动画类型与实际动画对应字典
+      animationMode() {
+        return {
+          fade: "opacity",
+          "slide-top": "translateY",
+          "slide-right": "translateX",
+          "slide-bottom": "translateY",
+          "slide-left": "translateX",
+          "zoom-in": "scale",
+          "zoom-out": "scale"
+        };
+      },
+      // 驼峰转中横线
+      toLine(name) {
+        return name.replace(/([A-Z])/g, "-$1").toLowerCase();
+      }
+    }
+  };
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+      ref: "ani",
+      animation: $data.animationData,
+      class: vue.normalizeClass($props.customClass),
+      style: vue.normalizeStyle($options.transformStyles),
+      onClick: _cache[0] || (_cache[0] = (...args) => $options.onClick && $options.onClick(...args))
+    }, [
+      vue.renderSlot(_ctx.$slots, "default")
+    ], 14, ["animation"])), [
+      [vue.vShow, $data.isShow]
+    ]);
+  }
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
+  const _sfc_main$7 = {
+    name: "uniPopup",
+    components: {},
+    emits: ["change", "maskClick"],
+    props: {
+      // 开启动画
+      animation: {
+        type: Boolean,
+        default: true
+      },
+      // 弹出层类型，可选值，top: 顶部弹出层；bottom：底部弹出层；center：全屏弹出层
+      // message: 消息提示 ; dialog : 对话框
+      type: {
+        type: String,
+        default: "center"
+      },
+      // maskClick
+      isMaskClick: {
+        type: Boolean,
+        default: null
+      },
+      // TODO 2 个版本后废弃属性 ，使用 isMaskClick
+      maskClick: {
+        type: Boolean,
+        default: null
+      },
+      backgroundColor: {
+        type: String,
+        default: "none"
+      },
+      safeArea: {
+        type: Boolean,
+        default: true
+      },
+      maskBackgroundColor: {
+        type: String,
+        default: "rgba(0, 0, 0, 0.4)"
+      },
+      borderRadius: {
+        type: String
+      }
+    },
+    watch: {
+      /**
+       * 监听type类型
+       */
+      type: {
+        handler: function(type) {
+          if (!this.config[type])
+            return;
+          this[this.config[type]](true);
+        },
+        immediate: true
+      },
+      isDesktop: {
+        handler: function(newVal) {
+          if (!this.config[newVal])
+            return;
+          this[this.config[this.type]](true);
+        },
+        immediate: true
+      },
+      /**
+       * 监听遮罩是否可点击
+       * @param {Object} val
+       */
+      maskClick: {
+        handler: function(val) {
+          this.mkclick = val;
+        },
+        immediate: true
+      },
+      isMaskClick: {
+        handler: function(val) {
+          this.mkclick = val;
+        },
+        immediate: true
+      },
+      // H5 下禁止底部滚动
+      showPopup(show) {
+      }
+    },
+    data() {
+      return {
+        duration: 300,
+        ani: [],
+        showPopup: false,
+        showTrans: false,
+        popupWidth: 0,
+        popupHeight: 0,
+        config: {
+          top: "top",
+          bottom: "bottom",
+          center: "center",
+          left: "left",
+          right: "right",
+          message: "top",
+          dialog: "center",
+          share: "bottom"
+        },
+        maskClass: {
+          position: "fixed",
+          bottom: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.4)"
+        },
+        transClass: {
+          backgroundColor: "transparent",
+          borderRadius: this.borderRadius || "0",
+          position: "fixed",
+          left: 0,
+          right: 0
+        },
+        maskShow: true,
+        mkclick: true,
+        popupstyle: "top"
+      };
+    },
+    computed: {
+      getStyles() {
+        let res = { backgroundColor: this.bg };
+        if (this.borderRadius || "0") {
+          res = Object.assign(res, { borderRadius: this.borderRadius });
+        }
+        return res;
+      },
+      isDesktop() {
+        return this.popupWidth >= 500 && this.popupHeight >= 500;
+      },
+      bg() {
+        if (this.backgroundColor === "" || this.backgroundColor === "none") {
+          return "transparent";
+        }
+        return this.backgroundColor;
+      }
+    },
+    mounted() {
+      const fixSize = () => {
+        const {
+          windowWidth,
+          windowHeight,
+          windowTop,
+          safeArea,
+          screenHeight,
+          safeAreaInsets
+        } = uni.getSystemInfoSync();
+        this.popupWidth = windowWidth;
+        this.popupHeight = windowHeight + (windowTop || 0);
+        if (safeArea && this.safeArea) {
+          this.safeAreaInsets = safeAreaInsets.bottom;
+        } else {
+          this.safeAreaInsets = 0;
+        }
+      };
+      fixSize();
+    },
+    // TODO vue3
+    unmounted() {
+      this.setH5Visible();
+    },
+    activated() {
+      this.setH5Visible(!this.showPopup);
+    },
+    deactivated() {
+      this.setH5Visible(true);
+    },
+    created() {
+      if (this.isMaskClick === null && this.maskClick === null) {
+        this.mkclick = true;
+      } else {
+        this.mkclick = this.isMaskClick !== null ? this.isMaskClick : this.maskClick;
+      }
+      if (this.animation) {
+        this.duration = 300;
+      } else {
+        this.duration = 0;
+      }
+      this.messageChild = null;
+      this.clearPropagation = false;
+      this.maskClass.backgroundColor = this.maskBackgroundColor;
+    },
+    methods: {
+      setH5Visible(visible = true) {
+      },
+      /**
+       * 公用方法，不显示遮罩层
+       */
+      closeMask() {
+        this.maskShow = false;
+      },
+      /**
+       * 公用方法，遮罩层禁止点击
+       */
+      disableMask() {
+        this.mkclick = false;
+      },
+      // TODO nvue 取消冒泡
+      clear(e) {
+        e.stopPropagation();
+        this.clearPropagation = true;
+      },
+      open(direction) {
+        if (this.showPopup) {
+          return;
+        }
+        let innerType = ["top", "center", "bottom", "left", "right", "message", "dialog", "share"];
+        if (!(direction && innerType.indexOf(direction) !== -1)) {
+          direction = this.type;
+        }
+        if (!this.config[direction]) {
+          formatAppLog("error", "at uni_modules/uni-popup/components/uni-popup/uni-popup.vue:298", "缺少类型：", direction);
+          return;
+        }
+        this[this.config[direction]]();
+        this.$emit("change", {
+          show: true,
+          type: direction
+        });
+      },
+      close(type) {
+        this.showTrans = false;
+        this.$emit("change", {
+          show: false,
+          type: this.type
+        });
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          this.showPopup = false;
+        }, 300);
+      },
+      // TODO 处理冒泡事件，头条的冒泡事件有问题 ，先这样兼容
+      touchstart() {
+        this.clearPropagation = false;
+      },
+      onTap() {
+        if (this.clearPropagation) {
+          this.clearPropagation = false;
+          return;
+        }
+        this.$emit("maskClick");
+        if (!this.mkclick)
+          return;
+        this.close();
+      },
+      /**
+       * 顶部弹出样式处理
+       */
+      top(type) {
+        this.popupstyle = this.isDesktop ? "fixforpc-top" : "top";
+        this.ani = ["slide-top"];
+        this.transClass = {
+          position: "fixed",
+          left: 0,
+          right: 0,
+          backgroundColor: this.bg,
+          borderRadius: this.borderRadius || "0"
+        };
+        if (type)
+          return;
+        this.showPopup = true;
+        this.showTrans = true;
+        this.$nextTick(() => {
+          if (this.messageChild && this.type === "message") {
+            this.messageChild.timerClose();
+          }
+        });
+      },
+      /**
+       * 底部弹出样式处理
+       */
+      bottom(type) {
+        this.popupstyle = "bottom";
+        this.ani = ["slide-bottom"];
+        this.transClass = {
+          position: "fixed",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          paddingBottom: this.safeAreaInsets + "px",
+          backgroundColor: this.bg,
+          borderRadius: this.borderRadius || "0"
+        };
+        if (type)
+          return;
+        this.showPopup = true;
+        this.showTrans = true;
+      },
+      /**
+       * 中间弹出样式处理
+       */
+      center(type) {
+        this.popupstyle = "center";
+        this.ani = ["zoom-out", "fade"];
+        this.transClass = {
+          position: "fixed",
+          display: "flex",
+          flexDirection: "column",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          top: 0,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: this.borderRadius || "0"
+        };
+        if (type)
+          return;
+        this.showPopup = true;
+        this.showTrans = true;
+      },
+      left(type) {
+        this.popupstyle = "left";
+        this.ani = ["slide-left"];
+        this.transClass = {
+          position: "fixed",
+          left: 0,
+          bottom: 0,
+          top: 0,
+          backgroundColor: this.bg,
+          borderRadius: this.borderRadius || "0",
+          display: "flex",
+          flexDirection: "column"
+        };
+        if (type)
+          return;
+        this.showPopup = true;
+        this.showTrans = true;
+      },
+      right(type) {
+        this.popupstyle = "right";
+        this.ani = ["slide-right"];
+        this.transClass = {
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          top: 0,
+          backgroundColor: this.bg,
+          borderRadius: this.borderRadius || "0",
+          display: "flex",
+          flexDirection: "column"
+        };
+        if (type)
+          return;
+        this.showPopup = true;
+        this.showTrans = true;
+      }
+    }
+  };
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_transition = resolveEasycom(vue.resolveDynamicComponent("uni-transition"), __easycom_0);
+    return $data.showPopup ? (vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        key: 0,
+        class: vue.normalizeClass(["uni-popup", [$data.popupstyle, $options.isDesktop ? "fixforpc-z-index" : ""]])
+      },
+      [
+        vue.createElementVNode(
+          "view",
+          {
+            onTouchstart: _cache[1] || (_cache[1] = (...args) => $options.touchstart && $options.touchstart(...args))
+          },
+          [
+            $data.maskShow ? (vue.openBlock(), vue.createBlock(_component_uni_transition, {
+              key: "1",
+              name: "mask",
+              "mode-class": "fade",
+              styles: $data.maskClass,
+              duration: $data.duration,
+              show: $data.showTrans,
+              onClick: $options.onTap
+            }, null, 8, ["styles", "duration", "show", "onClick"])) : vue.createCommentVNode("v-if", true),
+            vue.createVNode(_component_uni_transition, {
+              key: "2",
+              "mode-class": $data.ani,
+              name: "content",
+              styles: $data.transClass,
+              duration: $data.duration,
+              show: $data.showTrans,
+              onClick: $options.onTap
+            }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: vue.normalizeClass(["uni-popup__wrapper", [$data.popupstyle]]),
+                    style: vue.normalizeStyle($options.getStyles),
+                    onClick: _cache[0] || (_cache[0] = (...args) => $options.clear && $options.clear(...args))
+                  },
+                  [
+                    vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+                  ],
+                  6
+                  /* CLASS, STYLE */
+                )
+              ]),
+              _: 3
+              /* FORWARDED */
+            }, 8, ["mode-class", "styles", "duration", "show", "onClick"])
+          ],
+          32
+          /* NEED_HYDRATION */
+        )
+      ],
+      2
+      /* CLASS */
+    )) : vue.createCommentVNode("v-if", true);
+  }
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-4dd3c44b"], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const _imports_0$1 = "/static/config-icons/mipmap-xxhdpi/ic_launcher.png";
+  const _imports_1 = "/static/images/searchCode.png";
+  const _sfc_main$6 = {
     data() {
       return {
         version: "1.0.0",
@@ -6002,14 +6791,20 @@ if (uni.restoreGlobal) {
           url
         });
       },
-      handleShare() {
+      showSharePopup() {
+        this.$refs.sharePopup.open();
+      },
+      closeSharePopup() {
+        this.$refs.sharePopup.close();
+      },
+      handleAbout() {
         plus.runtime.openURL("https://gitee.com/szxio/pick-up-code-app");
       },
       getAppVersion() {
         try {
           this.version = plus.runtime.version;
         } catch (e) {
-          formatAppLog("error", "at pages/my/index.vue:100", "获取版本号失败:", e);
+          formatAppLog("error", "at pages/my/index.vue:133", "获取版本号失败:", e);
         }
       },
       loadStats() {
@@ -6018,13 +6813,14 @@ if (uni.restoreGlobal) {
           this.stats.total = packageCodes.length;
           this.stats.picked = packageCodes.filter((item) => item.isPicked).length;
         } catch (e) {
-          formatAppLog("error", "at pages/my/index.vue:118", "加载统计数据失败:", e);
+          formatAppLog("error", "at pages/my/index.vue:151", "加载统计数据失败:", e);
         }
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "my-container" }, [
       vue.createCommentVNode(" 顶部区域 "),
       vue.createElementVNode("view", { class: "header" }, [
@@ -6085,7 +6881,43 @@ if (uni.restoreGlobal) {
           ]),
           vue.createElementVNode("view", {
             class: "menu-item",
-            onClick: _cache[1] || (_cache[1] = ($event) => $options.navigateTo("/pages/my/faq"))
+            onClick: _cache[1] || (_cache[1] = ($event) => $options.navigateTo("/pages/my/about"))
+          }, [
+            vue.createElementVNode("view", { class: "menu-left" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "info",
+                size: "20",
+                color: "#1673ff"
+              }),
+              vue.createElementVNode("text", { class: "menu-text" }, "软件介绍")
+            ]),
+            vue.createVNode(_component_uni_icons, {
+              type: "right",
+              size: "16",
+              color: "#999"
+            })
+          ]),
+          vue.createElementVNode("view", {
+            class: "menu-item",
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.handleAbout && $options.handleAbout(...args))
+          }, [
+            vue.createElementVNode("view", { class: "menu-left" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "upload",
+                size: "20",
+                color: "#1673ff"
+              }),
+              vue.createElementVNode("text", { class: "menu-text" }, "更新记录")
+            ]),
+            vue.createVNode(_component_uni_icons, {
+              type: "right",
+              size: "16",
+              color: "#999"
+            })
+          ]),
+          vue.createElementVNode("view", {
+            class: "menu-item",
+            onClick: _cache[3] || (_cache[3] = ($event) => $options.navigateTo("/pages/my/faq"))
           }, [
             vue.createElementVNode("view", { class: "menu-left" }, [
               vue.createVNode(_component_uni_icons, {
@@ -6103,7 +6935,7 @@ if (uni.restoreGlobal) {
           ]),
           vue.createElementVNode("view", {
             class: "menu-item",
-            onClick: _cache[2] || (_cache[2] = (...args) => $options.handleShare && $options.handleShare(...args))
+            onClick: _cache[4] || (_cache[4] = (...args) => $options.showSharePopup && $options.showSharePopup(...args))
           }, [
             vue.createElementVNode("view", { class: "menu-left" }, [
               vue.createVNode(_component_uni_icons, {
@@ -6111,7 +6943,7 @@ if (uni.restoreGlobal) {
                 size: "20",
                 color: "#1673ff"
               }),
-              vue.createElementVNode("text", { class: "menu-text" }, "分享")
+              vue.createElementVNode("text", { class: "menu-text" }, "分享软件")
             ]),
             vue.createVNode(_component_uni_icons, {
               type: "right",
@@ -6129,11 +6961,39 @@ if (uni.restoreGlobal) {
             /* TEXT */
           )
         ])
-      ])
+      ]),
+      vue.createCommentVNode(" 分享弹窗 "),
+      vue.createVNode(
+        _component_uni_popup,
+        {
+          ref: "sharePopup",
+          type: "center"
+        },
+        {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("view", { class: "share-popup" }, [
+              vue.createElementVNode("image", {
+                class: "qrcode",
+                src: _imports_1,
+                mode: "aspectFit"
+              }),
+              vue.createElementVNode("text", { class: "share-tip" }, "扫码下载最新版本"),
+              vue.createElementVNode("button", {
+                class: "close-btn",
+                onClick: _cache[5] || (_cache[5] = (...args) => $options.closeSharePopup && $options.closeSharePopup(...args))
+              }, "关闭")
+            ])
+          ]),
+          _: 1
+          /* STABLE */
+        },
+        512
+        /* NEED_PATCH */
+      )
     ]);
   }
-  const PagesMyIndex = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/index.vue"]]);
-  const _sfc_main$3 = {
+  const PagesMyIndex = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/index.vue"]]);
+  const _sfc_main$5 = {
     data() {
       return {
         mode: "add",
@@ -6288,7 +7148,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "match-settings" }, [
       vue.createCommentVNode(" 规则名称输入区 "),
       vue.createElementVNode("view", { class: "input-section" }, [
@@ -6535,12 +7395,71 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesMyMatchSettings = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-settings.vue"]]);
+  const PagesMyMatchSettings = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-settings.vue"]]);
   const _imports_0 = "/static/images/empty.png";
-  const _sfc_main$2 = {
+  const _sfc_main$4 = {
     data() {
       return {
-        rulesList: []
+        rulesList: [],
+        presetRules: [
+          {
+            name: "兔喜生活",
+            desc: "适用于兔喜快递驿站的取件码匹配",
+            smsContent: "【兔喜生活】您的中通快递包裹已到xx村xx学校往东200米路北兔喜生活，凭Y17-123来取，有问题联系159xxxx6637",
+            rules: {
+              code: {
+                start: "凭",
+                end: "来"
+              },
+              express: {
+                start: "的",
+                end: "包裹"
+              },
+              address: {
+                start: "到",
+                end: "，"
+              }
+            }
+          },
+          {
+            name: "递管家模板1",
+            desc: "适用于由递管家提供的快递柜取件码匹配",
+            smsContent: "【递管家】您的邮政包裹已到xx小区18号楼超市旁，请凭取件码25363454到1号快递柜取件，咨询135xxxx347",
+            rules: {
+              code: {
+                start: "取件码",
+                end: "到"
+              },
+              express: {
+                start: "的",
+                end: "已到"
+              },
+              address: {
+                start: "已到",
+                end: "，"
+              }
+            }
+          },
+          {
+            name: "递管家模板2",
+            desc: "适用于由递管家提供的快递柜取件码匹配",
+            smsContent: "【递管家】您的圆通速递已到xx小区18号楼超市旁，凭取件码60116553取，有问题联系135xxxx9347",
+            rules: {
+              code: {
+                start: "取件码",
+                end: "取"
+              },
+              express: {
+                start: "的",
+                end: "已到"
+              },
+              address: {
+                start: "已到",
+                end: "，"
+              }
+            }
+          }
+        ]
       };
     },
     onShow() {
@@ -6618,12 +7537,60 @@ if (uni.restoreGlobal) {
             }
           }
         });
+      },
+      // 显示预制规则弹窗
+      showPresetRules() {
+        this.$refs.presetPopup.open();
+      },
+      // 关闭预制规则弹窗
+      closePresetPopup() {
+        this.$refs.presetPopup.close();
+      },
+      // 选择预制规则
+      handleSelectPreset(preset) {
+        if (this.rulesList.some((rule) => rule.name === preset.name)) {
+          uni.showToast({
+            title: `${preset.name} 已存在`,
+            icon: "none"
+          });
+          return;
+        }
+        const newRule = {
+          id: Date.now().toString(),
+          name: preset.name,
+          rules: preset.rules,
+          enabled: true,
+          smsContent: preset.smsContent,
+          createTime: this.formatDate(/* @__PURE__ */ new Date())
+        };
+        this.rulesList.push(newRule);
+        uni.setStorageSync("matchRulesList", JSON.stringify(this.rulesList));
+        this.closePresetPopup();
+        uni.showToast({
+          title: "添加成功",
+          icon: "success"
+        });
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "match-rules" }, [
+      vue.createCommentVNode(" 顶部操作区 "),
+      vue.createElementVNode("view", { class: "action-header" }, [
+        vue.createElementVNode("button", {
+          class: "preset-btn",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.showPresetRules && $options.showPresetRules(...args))
+        }, [
+          vue.createVNode(_component_uni_icons, {
+            type: "download",
+            size: "16",
+            color: "#0052d9"
+          }),
+          vue.createElementVNode("text", null, "使用预制规则")
+        ])
+      ]),
       vue.createCommentVNode(" 规则列表 "),
       $data.rulesList.length > 0 ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -6708,7 +7675,7 @@ if (uni.restoreGlobal) {
       vue.createCommentVNode(" 添加按钮 "),
       vue.createElementVNode("button", {
         class: "add-btn",
-        onClick: _cache[0] || (_cache[0] = (...args) => $options.handleAdd && $options.handleAdd(...args))
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.handleAdd && $options.handleAdd(...args))
       }, [
         vue.createVNode(_component_uni_icons, {
           type: "plusempty",
@@ -6716,12 +7683,80 @@ if (uni.restoreGlobal) {
           color: "#fff"
         }),
         vue.createElementVNode("text", null, "添加规则")
-      ])
+      ]),
+      vue.createCommentVNode(" 预制规则弹窗 "),
+      vue.createVNode(
+        _component_uni_popup,
+        {
+          ref: "presetPopup",
+          type: "bottom"
+        },
+        {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("view", { class: "preset-popup" }, [
+              vue.createElementVNode("view", { class: "popup-header" }, [
+                vue.createElementVNode("text", { class: "popup-title" }, "选择预制规则"),
+                vue.createElementVNode("text", { class: "popup-desc" }, "选择常用快递公司的匹配规则")
+              ]),
+              vue.createElementVNode("scroll-view", {
+                class: "preset-list",
+                "scroll-y": ""
+              }, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($data.presetRules, (rule, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "preset-item",
+                      key: index,
+                      onClick: ($event) => $options.handleSelectPreset(rule)
+                    }, [
+                      vue.createElementVNode("view", { class: "preset-info" }, [
+                        vue.createElementVNode(
+                          "text",
+                          { class: "preset-name" },
+                          vue.toDisplayString(rule.name),
+                          1
+                          /* TEXT */
+                        ),
+                        vue.createElementVNode(
+                          "text",
+                          { class: "preset-desc" },
+                          vue.toDisplayString(rule.desc),
+                          1
+                          /* TEXT */
+                        )
+                      ]),
+                      vue.createVNode(_component_uni_icons, {
+                        type: "right",
+                        size: "16",
+                        color: "#999"
+                      })
+                    ], 8, ["onClick"]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              vue.createElementVNode("view", { class: "popup-footer" }, [
+                vue.createElementVNode("button", {
+                  class: "close-btn",
+                  onClick: _cache[2] || (_cache[2] = (...args) => $options.closePresetPopup && $options.closePresetPopup(...args))
+                }, "关闭")
+              ])
+            ])
+          ]),
+          _: 1
+          /* STABLE */
+        },
+        512
+        /* NEED_PATCH */
+      )
     ]);
   }
-  const PagesMyMatchRules = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-rules.vue"]]);
-  const _sfc_main$1 = {};
-  function _sfc_render(_ctx, _cache) {
+  const PagesMyMatchRules = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/match-rules.vue"]]);
+  const _sfc_main$3 = {};
+  function _sfc_render$2(_ctx, _cache) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "faq-container" }, [
       vue.createElementVNode("view", { class: "faq-list" }, [
         vue.createCommentVNode(" 问题1 "),
@@ -6766,7 +7801,103 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesMyFaq = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/faq.vue"]]);
+  const PagesMyFaq = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/faq.vue"]]);
+  const _sfc_main$2 = {
+    methods: {
+      handleGithub() {
+        plus.runtime.openURL("https://gitee.com/szxio/pick-up-code-app");
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "about-container" }, [
+      vue.createElementVNode("view", { class: "about-content" }, [
+        vue.createElementVNode("text", { class: "title" }, "快递取件助手"),
+        vue.createElementVNode("text", { class: "desc" }, "快递取件助手是一款专注于快递取件场景的实用工具。它能够自动识别并提取快递短信中的取件码，让您不再需要手动复制粘贴或记忆繁琐的取件码。"),
+        vue.createElementVNode("text", { class: "subtitle" }, "主要特点："),
+        vue.createElementVNode("view", { class: "features" }, [
+          vue.createElementVNode("text", null, "1. 智能提取：一键从短信中提取取件码、快递公司和取件地点等信息"),
+          vue.createElementVNode("text", null, "2. 自定义规则：支持添加和编辑匹配规则，适应不同快递公司的短信格式"),
+          vue.createElementVNode("text", null, "3. 历史记录：自动记录所有取件码，并标记已取和未取状态"),
+          vue.createElementVNode("text", null, "4. 隐私保护：所有数据存储在本地，不会上传服务器，充分保护您的隐私"),
+          vue.createElementVNode("text", null, "5. 简洁界面：采用清新简约的设计风格，操作直观便捷")
+        ]),
+        vue.createElementVNode("text", { class: "desc" }, "无论是在快递柜、自提点，还是快递驿站取件，这款应用都能帮您快速找到取件码。它特别适合经常网购的用户，能够有效节省找码时间，让取件过程更加轻松愉快。"),
+        vue.createElementVNode("text", { class: "desc" }, "开源免费，无广告，无需注册，安装即用。让每一次取件都变得简单高效。"),
+        vue.createElementVNode("button", {
+          class: "github-btn",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.handleGithub && $options.handleGithub(...args))
+        }, [
+          vue.createVNode(_component_uni_icons, {
+            type: "github",
+            size: "20",
+            color: "#333"
+          }),
+          vue.createElementVNode("text", null, "查看源码")
+        ])
+      ])
+    ]);
+  }
+  const PagesMyAbout = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/about.vue"]]);
+  const _sfc_main$1 = {};
+  function _sfc_render(_ctx, _cache) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "changelog-container" }, [
+      vue.createElementVNode("view", { class: "version-list" }, [
+        vue.createCommentVNode(" 1.0.1 "),
+        vue.createElementVNode("view", { class: "version-item" }, [
+          vue.createElementVNode("view", { class: "version-header" }, [
+            vue.createElementVNode("text", { class: "version-name" }, "v1.0.1"),
+            vue.createElementVNode("text", { class: "version-date" }, "2024-03-21")
+          ]),
+          vue.createElementVNode("view", { class: "update-list" }, [
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag feature" }, "新增"),
+              vue.createElementVNode("text", { class: "content" }, "添加预制匹配规则功能")
+            ]),
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag feature" }, "新增"),
+              vue.createElementVNode("text", { class: "content" }, "添加软件介绍和更新记录")
+            ]),
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag optimize" }, "优化"),
+              vue.createElementVNode("text", { class: "content" }, "优化取件码列表显示效果")
+            ]),
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag fix" }, "修复"),
+              vue.createElementVNode("text", { class: "content" }, "修复部分机型无法正确读取短信的问题")
+            ])
+          ])
+        ]),
+        vue.createCommentVNode(" 1.0.0 "),
+        vue.createElementVNode("view", { class: "version-item" }, [
+          vue.createElementVNode("view", { class: "version-header" }, [
+            vue.createElementVNode("text", { class: "version-name" }, "v1.0.0"),
+            vue.createElementVNode("text", { class: "version-date" }, "2024-03-20")
+          ]),
+          vue.createElementVNode("view", { class: "update-list" }, [
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag feature" }, "新增"),
+              vue.createElementVNode("text", { class: "content" }, "首次发布")
+            ]),
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag feature" }, "新增"),
+              vue.createElementVNode("text", { class: "content" }, "支持自定义匹配规则")
+            ]),
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag feature" }, "新增"),
+              vue.createElementVNode("text", { class: "content" }, "支持自动读取短信提取取件码")
+            ]),
+            vue.createElementVNode("view", { class: "update-item" }, [
+              vue.createElementVNode("text", { class: "tag feature" }, "新增"),
+              vue.createElementVNode("text", { class: "content" }, "支持取件码历史记录管理")
+            ])
+          ])
+        ])
+      ])
+    ]);
+  }
+  const PagesMyChangelog = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/mygitee/项目大全/pickUpCode/取件码/pages/my/changelog.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/packages/index", PagesPackagesIndex);
   __definePage("pages/packages/edit", PagesPackagesEdit);
@@ -6774,6 +7905,8 @@ if (uni.restoreGlobal) {
   __definePage("pages/my/match-settings", PagesMyMatchSettings);
   __definePage("pages/my/match-rules", PagesMyMatchRules);
   __definePage("pages/my/faq", PagesMyFaq);
+  __definePage("pages/my/about", PagesMyAbout);
+  __definePage("pages/my/changelog", PagesMyChangelog);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("warn", "at App.vue:4", "当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！");

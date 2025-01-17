@@ -5,7 +5,7 @@
       <view class="user-info">
         <image
           class="avatar"
-          src="/static/images/avatar.png"
+          src="/static/config-icons/mipmap-xxhdpi/ic_launcher.png"
           mode="aspectFill"
         ></image>
         <text class="nickname">快递取件助手</text>
@@ -36,6 +36,20 @@
           </view>
           <uni-icons type="right" size="16" color="#999"></uni-icons>
         </view>
+        <view class="menu-item" @click="navigateTo('/pages/my/about')">
+          <view class="menu-left">
+            <uni-icons type="info" size="20" color="#1673ff"></uni-icons>
+            <text class="menu-text">软件介绍</text>
+          </view>
+          <uni-icons type="right" size="16" color="#999"></uni-icons>
+        </view>
+        <view class="menu-item" @click="handleAbout">
+          <view class="menu-left">
+            <uni-icons type="upload" size="20" color="#1673ff"></uni-icons>
+            <text class="menu-text">更新记录</text>
+          </view>
+          <uni-icons type="right" size="16" color="#999"></uni-icons>
+        </view>
         <view class="menu-item" @click="navigateTo('/pages/my/faq')">
           <view class="menu-left">
             <uni-icons type="help" size="20" color="#1673ff"></uni-icons>
@@ -43,10 +57,10 @@
           </view>
           <uni-icons type="right" size="16" color="#999"></uni-icons>
         </view>
-        <view class="menu-item" @click="handleShare">
+        <view class="menu-item" @click="showSharePopup">
           <view class="menu-left">
             <uni-icons type="redo" size="20" color="#1673ff"></uni-icons>
-            <text class="menu-text">分享</text>
+            <text class="menu-text">分享软件</text>
           </view>
           <uni-icons type="right" size="16" color="#999"></uni-icons>
         </view>
@@ -56,6 +70,19 @@
         <text>v{{version}}</text>
       </view>
     </view>
+
+    <!-- 分享弹窗 -->
+    <uni-popup ref="sharePopup" type="center">
+      <view class="share-popup">
+        <image 
+          class="qrcode" 
+          src="/static/images/searchCode.png" 
+          mode="aspectFit"
+        ></image>
+        <text class="share-tip">扫码下载最新版本</text>
+        <button class="close-btn" @click="closeSharePopup">关闭</button>
+      </view>
+    </uni-popup>
   </view>
 </template>
 
@@ -82,7 +109,13 @@ export default {
         url,
       });
     },
-    handleShare() {
+    showSharePopup() {
+      this.$refs.sharePopup.open();
+    },
+    closeSharePopup() {
+      this.$refs.sharePopup.close();
+    },
+    handleAbout() {
       // #ifdef H5
       window.open('https://gitee.com/szxio/pick-up-code-app');
       // #endif
@@ -166,6 +199,7 @@ export default {
         font-size: 24rpx;
         color: rgba(255, 255, 255, 0.9);
         line-height: 1;
+        margin-top: 10rpx;
       }
     }
   }
@@ -216,7 +250,7 @@ export default {
 
     .menu-list {
       background-color: #fff;
-      border-radius: 12rpx;
+      border-radius: 20rpx;
       overflow: hidden;
 
       .menu-item {
@@ -255,6 +289,49 @@ export default {
       text-align: center;
       color: #666;
       font-size: 24rpx;
+    }
+  }
+
+  .share-popup {
+    background: #fff;
+    border-radius: 20rpx;
+    padding: 40rpx;
+    width: 600rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .qrcode {
+      width: 400rpx;
+      height: 400rpx;
+      margin-bottom: 20rpx;
+    }
+    
+    .share-tip {
+      font-size: 28rpx;
+      color: #666;
+      margin-bottom: 30rpx;
+    }
+    
+    .close-btn {
+      width: 100%;
+      height: 88rpx;
+      line-height: 88rpx;
+      background: #f5f5f5;
+      border-radius: 44rpx;
+      font-size: 30rpx;
+      color: #333;
+      border: none;
+      
+      &:active {
+        opacity: 0.8;
+      }
+      
+      &::after {
+        border: 1px solid #ddd;
+        border-radius: 44rpx;
+      }
     }
   }
 }
