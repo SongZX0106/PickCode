@@ -37,7 +37,7 @@
   - 递管家
 - 我的页面新增分享二维码
 
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.1/__UNI__6D58568__20250117144133.apk)
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.1/__UNI__6D58568__20250117144718.apk)
 
 ## 软件架构
 
