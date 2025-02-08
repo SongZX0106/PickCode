@@ -3,13 +3,13 @@
     <view class="page-bg"></view>
 
     <!-- 添加插画装饰 -->
-    <view class="header-illustration">
+    <!-- <view class="header-illustration">
       <image
         class="illustration"
         src="/static/images/package-illustration.png"
         mode="aspectFit"
       />
-    </view>
+    </view> -->
 
     <view class="container">
       <view class="title-wrapper">
@@ -40,16 +40,16 @@
             v-for="(platformItems, platform) in groupByPlatform(item.list)"
             :key="platform"
           >
-            <view class="platform-header">
+            <view class="platform-header" @click="goToApp(platform)">
               <image
                 class="platform-icon"
                 :src="getPlatformIcon(platform)"
                 mode="aspectFit"
               />
               <text class="platform-name">{{ platform }}</text>
-              <text class="platform-amount"
-                >¥{{ getPlatformAmount(platformItems) }}</text
-              >
+              <text class="platform-amount">
+                ¥{{ getPlatformAmount(platformItems) }}
+              </text>
             </view>
 
             <view class="goods-list">
@@ -155,7 +155,16 @@ export default {
       alibaba,
       other,
       tableData: [],
-      platforms: ["淘宝", "京东", "拼多多", "抖音", "唯品会", "小红书", "1688", "其他"],
+      platforms: [
+        "淘宝",
+        "京东",
+        "拼多多",
+        "抖音",
+        "唯品会",
+        "小红书",
+        "1688",
+        "其他",
+      ],
       menuStyle: {
         top: "0px",
         right: "25px",
@@ -193,23 +202,27 @@ export default {
     showAddPackage() {
       this.vibrateShort();
       uni.navigateTo({
-        url: '/pages/packages/edit',
-        animationType: 'slide-in-right',
-        animationDuration: 300
+        url: "/pages/packages/edit",
+        animationType: "slide-in-right",
+        animationDuration: 300,
       });
     },
     showEditPackage(item, date) {
       this.vibrateShort();
-      uni.setStorageSync('editData', JSON.stringify({
-        item,
-        date,
-        index: this.tableData.find(group => group.date === date)
-          .list.findIndex(i => i === item)
-      }));
+      uni.setStorageSync(
+        "editData",
+        JSON.stringify({
+          item,
+          date,
+          index: this.tableData
+            .find((group) => group.date === date)
+            .list.findIndex((i) => i === item),
+        })
+      );
       // 关闭操作菜单
-      this.$set(item, 'showActions', false);
+      this.$set(item, "showActions", false);
       uni.navigateTo({
-        url: '/pages/packages/edit?type=edit',
+        url: "/pages/packages/edit?type=edit",
       });
     },
     handlePageClick() {
@@ -353,7 +366,7 @@ export default {
         抖音: this.douyin,
         唯品会: this.weipinhui,
         小红书: this.xiaohongshu,
-        "1688": this.alibaba,
+        1688: this.alibaba,
         其他: this.other,
       };
       return icons[platform] || this.other;
@@ -428,16 +441,31 @@ export default {
       // 获取当前元素的位置信息
       const query = uni.createSelectorQuery();
       let isUp = false;
-      
-      query.select('.goods-actions').boundingClientRect(data => {
-        if (data) {
-          // 如果按钮距离底部小于300rpx，菜单向上显示
-          const windowHeight = uni.getSystemInfoSync().windowHeight;
-          isUp = windowHeight - data.bottom < 300;
-        }
-      }).exec();
-      
+
+      query
+        .select(".goods-actions")
+        .boundingClientRect((data) => {
+          if (data) {
+            // 如果按钮距离底部小于300rpx，菜单向上显示
+            const windowHeight = uni.getSystemInfoSync().windowHeight;
+            isUp = windowHeight - data.bottom < 300;
+          }
+        })
+        .exec();
+
       return isUp;
+    },
+    goToApp(platform) {      
+      const appampaigns = {
+        淘宝: "taobao://taobao.com",
+        京东: "openApp.jdMobile://",
+        拼多多: "pinduoduo://",
+        抖音: "snssdk1128://",
+        唯品会: "vipshop://",
+        小红书: "https://xiaohongshu.com/",
+        1688: "https://m.1688.com/",
+      };
+      plus.runtime.openURL(appampaigns[platform]);
     },
   },
   created() {
@@ -850,18 +878,18 @@ $theme-gradient: linear-gradient(135deg, #0052d9, #003ca3);
     box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
     z-index: 100;
     overflow: hidden;
-    
+
     &.menu-up {
       top: auto;
       bottom: calc(100% + 10rpx); // 向上显示
-      
+
       &::before {
         top: auto;
         bottom: -6rpx;
         box-shadow: 2rpx 2rpx 5rpx rgba(0, 0, 0, 0.05);
       }
     }
-    
+
     &::before {
       content: "";
       position: absolute;

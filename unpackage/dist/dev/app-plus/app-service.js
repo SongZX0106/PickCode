@@ -1802,7 +1802,6 @@ if (uni.restoreGlobal) {
   const xiaohongshu = "/static/images/xiaohongshu.png";
   const alibaba = "/static/images/1688.png";
   const other = "/static/images/other.png";
-  const _imports_0$2 = "/static/images/package-illustration.png";
   const _sfc_main$e = {
     data() {
       return {
@@ -1816,7 +1815,16 @@ if (uni.restoreGlobal) {
         alibaba,
         other,
         tableData: [],
-        platforms: ["淘宝", "京东", "拼多多", "抖音", "唯品会", "小红书", "1688", "其他"],
+        platforms: [
+          "淘宝",
+          "京东",
+          "拼多多",
+          "抖音",
+          "唯品会",
+          "小红书",
+          "1688",
+          "其他"
+        ],
         menuStyle: {
           top: "0px",
           right: "25px"
@@ -1856,11 +1864,14 @@ if (uni.restoreGlobal) {
       },
       showEditPackage(item, date) {
         this.vibrateShort();
-        uni.setStorageSync("editData", JSON.stringify({
-          item,
-          date,
-          index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
-        }));
+        uni.setStorageSync(
+          "editData",
+          JSON.stringify({
+            item,
+            date,
+            index: this.tableData.find((group) => group.date === date).list.findIndex((i) => i === item)
+          })
+        );
         this.$set(item, "showActions", false);
         uni.navigateTo({
           url: "/pages/packages/edit?type=edit"
@@ -1880,7 +1891,7 @@ if (uni.restoreGlobal) {
         try {
           uni.removeStorageSync("packageData");
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:231", "清除缓存失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:244", "清除缓存失败:", e);
         }
       },
       confirmDeleteDateGroup(date) {
@@ -1989,7 +2000,7 @@ if (uni.restoreGlobal) {
           抖音: this.douyin,
           唯品会: this.weipinhui,
           小红书: this.xiaohongshu,
-          "1688": this.alibaba,
+          1688: this.alibaba,
           其他: this.other
         };
         return icons[platform] || this.other;
@@ -2008,7 +2019,7 @@ if (uni.restoreGlobal) {
         try {
           uni.setStorageSync("packageData", JSON.stringify(this.tableData));
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:375", "保存数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:388", "保存数据失败:", e);
         }
       },
       loadData() {
@@ -2018,7 +2029,7 @@ if (uni.restoreGlobal) {
             this.tableData = JSON.parse(data);
           }
         } catch (e) {
-          formatAppLog("error", "at pages/packages/index.vue:385", "读取数据失败:", e);
+          formatAppLog("error", "at pages/packages/index.vue:398", "读取数据失败:", e);
         }
       },
       toggleCheck(item) {
@@ -2049,7 +2060,7 @@ if (uni.restoreGlobal) {
       vibrateShort() {
         uni.vibrateShort({
           success: function() {
-            formatAppLog("log", "at pages/packages/index.vue:423", "振动成功");
+            formatAppLog("log", "at pages/packages/index.vue:436", "振动成功");
           }
         });
       },
@@ -2063,6 +2074,18 @@ if (uni.restoreGlobal) {
           }
         }).exec();
         return isUp;
+      },
+      goToApp(platform) {
+        const appampaigns = {
+          淘宝: "taobao://taobao.com",
+          京东: "openApp.jdMobile://",
+          拼多多: "pinduoduo://",
+          抖音: "snssdk1128://",
+          唯品会: "vipshop://",
+          小红书: "https://xiaohongshu.com/",
+          1688: "https://m.1688.com/"
+        };
+        plus.runtime.openURL(appampaigns[platform]);
       }
     },
     created() {
@@ -2077,13 +2100,7 @@ if (uni.restoreGlobal) {
     }, [
       vue.createElementVNode("view", { class: "page-bg" }),
       vue.createCommentVNode(" 添加插画装饰 "),
-      vue.createElementVNode("view", { class: "header-illustration" }, [
-        vue.createElementVNode("image", {
-          class: "illustration",
-          src: _imports_0$2,
-          mode: "aspectFit"
-        })
-      ]),
+      vue.createCommentVNode(' <view class="header-illustration">\r\n      <image\r\n        class="illustration"\r\n        src="/static/images/package-illustration.png"\r\n        mode="aspectFit"\r\n      />\r\n    </view> '),
       vue.createElementVNode("view", { class: "container" }, [
         vue.createElementVNode("view", { class: "title-wrapper" }, [
           vue.createElementVNode("text", { class: "title" }, "包裹记录"),
@@ -2127,7 +2144,10 @@ if (uni.restoreGlobal) {
                       class: "platform-card",
                       key: platform
                     }, [
-                      vue.createElementVNode("view", { class: "platform-header" }, [
+                      vue.createElementVNode("view", {
+                        class: "platform-header",
+                        onClick: ($event) => $options.goToApp(platform)
+                      }, [
                         vue.createElementVNode("image", {
                           class: "platform-icon",
                           src: $options.getPlatformIcon(platform),
@@ -2143,11 +2163,11 @@ if (uni.restoreGlobal) {
                         vue.createElementVNode(
                           "text",
                           { class: "platform-amount" },
-                          "¥" + vue.toDisplayString($options.getPlatformAmount(platformItems)),
+                          " ¥" + vue.toDisplayString($options.getPlatformAmount(platformItems)),
                           1
                           /* TEXT */
                         )
-                      ]),
+                      ], 8, ["onClick"]),
                       vue.createElementVNode("view", { class: "goods-list" }, [
                         (vue.openBlock(true), vue.createElementBlock(
                           vue.Fragment,
