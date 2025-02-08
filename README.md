@@ -39,6 +39,12 @@
 
 [点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.1/__UNI__6D58568__20250117144718.apk)
 
+### 2.1.2
+
+- 增加app跳转功能
+
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.2/__UNI__6D58568__20250208112739.apk)
+
 ## 软件架构
 
 采用 uni-app、vue3
