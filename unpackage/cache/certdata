@@ -1,3 +1,4 @@
-andrCertfile=D:/mygitee/keyStore/szxApp.jks
-andrCertAlias=aaaa
+andrCertfile=E:/Program/HBuilderX.4.45/HBuilderX/plugins/app-safe-pack/Test.keystore
+andrCertAlias=android
 andrCertPass=ep/Tdjka4Y7WYqDB6/S7dw==
+storePassword=ep/Tdjka4Y7WYqDB6/S7dw==
