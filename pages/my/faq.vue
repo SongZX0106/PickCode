@@ -31,7 +31,7 @@
               <uni-icons type="notification" size="20" color="#1673ff" />
               <text>开启通知类权限</text>
             </button>
-            <button class="tutorial-btn mini-btn">
+            <button class="tutorial-btn mini-btn" @click="openTutorial">
               <uni-icons type="image" size="20" color="#1673ff" />
               <text>查看图文教程</text>
             </button>
@@ -71,6 +71,15 @@ export default {
       // #endif
       // #ifdef H5
       uni.showToast({ title: '请在手机系统设置中手动开启权限', icon: 'none' });
+      // #endif
+    },
+    openTutorial() {
+      // #ifdef H5
+      window.open('https://gitee.com/szxio/pick-up-code-app/blob/master/OpenSMSTutorial.md');
+      // #endif
+      
+      // #ifdef APP-PLUS
+      plus.runtime.openURL('https://gitee.com/szxio/pick-up-code-app/blob/master/OpenSMSTutorial.md');
       // #endif
     }
   }

@@ -8110,6 +8110,9 @@ if (uni.restoreGlobal) {
         } else {
           plus.runtime.openURL("app-settings:");
         }
+      },
+      openTutorial() {
+        plus.runtime.openURL("https://gitee.com/szxio/pick-up-code-app/blob/master/OpenSMSTutorial.md");
       }
     }
   };
@@ -8153,7 +8156,10 @@ if (uni.restoreGlobal) {
                 }),
                 vue.createElementVNode("text", null, "开启通知类权限")
               ]),
-              vue.createElementVNode("button", { class: "tutorial-btn mini-btn" }, [
+              vue.createElementVNode("button", {
+                class: "tutorial-btn mini-btn",
+                onClick: _cache[1] || (_cache[1] = (...args) => $options.openTutorial && $options.openTutorial(...args))
+              }, [
                 vue.createVNode(_component_uni_icons, {
                   type: "image",
                   size: "20",
