@@ -8102,8 +8102,19 @@ if (uni.restoreGlobal) {
     ]);
   }
   const PagesMyMatchRules = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "E:/A0MyCodes/pick-up-code-app/pages/my/match-rules.vue"]]);
-  const _sfc_main$3 = {};
-  function _sfc_render$2(_ctx, _cache) {
+  const _sfc_main$3 = {
+    methods: {
+      openPermissionSetting() {
+        if (uni.getSystemInfoSync().platform === "android") {
+          uni.openAppAuthorizeSetting();
+        } else {
+          plus.runtime.openURL("app-settings:");
+        }
+      }
+    }
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "faq-container" }, [
       vue.createElementVNode("view", { class: "faq-list" }, [
         vue.createCommentVNode(" 问题1 "),
@@ -8129,7 +8140,28 @@ if (uni.restoreGlobal) {
             vue.createElementVNode("text", null, '1. 没有添加匹配规则：请先在"匹配设置"中添加并启用至少一条规则'),
             vue.createElementVNode("text", null, "2. 权限问题：请确保在系统设置中允许应用访问短信"),
             vue.createElementVNode("text", null, "3. 设备限制：iOS设备因系统限制，无法读取短信内容"),
-            vue.createElementVNode("text", null, '4. 短信权限：某些手机（如小米）需要额外开启"通知类短信"权限')
+            vue.createElementVNode("text", null, '4. 短信权限：某些手机（如小米）需要额外开启"通知类短信"权限'),
+            vue.createElementVNode("view", { class: "faq-btn-row" }, [
+              vue.createElementVNode("button", {
+                class: "notify-btn mini-btn",
+                onClick: _cache[0] || (_cache[0] = (...args) => $options.openPermissionSetting && $options.openPermissionSetting(...args))
+              }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "notification",
+                  size: "20",
+                  color: "#1673ff"
+                }),
+                vue.createElementVNode("text", null, "开启通知类权限")
+              ]),
+              vue.createElementVNode("button", { class: "tutorial-btn mini-btn" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "image",
+                  size: "20",
+                  color: "#1673ff"
+                }),
+                vue.createElementVNode("text", null, "查看图文教程")
+              ])
+            ])
           ])
         ]),
         vue.createCommentVNode(" 问题3 "),

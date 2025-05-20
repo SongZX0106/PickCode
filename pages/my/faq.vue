@@ -26,6 +26,16 @@
           <text>2. 权限问题：请确保在系统设置中允许应用访问短信</text>
           <text>3. 设备限制：iOS设备因系统限制，无法读取短信内容</text>
           <text>4. 短信权限：某些手机（如小米）需要额外开启"通知类短信"权限</text>
+          <view class="faq-btn-row">
+            <button class="notify-btn mini-btn" @click="openPermissionSetting">
+              <uni-icons type="notification" size="20" color="#1673ff" />
+              <text>开启通知类权限</text>
+            </button>
+            <button class="tutorial-btn mini-btn">
+              <uni-icons type="image" size="20" color="#1673ff" />
+              <text>查看图文教程</text>
+            </button>
+          </view>
         </view>
       </view>
 
@@ -45,6 +55,27 @@
     </view>
   </view>
 </template>
+
+<script>
+export default {
+  methods: {
+    openPermissionSetting() {
+      // #ifdef APP-PLUS
+      // 安卓跳转到应用权限设置
+      if (uni.getSystemInfoSync().platform === 'android') {
+        uni.openAppAuthorizeSetting();
+      } else {
+        // iOS 跳转到设置
+        plus.runtime.openURL('app-settings:');
+      }
+      // #endif
+      // #ifdef H5
+      uni.showToast({ title: '请在手机系统设置中手动开启权限', icon: 'none' });
+      // #endif
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 .faq-container {
@@ -86,5 +117,36 @@
       }
     }
   }
+}
+
+.faq-btn-row {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.mini-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 6rpx;
+  height: 80rpx;
+  min-width: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.notify-btn.mini-btn {
+  background: #eaf3ff;
+  color: #1673ff;
+  border: 1rpx solid #1673ff;
+}
+
+.tutorial-btn.mini-btn {
+  background: #fff;
+  color: #1673ff;
+  border: 1rpx solid #1673ff;
 }
 </style> 
