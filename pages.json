@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/index/edit-code",
+      "style": {
+        "navigationBarTitleText": "编辑取件码"
+      }
+    },
+    {
       "path": "pages/packages/index",
       "style": {
         "navigationStyle": "custom"

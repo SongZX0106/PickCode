@@ -36,14 +36,6 @@
         </view>
       </view>
 
-      <!-- 日期显示 -->
-      <!-- <view class="card">
-        <view class="date-display">
-          <text class="date-label">今天是:</text>
-          <text class="date">{{ today }}</text>
-        </view>
-      </view> -->
-
       <!-- 按日期分组的取件码列表 -->
       <template v-for="(dateGroup, date) in groupedCodes" :key="date">
         <view class="card code-card">
@@ -107,6 +99,12 @@
                       <view class="code-desc" :class="{ picked: item.isPicked }">
                         <text>{{ item.sendDate ? item.sendDate.split(" ")[1] : "" }} {{ item.isManual ? '添加' : '进站' }}</text>
                       </view>
+                      <!-- 标签展示 -->
+                      <view v-if="item.tags && item.tags.length" class="code-tags">
+                        <view v-for="tag in item.tags" :key="tag" class="code-tag">{{ tag }}</view>
+                      </view>
+                      <!-- 备注展示 -->
+                      <view v-if="item.remark" class="code-remark">{{ item.remark }}</view>
                     </view>
                   </view>
                 </view>
@@ -309,6 +307,8 @@ export default {
         isPicked: false,
         showActions: false, // 添加 showActions 属性
         isManual: true,
+        tags: [], // 新增标签字段
+        remark: '', // 新增备注字段
       };
       
       this.packageCodes.unshift(newItem);
@@ -316,12 +316,42 @@ export default {
       this.newCode = "";
     },
     editCode(item) {
-      this.vibrateShort(); // 添加震动
-      this.editingItem = item;
-      this.editingCode = item.code;
-      this.showEditDialog = true;
+      this.vibrateShort();
       // 关闭操作菜单
       item.showActions = false;
+      // 跳转到编辑页面，传递当前项信息
+      uni.navigateTo({
+        url: '/pages/index/edit-code',
+        success: res => {
+          res.eventChannel.emit('editCodeInit', {
+            item: item,
+            index: this.packageCodes.indexOf(item)
+          });
+          // 监听编辑完成事件
+          res.eventChannel.on('editCodeDone', ({ form, index, deletedTags }) => {
+            if (deletedTags && deletedTags.length) {
+              // 全局移除被删除的标签
+              this.packageCodes.forEach(item => {
+                if (item.tags && item.tags.length) {
+                  item.tags = item.tags.filter(tag => !deletedTags.includes(tag));
+                }
+              });
+            }
+            if (index !== undefined && this.packageCodes[index]) {
+              // 更新取件码信息，保留原有其它字段
+              this.$set(this.packageCodes, index, {
+                ...this.packageCodes[index],
+                code: form.code,
+                company: form.company,
+                tags: form.tags,
+                remark: form.remark,
+                isPicked: form.isPicked,
+              });
+              this.saveToStorage();
+            }
+          });
+        }
+      });
     },
     handleEditConfirm(value) {
       if (!this.editingItem) return;
@@ -675,6 +705,32 @@ export default {
           this.$set(this.dateShowActions, key, false);
         }
       });
+    },
+    onLoad(options) {
+      // options.index 传递当前编辑项的唯一标识（如 code 或 index）
+      if (options.item) {
+        const item = JSON.parse(decodeURIComponent(options.item));
+        this.form = {
+          code: item.code || '',
+          company: item.company || '',
+          tags: item.tags || [],
+          remark: item.remark || '',
+        };
+        this.editIndex = options.index || null;
+      }
+      // 支持 eventChannel 初始化
+      const eventChannel = this.getOpenerEventChannel && this.getOpenerEventChannel();
+      if (eventChannel) {
+        eventChannel.on && eventChannel.on('editCodeInit', ({ item, index }) => {
+          this.form = {
+            code: item.code || '',
+            company: item.company || '',
+            tags: item.tags || [],
+            remark: item.remark || '',
+          };
+          this.editIndex = index;
+        });
+      }
     },
   },
 };
@@ -1148,5 +1204,29 @@ export default {
   .address-text {
     flex: 1;
   }
+}
+
+.code-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 8rpx;
+}
+.code-tag {
+  background: #f0f4ff;
+  color: #1673ff;
+  border-radius: 8rpx;
+  padding: 4rpx 16rpx;
+  font-size: 22rpx;
+  margin-bottom: 4rpx;
+}
+.code-remark {
+  margin-top: 6rpx;
+  color: #888;
+  font-size: 22rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  padding: 4rpx 12rpx;
+  word-break: break-all;
 }
 </style>
