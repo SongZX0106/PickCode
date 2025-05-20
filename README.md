@@ -13,11 +13,24 @@
 
 ## 更新记录
 
-### 1.0.0
+### 2.1.2
 
-内部测试功能，仅适配对管家和兔喜生活，不能自定义设置匹配规则
+- 增加app跳转功能
 
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/1.0.0/__UNI__6D58568__20250108150232.apk)
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.2/__UNI__6D58568__20250208112739.apk)
+
+
+
+### 2.1.1
+
+- 新增选择预制规则功能，目前已预制
+  - 兔喜生活
+  - 递管家
+- 我的页面新增分享二维码
+
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.1/__UNI__6D58568__20250117144718.apk)
+
+
 
 ### 2.1.0
 
@@ -30,20 +43,25 @@
 
 [点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.0/__UNI__6D58568__20250114144215.apk)
 
-### 2.1.1
 
-- 新增选择预制规则功能，目前已预制
-  - 兔喜生活
-  - 递管家
-- 我的页面新增分享二维码
 
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.1/__UNI__6D58568__20250117144718.apk)
+### 1.0.0
 
-### 2.1.2
+内部测试功能，仅适配对管家和兔喜生活，不能自定义设置匹配规则
 
-- 增加app跳转功能
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/1.0.0/__UNI__6D58568__20250108150232.apk)
 
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.2/__UNI__6D58568__20250208112739.apk)
+
+
+## 支持作者
+
+如果你觉得软件给你带来了帮助，欢迎请作者喝杯奶茶~，对于已打赏的老板所提的issue，我会优先考虑并实现
+
+![image-20250520113926880](https://szx-bucket1.oss-cn-hangzhou.aliyuncs.com/picgo/image-20250520113926880.png)
+
+
+
+
 
 ## 软件架构
 
