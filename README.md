@@ -11,45 +11,19 @@
 - 简洁界面：采用清新简约的设计风格，操作直观便捷无论是在快递柜、自提点，还是快递驿站取件，这款应用都能帮您快速找到取件码。它特别适合经常网购的用户，能够有效节省找码时间，让取件过程更加轻松愉快。
 - 开源免费，无需注册，安装即用。让每一次取件都变得简单高效。
 
-## 更新记录
+## 最新版本
 
-### 2.1.2
+### 2.2.1.0
 
-- 增加app跳转功能
+- 增加单独的编辑取件码页面，可以添加标签，备注
+- 常见问题页面增加自动跳转权限设置页面，增加查看图文教程按钮
+- 修复已知问题
 
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.2/__UNI__6D58568__20250208112739.apk)
-
-
-
-### 2.1.1
-
-- 新增选择预制规则功能，目前已预制
-  - 兔喜生活
-  - 递管家
-- 我的页面新增分享二维码
-
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.1/__UNI__6D58568__20250117144718.apk)
+[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.2.1.0/__UNI__6D58568__20250521084457.apk)
 
 
 
-### 2.1.0
-
-- 自定义匹配规则
-- 包裹记录功能
-- 使用帮助说明
-- UI界面美化
-- 启动页优化
-- 其他问题优化
-
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/2.1.0/__UNI__6D58568__20250114144215.apk)
-
-
-
-### 1.0.0
-
-内部测试功能，仅适配对管家和兔喜生活，不能自定义设置匹配规则
-
-[点击下载](https://gitee.com/szxio/pick-up-code-app/releases/download/1.0.0/__UNI__6D58568__20250108150232.apk)
+[查看所有历史版本](https://gitee.com/szxio/pick-up-code-app/releases)
 
 
 

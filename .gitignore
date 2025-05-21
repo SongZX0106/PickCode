@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 **/*.log
 **/*.apk
+/unpackage/release/apk/
 /src/views/test/*.vue
 
 tests/**/coverage/
@@ -24,3 +25,7 @@ selenium-debug.log
 package-lock.json
 yarn.lock
 **/apk/*
+
+/unpackage/*
+
+/unpackage/
