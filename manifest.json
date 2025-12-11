@@ -2,8 +2,8 @@
     "name" : "取件码",
     "appid" : "__UNI__6D58568",
     "description" : "一个简单的取件码记录工具",
-    "versionName" : "2.2.1.0",
-    "versionCode" : 200,
+    "versionName" : "2.2.1.1",
+    "versionCode" : 201,
     "transformPx" : false,
     "app-plus" : {
         "usingComponents" : true,
@@ -41,7 +41,16 @@
                 "dSYMs" : false
             },
             "sdkConfigs" : {
-                "ad" : {},
+                "ad" : {
+                    "gdt" : {},
+                    "ks" : {},
+                    "sigmob" : {},
+                    "hw" : {},
+                    "bd" : {},
+                    "gm" : {},
+                    "zy" : {},
+                    "bz" : {}
+                },
                 "maps" : {},
                 "oauth" : {},
                 "payment" : {},
